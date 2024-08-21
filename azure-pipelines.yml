@@ -1,0 +1,58 @@
+# Node.js with React
+# Build a Node.js project that uses React.
+# Add steps that analyze code, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
+
+trigger:
+  branches:
+    include:
+      - main
+
+pool:
+  vmImage: ubuntu-latest
+
+variables:
+  tag: '$(Build.BuildId)'
+
+stages:
+- stage: TestAndBuild
+  displayName: Test and Build React Application
+  jobs:
+  - job: Test
+    displayName: Run Tests
+    steps:
+    - task: NodeTool@0
+      inputs:
+        versionSpec: '18.x'
+      displayName: 'Install Node.js'
+
+    - script: |
+        npm install
+        npm run test
+      displayName: 'Install Dependencies and Run Tests'
+
+  - job: Build
+    displayName: Build Application
+    dependsOn: Test  # Test should be successful
+    steps:
+    - script: |
+        npm run build
+      displayName: 'Build React Application'
+
+- stage: ContaineriseAndPush
+  displayName: Containerise and Push Image
+  dependsOn: TestAndBuild
+  jobs:
+  - job: DockerBuild
+    displayName: Build and Push Docker Image
+    steps:
+    - task: Docker@2
+      displayName: Build and Push Docker Image
+      inputs:
+        containerRegistry: 'DockerHub'  
+        repository: 'dohunwon/asd-group7-frontend'
+        command: buildAndPush
+        dockerfile: '**/Dockerfile'
+        tags: |
+          $(tag)
+
