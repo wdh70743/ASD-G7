@@ -1,28 +1,30 @@
 @import url('https://fonts.googleapis.com/css2?family=Darker+Grotesque:wght@300..900&display=swap');
 
 .hero-section {
-    background-color: #5831EE; 
+    background-color: #2828e8; 
     padding-top: 5%; 
     padding-bottom: 4%;
+    
 }  
   
 .hero-text {
     text-align: center;
-    font-family: 'Darker Grotesque', sans-serif;
+    font-family: "Inter";
 }
 
 .hero-title {
-    font-size: 60px; 
-    font-weight: 550; 
+    font-size: 45px; 
+    font-weight: bold; 
     color: #ffffff; 
-    font-family: 'Darker Grotesque', sans-serif;
+    font-family: "Inter";
     margin: 0; 
 }
 
 .hero-subtitle {
-    font-size: 30px; 
+    font-size: 25px; 
+    font-weight: 500; 
     color: #ffffff; 
-    font-family: 'Darker Grotesque', sans-serif;
+    font-family: "Inter";
     margin: 0; 
     padding-bottom: 0px;
 }

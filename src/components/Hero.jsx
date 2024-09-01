@@ -1,5 +1,5 @@
 import React from 'react';
-import './Hero.css'; // Ensure you import the CSS file
+import './Hero.css'; 
 
 const Hero = ({ title = "You've got 5 tasks today", subtitle = "Hey John!" }) => {
   return (

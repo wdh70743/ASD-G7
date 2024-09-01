@@ -1,6 +1,7 @@
 import React from 'react';
 import NavBar from '../components/NavBar';
 import Hero from '../components/Hero';
+import TaskList from '../components/TaskList';
 
 
 const DashboardPage = () => {
@@ -8,6 +9,7 @@ const DashboardPage = () => {
     <>
         <NavBar />
         <Hero />
+        <TaskList />
     </>
 
     

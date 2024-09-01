@@ -1,0 +1,54 @@
+/* NavBar.css */
+
+/* Main navigation container */
+.nav-bar {
+    display: flex;
+    justify-content: space-between; /* Space between brand and links */
+    align-items: center;
+    padding: 10px 20px;
+    background: transparent; /* Transparent background */
+    position: fixed; /* Fix the navbar to the top */
+    top: 0;
+    width: 100%; /* Full width */
+    left: 0;
+    z-index: 1000; /* Ensure it stays above other content */
+  }
+  
+  /* Brand on the left side */
+  .nav-brand {
+    font-size: 24px;
+    font-weight: bold;
+    color: white;
+  }
+  
+  /* Navigation links container */
+  .nav-links {
+    display: flex;
+    gap: 15px;
+    margin: 0 auto; /* Center the links horizontally */
+    background-color: #2222be; /* Dark blue background */
+    border-radius: 25px; /* Rounded edges */
+  }
+  
+  /* Individual navigation link */
+  .nav-link {
+    padding: 10px 20px;
+    border-radius: 25px; /* Rounded edges */
+    cursor: pointer;
+    text-align: center;
+    transition: background 0.3s, color 0.3s;
+  }
+  
+  /* Active link styling */
+  .nav-link.active {
+    background-color: white;
+    color: black;
+  }
+  
+  /* Inactive link styling */
+  .nav-link:not(.active) {
+    background-color: #2222be; /* Dark blue background */
+    color: white;
+  }
+  
+  
