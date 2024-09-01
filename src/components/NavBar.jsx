@@ -2,7 +2,7 @@ import React from 'react'
 
 const NavBar = () => {
   return (
-    <>Dashboard</>
+    <>navBAR GOES HERE</>
 
   )
 }
