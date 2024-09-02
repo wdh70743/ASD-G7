@@ -1,19 +1,26 @@
 import React from 'react';
-import NavBar from '../components/NavBar';
 import Hero from '../components/Hero';
 import TaskList from '../components/TaskList';
-
+import MyProjects from '../components/MyProjects';
+import Overview from '../components/Overview';
+import './DashboardPage.css'; 
 
 const DashboardPage = () => {
   return (
-    <>
-        <NavBar />
-        <Hero />
-        <TaskList />
-    </>
-
-    
-
+    <div className="dashboard-page">
+      <Hero />
+      <div className="dashboard-content">
+        <div className="TaskListItem">
+          <TaskList />
+        </div>
+        <div className="OverviewItem">
+          <Overview />
+        </div>
+        <div className="ProjectListItem">
+          <MyProjects />
+        </div>
+      </div>
+    </div>
   );
 };
 
