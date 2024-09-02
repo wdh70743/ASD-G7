@@ -8,7 +8,7 @@ const NavBar = () => {
   return (
     <nav className="nav-bar">
       <div className="nav-brand">Taskbee</div>
-      <div className="nav-links">
+      <div className="nav-links"> 
         <div
           className={`nav-link ${active === 'Dashboard' ? 'active' : ''}`}
           onClick={() => setActive('Dashboard')}
