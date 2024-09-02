@@ -17,21 +17,21 @@ const NavBar = () => {
           Dashboard
         </NavLink>
         <NavLink
-          to="/projects"
+          to="/projects"/* These are placeholders */
           className="nav-link"
           activeClassName="active"
         >
           Projects
         </NavLink>
         <NavLink
-          to="/calendar"
+          to="/calendar" /* These are placeholders */
           className="nav-link"
           activeClassName="active"
         >
           Calendar
         </NavLink>
       </div>
-      <div className="nav-icons">
+      <div className="nav-icons"> 
         <FaBell className="nav-icon bell-icon" />
         <FaUserCircle className="nav-icon profile-icon" />
       </div>
