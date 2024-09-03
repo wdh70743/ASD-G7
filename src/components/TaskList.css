@@ -1,0 +1,18 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+.TaskListContainer {
+    padding-left: 3%;
+}
+
+.DueTodayContainer {
+    max-height: 570px; /* Set a fixed height; adjust as needed */
+    overflow-y: auto;  /* Enable vertical scrolling if content overflows */
+    overflow-x: hidden; /* Prevent horizontal scrolling */
+}
+
+.TaskListTitle {
+    font-family: "Inter";
+    font-size: 30px; 
+    margin-bottom: 5px; /* Space between title and tasks */
+    font-weight: normal;
+}
