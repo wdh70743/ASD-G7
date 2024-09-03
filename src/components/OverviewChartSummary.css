@@ -1,0 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300..900&display=swap');
+
+.chart-container {
+    width: 150px;
+    height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+    font-family: 'Inter';
+    font-weight: 600; /* Adjust font weight as needed */
+    padding-top: 10%;
+  }
+  

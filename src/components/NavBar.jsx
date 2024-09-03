@@ -1,36 +1,46 @@
-// src/components/NavBar.jsx
-import React, { useState } from 'react';
+import React from 'react';
+import { Link, NavLink } from 'react-router-dom';
+import { FaBell, FaUserCircle } from 'react-icons/fa'; // Importing icons
 import './NavBar.css'; // Import the CSS file
 
 const NavBar = () => {
-  const [active, setActive] = useState('Dashboard');
-
   return (
     <nav className="nav-bar">
-      <div className="nav-brand">Taskbee</div>
-      <div className="nav-links"> 
-        <div
-          className={`nav-link ${active === 'Dashboard' ? 'active' : ''}`}
-          onClick={() => setActive('Dashboard')}
+      <Link className="nav-brand" to="/">Taskbee</Link>
+      <div className="nav-links">
+        <NavLink
+          exact
+          to="/dashboard"
+          className="nav-link"
+          activeClassName="active"
         >
           Dashboard
-        </div>
-        <div
-          className={`nav-link ${active === 'Projects' ? 'active' : ''}`}
-          onClick={() => setActive('Projects')}
+        </NavLink>
+        <NavLink
+          to="/projects"/* These are placeholders */
+          className="nav-link"
+          activeClassName="active"
         >
           Projects
-        </div>
-        <div
-          className={`nav-link ${active === 'Calendar' ? 'active' : ''}`}
-          onClick={() => setActive('Calendar')}
+        </NavLink>
+        <NavLink
+          to="/calendar" /* These are placeholders */
+          className="nav-link"
+          activeClassName="active"
         >
           Calendar
-        </div>
+        </NavLink>
+      </div>
+      <div className="nav-icons"> 
+        <FaBell className="nav-icon bell-icon" />
+        <FaUserCircle className="nav-icon profile-icon" />
       </div>
     </nav>
   );
 };
 
 export default NavBar;
+
+
+
 

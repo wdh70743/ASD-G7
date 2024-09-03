@@ -1,19 +1,14 @@
 import React from 'react';
 import './Task.css'; 
 import './TaskList.css'; 
-// import personImage from 'src/assets/person.jpg'; 
 
-
-const Task = ({ color }) => {
+const Task = ({ color, title, subtitle }) => {
   return (
     <div className="rectangle-box" style={{ backgroundColor: color }}>
-        <h1 className="title">Areo branding project</h1>
-        <p className="subtitle">Logo, Brand Identity, Brand Strategy</p>
-        <div className="image-container">
-        {/* <img src={personImage} alt="Person" className="person-image" /> */}
-        </div>
+        <h1 className="title">{title}</h1>
+        <p className="subtitle">{subtitle}</p>
     </div>
-  )
+  );
 }
 
 export default Task;

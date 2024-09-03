@@ -1,0 +1,108 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300..900&display=swap');
+
+.OverviewContainer {
+    padding-left: 3%;
+}
+
+.OverviewContentContainer {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Two equal columns */
+    grid-template-rows: auto 1fr; /* Two rows: first auto height, second takes up remaining space */
+    grid-template-areas:
+        "item1 item2"
+        "item3 item3";
+    gap: 20px; /* Space between grid items */
+    max-height: 600px; /* Adjust height to fit your layout */
+    overflow: hidden; /* Prevent scrolling on the grid container itself */
+    padding-top: 2.5%;
+    padding-right: 3%;
+}
+
+.OverviewTitle {
+    font-family: "Inter", sans-serif;
+    font-size: 30px;
+    margin-bottom: 5px;
+    font-weight: normal;
+}
+
+.OverviewItem {
+    border-radius: 8px;
+    color: #000; /* Default text color, adjust if needed */
+}
+
+.item1 {
+    grid-area: item1; /* Assign grid area */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: #e0ec5c;
+    padding: 20px; /* Increased padding for better spacing */
+    height: 200px; /* Increased height to accommodate the larger chart */
+    display: flex; /* Use flexbox for centering content */
+    align-items: center; /* Center content vertically */
+    justify-content: center; /* Center content horizontally */
+    position: relative; /* Ensure proper positioning */
+    font-family: "Inter", sans-serif;
+}
+
+.item2 {
+    grid-area: item2; /* Assign grid area */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: #ffff;
+    font-family: "Inter", sans-serif;
+    align-self: start; /* Align the start of the grid area */
+    margin-top: 20px; /* Adjust margin to move it down slightly */
+    padding: 20px;
+    height: 180px; /* Set a fixed height to make the box taller */
+    display: flex; /* Use flexbox to control text alignment */
+    align-items: flex-start; /* Align text to the top */
+    justify-content: flex-start; /* Align text to the left */
+}
+
+.item3 {
+    grid-area: item3; /* Assign grid area */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: #b787f1;
+    padding: 20px;
+    color: #000; /* Text color for readability on dark background */
+    font-family: "Inter", sans-serif;
+    overflow-y: auto;  /* Enable vertical scrolling if content overflows */
+    overflow-x: hidden; /* Prevent horizontal scrolling */
+    min-height: 280px; /* Set a minimum height for the item */
+}
+
+.Dailywork-progress-text {
+    font-weight: 550; /* Make the text bold */
+    font-size: 14px; /* Adjust font size if needed */
+    margin: 0; /* Remove default margins */
+    text-align: center; /* Center the text */
+    position: absolute; /* Absolute positioning for better control */
+    top: 10px; /* Adjust as needed */
+    width: 100%; /* Ensure text spans the width of the container */
+    left: 0;
+    font-family: "Inter", sans-serif;
+}
+
+.Notes-title {
+    font-weight: 550; /* Make the text bold */
+    font-size: 14px; /* Adjust font size if needed */
+    margin: 0; /* Remove default margins */
+    text-align: left; /* Center the text */
+    top: 10px; /* Adjust as needed */
+    width: 100%; /* Ensure text spans the width of the container */
+    left: 0;
+    font-family: "Inter", sans-serif;
+}
+
+.CompletedProjectsTitle {
+    font-weight: 450; /* Make the text bold */
+    font-size: 18px; /* Adjust font size if needed */
+    margin: 0; /* Remove default margins */
+    text-align: left; /* Center the text */
+    top: 10px; /* Adjust as needed */
+    width: 100%; /* Ensure text spans the width of the container */
+    left: 0;
+    font-family: "Inter", sans-serif;
+}
+
+
+
+
