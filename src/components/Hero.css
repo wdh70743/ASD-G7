@@ -1,0 +1,37 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300..900&display=swap');
+
+.MainHero-section{
+    padding-left: 1%;
+    padding-top: 1%;
+    padding-right: 1%;
+    
+}
+.hero-section {
+    background-color: #2727ce;
+    padding-top: 6%;
+    padding-bottom: 3%;
+    text-align: center; /* Center text horizontally */
+    border-radius: 30px; /* Curved edges */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.hero-text {
+    font-family: "Inter", sans-serif;
+    display: inline-block; /* Ensures that text is treated as a block for centering */
+}
+
+.hero-title {
+    font-size: 55px;
+    font-weight: bold;
+    color: #ffffff;
+    margin: 0;
+    
+}
+
+.hero-subtitle {
+    font-size: 25px;
+    font-weight: normal;
+    color: #ffffff;
+    margin: 0;
+    padding-bottom: 5%;
+}
