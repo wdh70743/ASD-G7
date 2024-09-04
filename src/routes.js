@@ -1,5 +1,6 @@
 import LoginPage from './pages/LoginPage';
 import DashboardPage from './pages/DashboardPage';
+import ProjectsPage from './pages/ProjectsPage';
 
 const routes = [
   {
@@ -10,6 +11,10 @@ const routes = [
     path: '/Dashboard',
     element: <DashboardPage />
   },
+  {
+    path: '/Projects',
+    element : <ProjectsPage />
+  }
 ];
 
 export default routes;
