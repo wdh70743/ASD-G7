@@ -19,15 +19,17 @@ const routes = [
     element: <RegisterPage />
   },
   {
-    path: 'Calendar',
+    path: '/Calendar',
     element: <CalendarPage />
   },
   {
-    path: 'Archive',
+    path: '/Archive',
     element: <ArchivePage />
+  },
+  {
     path: '/Projects',
     element : <ProjectsPage />
-  }
+  },
 ];
 
 export default routes;

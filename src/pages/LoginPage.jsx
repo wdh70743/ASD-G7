@@ -1,22 +1,22 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import LoginBox from '../components/Login/Components/loginBox.jsx';
-import useAuth from '../hooks/useAuth'; // Import the custom hook
+import useAuth from '../hooks/useAuth';
 
 const LoginPage = () => {
   const navigate = useNavigate();
-  const { login, loading, error } = useAuth();  // Destructure the custom hook
+  const { login, loading, error } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
 
   const handleLogin = async () => {
     const result = await login(email, password);
-    if (!error) {
+    if (result && result.status === 200) {
       console.log('Login successful:', result);
-      navigate('/dashboard');  // Redirect to dashboard
+      navigate('/dashboard');
     } else {
-      setErrorMessage(error);  // Display error if login failed
+      setErrorMessage(error);
     }
   };
 

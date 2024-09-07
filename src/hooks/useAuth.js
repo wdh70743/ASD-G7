@@ -11,7 +11,7 @@ const useAuth = () => {
     try {
       const response = await userService.register(user);
       setLoading(false);
-      return response.data;  // Return the data to the component for further actions
+      return response;  // Return the data to the component for further actions
     } catch (err) {
       setLoading(false);
       setError(err.response?.data?.message || 'Registration failed');
@@ -24,7 +24,7 @@ const useAuth = () => {
     try {
       const response = await userService.login(email, password);
       setLoading(false);
-      return response.data;  // Return the data to the component for further actions
+      return response;  // Return the data to the component for further actions
     } catch (err) {
       setLoading(false);
       setError(err.response?.data?.message || 'Login failed');

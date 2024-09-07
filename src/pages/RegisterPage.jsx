@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import LoginBox from '../components/Login/Components/loginBox.jsx';
-import useAuth from '../hooks/useAuth'; // Import the custom hook
+import useAuth from '../hooks/useAuth';
 
 const RegisterPage = () => {
   const navigate = useNavigate();
-  const { register, loading, error } = useAuth();  // Destructure the custom hook
+  const { register, loading, error } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -26,7 +26,7 @@ const RegisterPage = () => {
 
     const result = await register(user);
 
-    if (!error) {
+    if (result && result.status === 201) {
         console.log('Registration successful:', result);
         navigate('/');
     } else {
