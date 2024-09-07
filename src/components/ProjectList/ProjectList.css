@@ -1,0 +1,35 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+.ProjectListContainer {
+    padding-left: 3%;
+    padding-right: 3%;
+}
+
+.AdditionContainer {
+    padding-right: 90%;
+}
+
+.addition-box {
+    height: 60p; 
+    padding: 10px;
+    border-radius: 15px; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+    margin: 9px auto; 
+    position: relative; 
+    box-sizing: border-box; 
+    background-color: #daddea;
+    cursor: pointer;
+
+}
+
+.title {
+    font-size: 25px;
+    font-weight: 500;
+    color: #000000;
+    font-family: "Inter";
+    margin: 0; 
+    padding-bottom: 2%;
+    text-align: center;
+    
+ 
+}
