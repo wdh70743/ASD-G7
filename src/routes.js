@@ -25,9 +25,11 @@ const routes = [
   {
     path: '/Archive',
     element: <ArchivePage />
+  },
+  {
     path: '/Projects',
     element : <ProjectsPage />
-  }
+  },
 ];
 
 export default routes;
