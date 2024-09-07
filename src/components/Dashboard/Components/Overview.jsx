@@ -1,7 +1,7 @@
 // Overview.js
 import React from 'react';
 import OverviewChartSummary from './OverviewChartSummary'; // Import the chart component
-import './Overview.css';
+import '../Styles/Overview.css';
 
 const Overview = () => {
   // Example percentage; you can calculate this based on your data

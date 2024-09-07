@@ -1,0 +1,24 @@
+.loginInputTag {
+    font-size: 24px;
+    font-weight: bold;
+    color: white;
+    margin: 15px 0 10px 0;
+}
+
+@media only screen and (max-width: 600px) {
+    .loginInputTag {
+        font-size: 18px;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .loginInputTag {
+        font-size: 20px;
+    }
+}
+
+@media only screen and (min-width: 1200px) {
+    .loginInputTag {
+        font-size: 26px;
+    }
+}

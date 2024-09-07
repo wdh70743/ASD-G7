@@ -1,0 +1,12 @@
+.archive-button {
+    padding: 8px 16px;
+    font-size: 14px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.archive-button:hover {
+    background-color: #ccc;
+}

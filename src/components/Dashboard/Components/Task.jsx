@@ -1,6 +1,6 @@
 import React from 'react';
-import './Task.css'; 
-import './TaskList.css'; 
+import '../Styles/Task.css'; 
+import '../Styles/TaskList.css'; 
 
 const Task = ({ color, title, subtitle }) => {
   return (

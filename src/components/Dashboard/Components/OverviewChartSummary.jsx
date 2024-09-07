@@ -1,7 +1,7 @@
 import React from 'react';
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css'; // Import default styles
-import './OverviewChartSummary.css'; // Import custom styles
+import '../Styles/OverviewChartSummary.css'; // Import custom styles
 
 const OverviewChartSummary = ({ percentage }) => {
   return (

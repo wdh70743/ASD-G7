@@ -1,6 +1,6 @@
 import React from 'react';
-import './Hero.css'; 
-import NavBar from '../components/NavBar';
+import '../Styles/Hero.css'; 
+import NavBar from './NavBar';
 
 const Hero = ({ title = "You've got 5 tasks today", subtitle = "Hey John!" }) => {
   return (

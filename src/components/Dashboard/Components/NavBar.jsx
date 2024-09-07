@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { FaBell, FaUserCircle } from 'react-icons/fa'; // Importing icons
-import './NavBar.css'; // Import the CSS file
+import '../Styles/NavBar.css'; // Import the CSS file
 
 const NavBar = () => {
   return (
@@ -30,8 +30,15 @@ const NavBar = () => {
         >
           Calendar
         </NavLink>
+        <NavLink
+          to="/archive" /* These are placeholders */
+          className="nav-link"
+          activeClassName="active"
+        >
+          Archive
+        </NavLink>
       </div>
-      <div className="nav-icons"> 
+      <div className="nav-icons">
         <FaBell className="nav-icon bell-icon" />
         <FaUserCircle className="nav-icon profile-icon" />
       </div>

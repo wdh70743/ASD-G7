@@ -1,9 +1,9 @@
 import React from 'react';
-import Hero from '../components/Hero';
-import TaskList from '../components/TaskList';
-import MyProjects from '../components/MyProjects';
-import Overview from '../components/Overview';
-import './DashboardPage.css'; 
+import Hero from '../components/Dashboard/Components/Hero';
+import TaskList from '../components/Dashboard/Components/TaskList';
+import MyProjects from '../components/Dashboard/Components/MyProjects';
+import Overview from '../components/Dashboard/Components/Overview';
+import './Styles/DashboardPage.css'; 
 
 const DashboardPage = () => {
   return (
