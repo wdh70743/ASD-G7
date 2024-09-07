@@ -1,0 +1,30 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.rectangle-box {
+    height: 130px;
+    padding: 10px; 
+    padding-left: 3%;
+    padding-top: 3%;
+    border-radius: 15px; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 9px auto; 
+    position: relative;
+    box-sizing: border-box; 
+    cursor: pointer;
+
+}
+
+.title {
+    font-size: 25px;
+    font-weight: 500;
+    color: #000000; 
+    font-family: "Inter";
+    margin: 0;
+    padding-bottom: 2%;
+    text-align: center;
+ 
+}
+
