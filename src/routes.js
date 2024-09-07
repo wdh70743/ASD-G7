@@ -1,5 +1,8 @@
 import LoginPage from './pages/LoginPage';
 import DashboardPage from './pages/DashboardPage';
+import RegisterPage from './pages/RegisterPage';
+import CalendarPage from './pages/CalendarPage';
+import ArchivePage from './pages/ArchivePage';
 
 const routes = [
   {
@@ -10,6 +13,18 @@ const routes = [
     path: '/Dashboard',
     element: <DashboardPage />
   },
+  {
+    path: '/Register',
+    element: <RegisterPage />
+  },
+  {
+    path: 'Calendar',
+    element: <CalendarPage />
+  },
+  {
+    path: 'Archive',
+    element: <ArchivePage />
+  }
 ];
 
 export default routes;

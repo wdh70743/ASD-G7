@@ -1,0 +1,30 @@
+.archive-list {
+    margin-top: 20px;
+}
+
+.archive-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background-color: white;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.archive-info h3 {
+    margin: 0;
+    font-size: 20px;
+}
+
+.archive-info p {
+    margin: 5px 0 0 0;
+    font-size: 14px;
+    color: gray;
+}
+
+.archive-buttons {
+    display: flex;
+    gap: 10px;
+}
