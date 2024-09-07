@@ -26,7 +26,7 @@ const RegisterPage = () => {
 
     const result = await register(user);
 
-    if (!error) {
+    if (result === 201) {
         console.log('Registration successful:', result);
         navigate('/');
     } else {

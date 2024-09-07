@@ -18,11 +18,11 @@ const routes = [
     element: <RegisterPage />
   },
   {
-    path: 'Calendar',
+    path: '/Calendar',
     element: <CalendarPage />
   },
   {
-    path: 'Archive',
+    path: '/Archive',
     element: <ArchivePage />
   }
 ];

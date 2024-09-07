@@ -12,7 +12,7 @@ const LoginPage = () => {
 
   const handleLogin = async () => {
     const result = await login(email, password);
-    if (!error) {
+    if (result === 200) {
       console.log('Login successful:', result);
       navigate('/dashboard');  // Redirect to dashboard
     } else {
