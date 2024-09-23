@@ -1,13 +1,13 @@
 import React from 'react';
-import NavBar from '../components/Dashboard/Components/NavBar';
-import ShareToggleSection from '../components/ShareToggle';
+import SimpleHero from '../components/Dashboard/Components/SimpleHero';
+import ShareToggleSection from '../components/Share/ShareToggle.jsx';
 import ProjectList from '../components/ProjectList/ProjectList.jsx';
 
 const ProjectsPage = () => {
   return (
     <>
-      <NavBar />
-      <ShareToggleSection />
+      <SimpleHero />
+      {/* <ShareToggleSection /> */}
       <ProjectList />
     </>
   );

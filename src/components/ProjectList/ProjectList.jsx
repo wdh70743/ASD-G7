@@ -12,7 +12,7 @@ const ProjectList = () => {
     </section>    
           <Project 
             color="#e8544c" 
-            title="Project 1" 
+            title="Areo Branding Project" 
           />
           <Project 
             color="#b787f1" 
