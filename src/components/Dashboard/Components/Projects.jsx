@@ -1,6 +1,6 @@
 import React from 'react'
 import '../Styles/Project.css'; 
-import '../Styles/TaskList.css'; 
+import '../Styles/DashTaskList.css'; 
 
 const Projects = ({color, title, subtitle}) => {
   return (

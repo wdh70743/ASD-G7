@@ -1,6 +1,6 @@
 import React from 'react'
 import './Styles/DashboardPage.css';
-import Hero from '../components/Dashboard/Components/Hero';
+import Hero from '../components/Dashboard/Components/SimpleHero';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
@@ -24,7 +24,7 @@ const CalendarPage = () => {
         <div className="dashboard-page">
             <Hero />
             <div style={{ padding: 20}}>
-                <div style={{ height: 500 }}>
+                <div style={{ height: 700 }}>
                     <Calendar
                         localizer={localizer}
                         events={events}

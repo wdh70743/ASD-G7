@@ -4,6 +4,8 @@ import RegisterPage from './pages/RegisterPage';
 import CalendarPage from './pages/CalendarPage';
 import ArchivePage from './pages/ArchivePage';
 import ProjectsPage from './pages/ProjectsPage';
+import TasksPage from './pages/TasksPage';
+
 
 const routes = [
   {
@@ -29,7 +31,11 @@ const routes = [
   {
     path: '/Projects',
     element : <ProjectsPage />
-  }
+  },
+  {
+    path: '/Tasks',
+    element : <TasksPage />
+  },
 ];
 
 export default routes;
