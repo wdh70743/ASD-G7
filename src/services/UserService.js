@@ -1,7 +1,7 @@
 import axios from "axios";
 
 class UserService {
-    BASE_URL = `/user/`;
+    BASE_URL = `/users/`;
 
     register(user){
         return axios.post(this.BASE_URL + 'create/', user)
