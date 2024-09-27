@@ -20,7 +20,23 @@
 .alter-task{
     display: flex;
     justify-content: space-between;
-    gap: 10px;
+    gap: 10px; 
 }
+
+.detail-button{
+    border: none; 
+    cursor: pointer; 
+}
+
+.edit-button{
+    border: none; 
+    cursor: pointer; 
+}
+
+.delete-button{
+    border: none; 
+    cursor: pointer; 
+}
+
 
 
