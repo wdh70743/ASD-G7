@@ -14,10 +14,10 @@ const Task = ({ title }) => {
       <input checked={taskComplete} onChange={checkHandler} type="checkbox" name="" id=""/>
       {title}
       <div className="alter-task">      
-        <div>Edit</div>
-        <div>Delete</div>
+        <button className='detail-button'>Details</button>
+        <button className='edit-button'>Edit</button>
+        <button className='delete-button'>Delete</button>
       </div>
-
     </div>
   );
 };

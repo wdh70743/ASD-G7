@@ -1,59 +1,115 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import '../Styles/TaskList.css'
+import '../Styles/TaskList.css';
 import Task from './Task';
 
 const TaskList = () => {
   const navigate = useNavigate();
-
   const handleBack = () => {
-    navigate('/Projects'); // Change to your actual projects route
+    navigate('/Projects'); 
   };
 
   const [taskForm, showTaskForm] = useState(false);
+  const [taskName, setTaskName] = useState('');
+  const [taskDescription, setTaskDescription] = useState('');
+  const [taskPriority, setTaskPriority] = useState('Medium');
+  const [newTaskButtonColor, setNewTaskButtonColor] = useState('#007BFF');
 
-    
   const toggleForm = () => {
-    showTaskForm(!taskForm)
-  }
+    const newColor = !taskForm ? 'red' : '#007BFF';
+    setNewTaskButtonColor(newColor);
+    showTaskForm(!taskForm);
+    if (taskForm) {
+      resetForm();
+    }
+  };
+
+  const resetForm = () => {
+    setTaskName('');
+    setTaskDescription('');
+    setTaskPriority('Medium');
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log('Task Created:', { taskName, taskDescription, taskPriority });
+    resetForm();
+    showTaskForm(false); // Retract the form
+    setNewTaskButtonColor('#007BFF'); // Reset button color
+  };
 
   return (
     <div className="main-container">
       <div className="task-list-header">
-          <button className="back-button" onClick={handleBack}>Back</button>
-          <div className="projectTitleDescription">
-            <h2 >Project Name</h2>
-            <p>This project will be based  on xxxxxxxj djnejejnqewekqfwefon xxxxxxxj</p>
-          </div>
-          <button onClick={toggleForm} className="new-task-button">{taskForm?"Cancel Task" : "New Task"}</button>
+        <button className="back-button" onClick={handleBack}>Back</button>
+        <div className="projectTitleDescription">
+          <h2>Project Name</h2>
+          <p>This project will be based on xxxxxxxj djnejejnqewekqfwefon xxxxxxxj</p>
+        </div>
+        <button 
+          onClick={toggleForm} 
+          className="new-task-button" 
+          style={{ backgroundColor: newTaskButtonColor }}
+        >
+          {taskForm ? "Cancel Task" : "New Task"}
+        </button>
       </div>
-        <div className="taskList">
+      <div className="task-form-list">
         {taskForm &&           
-          <div>
-            Noza cant code
-          </div> 
+          <form className="new-task-form" onSubmit={handleSubmit}>
+            <div className="form-group">
+              <label htmlFor="taskName">Task Name</label>
+              <input
+                id="taskName"
+                type="text"
+                placeholder="Enter task name"
+                value={taskName}
+                onChange={(e) => setTaskName(e.target.value)}
+                required
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor="taskDescription">Task Description</label>
+              <input
+                id="taskDescription"
+                type="text"
+                placeholder="Enter task description"
+                value={taskDescription}
+                onChange={(e) => setTaskDescription(e.target.value)}
+                required
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor="taskPriority">Priority</label>
+              <select
+                id="taskPriority"
+                value={taskPriority}
+                onChange={(e) => setTaskPriority(e.target.value)}
+                className="priority-dropdown"
+              >
+                <option value="High">High</option>
+                <option value="Medium">Medium</option>
+                <option value="Low">Low</option>
+              </select>
+            </div>
+            <div className="submit-button-container">
+              <button type="submit" className="submit-button">Add Task</button>
+            </div>
+          </form>
         }
-          <Task
-            title="Areo Branding Project" 
-          />
-          <Task
-            title="Areo Branding Project" 
-          />
-          <Task
-            title="Areo Branding Project" 
-          />
-          <Task
-            title="Areo Branding Project" 
-          />
-          <Task
-            title="Areo Branding Project" 
-          />
-          <Task
-            title="Areo Branding Project" 
-          />
       </div>
-  </div>
+      <div>
+        <Task title="Task 1" />
+        <Task title="Task 2" />
+        <Task title="Task 3" />
+        <Task title="Task 4" />
+        <Task title="Task 5" />
+        <Task title="Task 6" />
+      </div>
+    </div>
   );
 };
 
 export default TaskList;
+
+
