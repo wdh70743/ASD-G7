@@ -32,8 +32,14 @@ stages:
 
     # - script: |
     #     npm install
-    #     npm run test
+    #     npm run test -- --reporters junit --reporter-options mochaFile=test-results.xml
     #   displayName: 'Install Dependencies and Run Tests'
+    # - task: PublishTestResults@2
+    #   inputs:
+    #     testResultsFiles: '**/test-results.xml'
+    #     testResultsFormat: 'JUnit'
+    #     failTaskOnFailedTests: true
+    #   displayName: 'Publish Test Results'
 
   - job: Build
     displayName: Build Application
