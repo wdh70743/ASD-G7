@@ -13,6 +13,8 @@ const TaskList = () => {
   const [taskName, setTaskName] = useState('');
   const [taskDescription, setTaskDescription] = useState('');
   const [taskPriority, setTaskPriority] = useState('Medium');
+  const [taskStartDate, setTaskStartDate] = useState('');
+  const [taskEndDate, setTaskEndDate] = useState('');
   const [newTaskButtonColor, setNewTaskButtonColor] = useState('#007BFF');
 
   const toggleForm = () => {
@@ -28,14 +30,32 @@ const TaskList = () => {
     setTaskName('');
     setTaskDescription('');
     setTaskPriority('Medium');
+    setTaskStartDate('');
+    setTaskEndDate('');
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('Task Created:', { taskName, taskDescription, taskPriority });
+    console.log('Task Created:', { 
+      taskName, 
+      taskDescription, 
+      taskPriority, 
+      taskStartDate, 
+      taskEndDate 
+    });
     resetForm();
-    showTaskForm(false); // Retract the form
-    setNewTaskButtonColor('#007BFF'); // Reset button color
+    showTaskForm(false);
+    setNewTaskButtonColor('#007BFF');
+  };
+
+  // Function to handle editing a task
+  const handleEditTask = ({ title, description, startDate, endDate, priority }) => {
+    setTaskName(title);
+    setTaskDescription(description);
+    setTaskStartDate(startDate); 
+    setTaskEndDate(endDate);
+    setTaskPriority(priority);
+    showTaskForm(true); 
   };
 
   return (
@@ -80,6 +100,28 @@ const TaskList = () => {
               />
             </div>
             <div className="form-group">
+              <label htmlFor="taskStartDate">Start Date</label>
+              <input
+                id="taskStartDate"
+                type="date"
+                value={taskStartDate}
+                onChange={(e) => setTaskStartDate(e.target.value)}
+                required
+                className="set-task-date"
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor="taskEndDate">End Date</label>
+              <input
+                id="taskEndDate"
+                type="date"
+                value={taskEndDate}
+                onChange={(e) => setTaskEndDate(e.target.value)}
+                required
+                className="set-task-date"
+              />
+            </div>
+            <div className="form-group">
               <label htmlFor="taskPriority">Priority</label>
               <select
                 id="taskPriority"
@@ -99,17 +141,20 @@ const TaskList = () => {
         }
       </div>
       <div>
-        <Task title="Task 1" />
-        <Task title="Task 2" />
-        <Task title="Task 3" />
-        <Task title="Task 4" />
-        <Task title="Task 5" />
-        <Task title="Task 6" />
+        <Task 
+          title="Task 1" 
+          description="This is a description for Task 1." 
+          startDate="2024-09-01" 
+          endDate="2024-09-10" 
+          priority="High" 
+          onEdit={handleEditTask} // Pass the edit handler
+        />
       </div>
     </div>
   );
 };
 
 export default TaskList;
+
 
 

@@ -26,16 +26,19 @@
 .detail-button{
     border: none; 
     cursor: pointer; 
+    background-color: transparent;
 }
 
 .edit-button{
     border: none; 
     cursor: pointer; 
+    background-color: transparent;
 }
 
 .delete-button{
     border: none; 
     cursor: pointer; 
+    background-color: transparent;
 }
 
 
