@@ -11,7 +11,7 @@ const DashTaskList = () => {
             color="#e8544c" 
             title="Areo Branding Project" 
             subtitle="Logo, Brand Identity, Brand Strategy" 
-          />
+          /> 
           <DashTask 
             color="#b787f1" 
             title="Website Redesign" 

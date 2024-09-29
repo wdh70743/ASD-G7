@@ -2,7 +2,9 @@ import React from 'react';
 import '../Styles/Hero.css'; 
 import NavBar from './NavBar';
 
-const Hero = ({ title = "You've got 5 tasks today", subtitle = "Hey John!" }) => {
+const Hero = ({ title = "You've got 5 tasks today", userName }) => {
+  const subtitle = `Hey ${userName || 'User'}!`; // Default to 'User' if no name is provided
+
   return (
     <div className="MainHero-section">
       <NavBar />
@@ -21,3 +23,4 @@ const Hero = ({ title = "You've got 5 tasks today", subtitle = "Hey John!" }) =>
 };
 
 export default Hero;
+//in dashbaord page whwre u type in the title, replace number wirh variable counting the number of tasks that are due on todays date.
