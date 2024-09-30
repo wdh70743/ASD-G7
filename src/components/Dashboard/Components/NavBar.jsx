@@ -1,53 +1,21 @@
 import React from 'react';
-import { Link, NavLink } from 'react-router-dom';
-import { FaBell, FaUserCircle } from 'react-icons/fa'; // Importing icons
-import '../Styles/NavBar.css'; // Import the CSS file
+import { Link } from 'react-router-dom';
+import NavLinks from './NavLinks';
+import ProfileDropdown from './ProfileDropdown';
+import NotificationBell from './NotificationBell';
+import '../Styles/NavBar.css';
 
 const NavBar = () => {
   return (
     <nav className="nav-bar">
-      <Link className="nav-brand" to="/">Taskbee</Link>
-      <div className="nav-links">
-        <NavLink
-          exact
-          to="/dashboard"
-          className="nav-link"
-          activeClassName="active"
-        >
-          Dashboard
-        </NavLink>
-        <NavLink
-          to="/projects"/* These are placeholders */
-          className="nav-link"
-          activeClassName="active"
-        >
-          Projects
-        </NavLink>
-        <NavLink
-          to="/calendar" /* These are placeholders */
-          className="nav-link"
-          activeClassName="active"
-        >
-          Calendar
-        </NavLink>
-        <NavLink
-          to="/archive" /* These are placeholders */
-          className="nav-link"
-          activeClassName="active"
-        >
-          Archive
-        </NavLink>
-      </div>
+      <Link className="nav-brand" to="/dashboard">Taskbee</Link>
+      <NavLinks />
       <div className="nav-icons">
-        <FaBell className="nav-icon bell-icon" />
-        <FaUserCircle className="nav-icon profile-icon" />
+        <NotificationBell />
+        <ProfileDropdown />
       </div>
     </nav>
   );
 };
 
 export default NavBar;
-
-
-
-

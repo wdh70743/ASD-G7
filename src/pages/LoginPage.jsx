@@ -8,21 +8,14 @@ const LoginPage = () => {
   const { login, loading, error } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
 
   const handleLogin = async () => {
     const result = await login(email, password);
     if (result && result.status === 200) {
       console.log('Login successful:', result);
       navigate('/dashboard');
-    } else {
-      setErrorMessage(error);
     }
   };
-
-  const handleRegister = async () => {
-    navigate('/register');
-  }
 
   const inputs = [
     {
@@ -43,13 +36,13 @@ const LoginPage = () => {
 
   const buttons = [
     { name: 'Login', onClick: handleLogin },
-    { name: 'Register', onClick: handleRegister},
+    { name: 'Register', onClick: () => navigate('/register') },
   ];
 
   return (
     <div className="loginPageBackground">
       <LoginBox title="Login" inputs={inputs} buttons={buttons} />
-      {errorMessage && <p className="error-message">{errorMessage}</p>}
+      {error && <p className="error-message">{error}</p>}
       {loading && <p>Loading...</p>}
     </div>
   );

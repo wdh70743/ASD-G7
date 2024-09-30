@@ -73,10 +73,62 @@
   font-size: 20px; /* Smaller size */
 }
 
-/* Profile icon styling */
-.profile-icon {
-  font-size: 45px; /* Larger size */
+/* Container for the profile dropdown */
+.profile-dropdown-container {
+  position: relative;
+  display: inline-block;
 }
 
-  
-  
+/* Style for the profile icon */
+.profile-icon {
+  font-size: 2em;
+  cursor: pointer;
+}
+
+.profile-icon:hover {
+  color: #007bff; /* Change icon color on hover */
+}
+
+/* Custom dropdown menu */
+.custom-dropdown-menu {
+  position: absolute;
+  top: 35px; /* Position the dropdown below the icon */
+  right: 0; /* Align to the right */
+  background-color: #ffffff; /* White background */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Shadow effect */
+  border-radius: 8px; /* Rounded corners */
+  z-index: 1000; /* Make sure it's above other elements */
+  width: 150px; /* Set a fixed width */
+}
+
+/* Dropdown item styling */
+.dropdown-item {
+  display: block;
+  padding: 12px 16px; /* Spacing inside the menu items */
+  font-size: 14px;
+  text-align: left; /* Align text to the left */
+  border: none;
+  background: none;
+  width: 100%;
+  cursor: pointer;
+  color: #333; /* Text color */
+  border-radius: 8px;
+  transition: background-color 0.2s, color 0.2s; /* Smooth hover effect */
+}
+
+.dropdown-item:hover {
+  background-color: #f0f0f0; /* Light gray background on hover */
+  color: #007bff; /* Change text color on hover */
+  border-radius: 8px;
+}
+
+/* Dropdown arrow styling (optional) */
+.custom-dropdown-menu::before {
+  content: '';
+  position: absolute;
+  top: -8px; /* Position above the menu */
+  right: 10px; /* Align with the menu */
+  border-width: 0 8px 8px 8px;
+  border-style: solid;
+  border-color: transparent transparent #ffffff transparent; /* Arrow pointing down */
+}
