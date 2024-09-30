@@ -20,7 +20,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "jest --ci --reporters=default --reporters=jest-junit",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -43,16 +43,12 @@
   },
   "proxy": "http://127.0.0.1:8000",
   "devDependencies": {
+    "@babel/core": "^7.25.2",
+    "@babel/preset-env": "^7.25.4",
+    "@babel/preset-react": "^7.24.7",
+    "babel-jest": "^29.7.0",
+    "identity-obj-proxy": "^3.0.0",
     "jest": "^27.5.1",
     "jest-junit": "^16.0.0"
-  },
-  "jest": {
-    "reporters": [
-      "default",
-      ["jest-junit", {
-        "outputDirectory": "./test-results",
-        "outputName": "test-results.xml"
-      }]
-    ]
   }
 }
