@@ -30,20 +30,21 @@ stages:
         versionSpec: '18.x'
       displayName: 'Install Node.js'
 
-    # - script: |
-    #     npm install
-    #     npm run test -- --reporters junit --reporter-options mochaFile=test-results.xml
-    #   displayName: 'Install Dependencies and Run Tests'
-    # - task: PublishTestResults@2
-    #   inputs:
-    #     testResultsFiles: '**/test-results.xml'
-    #     testResultsFormat: 'JUnit'
-    #     failTaskOnFailedTests: true
-    #   displayName: 'Publish Test Results'
+    - script: |
+        npm install
+        npm run test -- --reporters junit --reporter-options mochaFile=test-results.xml
+      displayName: 'Install Dependencies and Run Tests'
+
+    - task: PublishTestResults@2
+      inputs:
+        testResultsFiles: '**/test-results.xml'
+        testResultsFormat: 'JUnit'
+        failTaskOnFailedTests: true
+      displayName: 'Publish Test Results'
 
   - job: Build
     displayName: Build Application
-    dependsOn: Test  # Test should be successful
+    dependsOn: Test
     steps:
     - script: |
         npm install
