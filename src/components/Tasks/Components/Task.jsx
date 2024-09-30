@@ -8,11 +8,20 @@ const Task = ({ title, description, startDate, endDate, priority, status, onEdit
     setDetailsVisible(prevState => !prevState);
   };
 
+  // Utility function to format date
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+    const year = String(date.getFullYear()).slice(-2); // Get last two digits of year
+    return `${day}/${month}/${year}`;
+  };
+
   return (
     <div className="task-box" style={{ backgroundColor: status ? 'rgba(64, 217, 43, 0.5)' : 'rgba(240, 240, 240, 0.8)' }}>
       <input 
         checked={status} 
-        onChange={onToggleStatus} // Call the toggle function
+        onChange={onToggleStatus} 
         type="checkbox" 
       />
       <div>
@@ -22,8 +31,8 @@ const Task = ({ title, description, startDate, endDate, priority, status, onEdit
         {detailsVisible && (
           <div className="task-details">
             <p><strong>Description:</strong> {description}</p>
-            <p><strong>Start Date:</strong> {startDate}</p>
-            <p><strong>Due Date:</strong> {endDate}</p>
+            <p><strong>Start Date:</strong> {formatDate(startDate)}</p>
+            <p><strong>Due Date:</strong> {formatDate(endDate)}</p>
             <p><strong>Priority:</strong> {priority}</p>
           </div>
         )}
@@ -42,5 +51,7 @@ const Task = ({ title, description, startDate, endDate, priority, status, onEdit
 };
 
 export default Task;
+
+
 
 
