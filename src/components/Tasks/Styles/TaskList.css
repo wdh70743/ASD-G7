@@ -59,6 +59,12 @@
     border: 1px solid #ccc; 
     padding: 5px; 
   }
+
+  .set-task-date{
+    width: 150px; /* Set the width for the dropdown */
+    border: 1px solid #ccc; 
+    padding: 5px; 
+  }
   
   .submit-button-container {
     display: flex;

@@ -33,7 +33,7 @@ const routes = [
     element : <ProjectsPage />
   },
   {
-    path: '/Tasks',
+    path: '/Projects/:id',
     element : <TasksPage />
   },
 ];

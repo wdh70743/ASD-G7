@@ -10,6 +10,7 @@ class UserService {
     login(email, password){
         return axios.post(this.BASE_URL + 'login/', { email, password })
     }
+
 }
 
 const userService = new UserService()
