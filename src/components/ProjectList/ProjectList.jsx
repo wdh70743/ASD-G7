@@ -6,7 +6,7 @@ const ProjectList = () => {
 
   const [projects, setProjects] = useState([
     {
-      id: 432,
+      id: 1,
       projectName: "Project 1",
       description: "This is a description for Project 1.",
       startDate: "2024-09-01",

@@ -1,14 +1,12 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import '../Styles/TaskList.css';
 import Task from './Task';
 
-const TaskList = () => {
+const TaskList = ({ userId, tasks, deleteTask }) => {
   const navigate = useNavigate();
-  const handleBack = () => {
-    navigate('/Projects'); 
-  };
 
+  const [taskList, setTaskList] = useState(tasks || []);
   const [taskForm, showTaskForm] = useState(false);
   const [taskName, setTaskName] = useState('');
   const [taskDescription, setTaskDescription] = useState('');
@@ -16,19 +14,11 @@ const TaskList = () => {
   const [taskStartDate, setTaskStartDate] = useState('');
   const [taskEndDate, setTaskEndDate] = useState('');
   const [newTaskButtonColor, setNewTaskButtonColor] = useState('#007BFF');
-  const [tasks, setTasks] = useState([
-    {
-      id: 343,
-      title: "Task 1",
-      description: "This is a description for Task 1.",
-      startDate: "2024-09-01",
-      endDate: "2024-09-10",
-      priority: "High",
-      status: false, 
-    },
-  ]);
-
   const [editingIndex, setEditingIndex] = useState(null);
+
+  const handleBack = () => {
+    navigate('/Projects'); 
+  };
 
   const toggleForm = () => {
     const newColor = !taskForm ? 'red' : '#007BFF';
@@ -50,24 +40,24 @@ const TaskList = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    const updatedTask = { 
+    const newTask = { 
+      id: Date.now(), // Unique ID based on timestamp
       title: taskName, 
       description: taskDescription, 
-      startDate: taskStartDate, 
-      endDate: taskEndDate, 
+      start_date: taskStartDate,
+      due_date: taskEndDate,
       priority: taskPriority,
       status: false, 
     };
 
     if (editingIndex !== null) {
-      setTasks(prevTasks => {
-        const newTasks = [...prevTasks];
-        newTasks[editingIndex] = updatedTask; // Update existing task
-        return newTasks;
+      setTaskList(prevTasks => {
+        const updatedTasks = [...prevTasks];
+        updatedTasks[editingIndex] = newTask; // Update the task
+        return updatedTasks;
       });
     } else {
-      setTasks(prevTasks => [...prevTasks, updatedTask]); // Add new task
+      setTaskList(prevTasks => [...prevTasks, newTask]); // Add new task
     }
 
     resetForm();
@@ -75,29 +65,33 @@ const TaskList = () => {
     setNewTaskButtonColor('#007BFF');
   };
 
-  const handleEditTask = (id, task) => {
+  const handleEditTask = (index, task) => {
     setTaskName(task.title);
     setTaskDescription(task.description);
-    setTaskStartDate(task.startDate);
-    setTaskEndDate(task.endDate);
+    setTaskStartDate(task.start_date);
+    setTaskEndDate(task.due_date);
     setTaskPriority(task.priority);
     showTaskForm(true);
-    setEditingIndex(id);
+    setEditingIndex(index);
+    setNewTaskButtonColor('red');
   };
 
-  const handleDeleteTask = (id) => {
-    setTasks(prevTasks => prevTasks.filter((_, i) => i !== id)); // Remove task at the specified index
-  };
+  const handleDeleteTask = (taskId) => {
+    deleteTask(taskId); // Call the hook's deleteTask with the task ID
+};
 
-  function toggleTaskStatus(id) {
-    setTasks(tasks.map(task => {
-      if (task.id === id) {
+  const toggleTaskStatus = (index) => {
+    setTaskList(prevTasks => prevTasks.map((task, i) => {
+      if (i === index) {
         return { ...task, status: !task.status };
-      } else {
-        return task;
       }
+      return task;
     }));
-  }
+  };
+
+  useEffect(() => {
+    console.log('Current tasks:', taskList);
+  }, [taskList]);
 
   return (
     <div className="main-container">
@@ -184,20 +178,24 @@ const TaskList = () => {
         }
       </div>
       <div>
-        {tasks.map((task) => (
-          <Task 
-            key={task.id}
-            title={task.title}
-            description={task.description}
-            startDate={task.startDate}
-            endDate={task.endDate}
-            priority={task.priority}
-            status={task.status} // Pass the status
-            onEdit={() => handleEditTask(task.id, task)}
-            onDelete={() => handleDeleteTask(task.id)}
-            onToggleStatus={() => toggleTaskStatus(task.id)} // Pass the toggle handler
-          />
-        ))}
+        {taskList.length === 0 ? (
+          <p>No tasks available.</p>
+        ) : (
+          taskList.map((task, index) => (
+            <Task 
+              key={task.id}
+              title={task.title}
+              description={task.description}
+              startDate={task.start_date}
+              endDate={task.due_date}
+              priority={task.priority}
+              status={task.status}
+              onEdit={() => handleEditTask(task.id)}
+              onDelete={() => handleDeleteTask(task.id)}
+              onToggleStatus={() => toggleTaskStatus(task.id)}
+            />
+          ))
+        )}
       </div>
     </div>
   );
