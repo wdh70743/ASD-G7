@@ -81,7 +81,42 @@ const useTasks = () => {
     }
   }, []);
 
-  return { fetchTasksByUser, fetchTasksByProject, deleteTask, tasks, todayTasks, loading, error };
+  const createTask = useCallback(async (newTask) => {
+    console.log('Creating task:', newTask); // Log to see the payload
+    setLoading(true);
+    setError(null);
+    try {
+        const response = await taskService.createTask(newTask);
+        console.log('Create response:', response.data);
+        setTasks(prevTasks => [...prevTasks, response.data]); // Update state
+    } catch (err) {
+        console.error('Create task error:', err.response?.data || err); // Log the full error response
+        setError(err.response?.data?.message || 'Failed to create task');
+    } finally {
+        setLoading(false);
+    }
+}, []);
+
+const updateTask = useCallback(async (taskId, updatedTask) => {
+  console.log('Updating task:', taskId); // Log to see the payload
+  setLoading(true);
+  setError(null);
+  try {
+      const response = await taskService.updateTask(taskId, updatedTask); // Call the updated service method
+      console.log('Update response:', response.data);
+      setTasks(prevTasks => 
+          prevTasks.map(task => (task.id === taskId ? response.data : task)) // Update the task in state
+      );
+  } catch (err) {
+      console.error('Update task error:', err.response?.data || err);
+      setError(err.response?.data?.message || 'Failed to update task');
+  } finally {
+      setLoading(false);
+  }
+}, []);
+
+
+  return { fetchTasksByUser, fetchTasksByProject, deleteTask, createTask, updateTask, tasks, todayTasks, loading, error };
 };
 
 export default useTasks;

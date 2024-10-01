@@ -8,22 +8,22 @@
     background-color: #2727ce;
     padding-top: 6%;
     padding-bottom: 3%;
-    text-align: center; /* Center text horizontally */
-    border-radius: 30px; /* Curved edges */
+    text-align: center; 
+    border-radius: 30px; 
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .SimpleHero-section {
     background-color: #2727ce;
     padding-top: 4.2%;
-    text-align: center; /* Center text horizontally */
-    border-radius: 30px; /* Curved edges */
+    text-align: center; 
+    border-radius: 30px; 
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .hero-text {
     font-family: "Inter", sans-serif;
-    display: inline-block; /* Ensures that text is treated as a block for centering */
+    display: inline-block; 
 }
 
 .hero-title {

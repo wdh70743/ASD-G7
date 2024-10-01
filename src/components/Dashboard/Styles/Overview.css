@@ -4,14 +4,14 @@
 
 .OverviewContentContainer {
     display: grid;
-    grid-template-columns: repeat(2, 1fr); /* Two equal columns */
-    grid-template-rows: auto 1fr; /* Two rows: first auto height, second takes up remaining space */
+    grid-template-columns: repeat(2, 1fr); 
+    grid-template-rows: auto 1fr; 
     grid-template-areas:
         "item1 item2"
         "item3 item3";
-    gap: 20px; /* Space between grid items */
-    max-height: 600px; /* Adjust height to fit your layout */
-    overflow: hidden; /* Prevent scrolling on the grid container itself */
+    gap: 20px; 
+    max-height: 600px; 
+    overflow: hidden; 
     padding-top: 2.5%;
     padding-right: 3%;
 }
@@ -25,78 +25,78 @@
 
 .OverviewItem {
     border-radius: 8px;
-    color: #000; /* Default text color, adjust if needed */
+    color: #000; 
 }
 
 .item1 {
-    grid-area: item1; /* Assign grid area */
+    grid-area: item1; 
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     background-color: #e0ec5c;
-    padding: 20px; /* Increased padding for better spacing */
-    height: 200px; /* Increased height to accommodate the larger chart */
-    display: flex; /* Use flexbox for centering content */
-    align-items: center; /* Center content vertically */
-    justify-content: center; /* Center content horizontally */
-    position: relative; /* Ensure proper positioning */
+    padding: 20px; 
+    height: 200px; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    position: relative; 
     font-family: "Inter", sans-serif;
 }
 
 .item2 {
-    grid-area: item2; /* Assign grid area */
+    grid-area: item2; 
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     background-color: #ffff;
     font-family: "Inter", sans-serif;
-    align-self: start; /* Align the start of the grid area */
-    margin-top: 20px; /* Adjust margin to move it down slightly */
+    align-self: start; 
+    margin-top: 20px; 
     padding: 20px;
-    height: 180px; /* Set a fixed height to make the box taller */
-    display: flex; /* Use flexbox to control text alignment */
-    align-items: flex-start; /* Align text to the top */
-    justify-content: flex-start; /* Align text to the left */
+    height: 180px; 
+    display: flex; 
+    align-items: flex-start;
+    justify-content: flex-start; 
 }
 
 .item3 {
-    grid-area: item3; /* Assign grid area */
+    grid-area: item3;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     background-color: #b787f1;
     padding: 20px;
-    color: #000; /* Text color for readability on dark background */
+    color: #000; 
     font-family: "Inter", sans-serif;
-    overflow-y: auto;  /* Enable vertical scrolling if content overflows */
-    overflow-x: hidden; /* Prevent horizontal scrolling */
-    min-height: 280px; /* Set a minimum height for the item */
+    overflow-y: auto;  
+    overflow-x: hidden; 
+    min-height: 280px; 
 }
 
 .Dailywork-progress-text {
-    font-weight: 550; /* Make the text bold */
-    font-size: 14px; /* Adjust font size if needed */
-    margin: 0; /* Remove default margins */
-    text-align: center; /* Center the text */
-    position: absolute; /* Absolute positioning for better control */
-    top: 10px; /* Adjust as needed */
-    width: 100%; /* Ensure text spans the width of the container */
+    font-weight: 550; 
+    font-size: 14px; 
+    margin: 0; 
+    text-align: center; 
+    position: absolute; 
+    top: 10px; 
+    width: 100%; 
     left: 0;
     font-family: "Inter", sans-serif;
 }
 
 .Notes-title {
-    font-weight: 550; /* Make the text bold */
-    font-size: 14px; /* Adjust font size if needed */
-    margin: 0; /* Remove default margins */
-    text-align: left; /* Center the text */
-    top: 10px; /* Adjust as needed */
-    width: 100%; /* Ensure text spans the width of the container */
+    font-weight: 550; 
+    font-size: 14px; 
+    margin: 0; 
+    text-align: left; 
+    top: 10px; 
+    width: 100%;
     left: 0;
     font-family: "Inter", sans-serif;
 }
 
 .CompletedProjectsTitle {
-    font-weight: 450; /* Make the text bold */
-    font-size: 18px; /* Adjust font size if needed */
-    margin: 0; /* Remove default margins */
-    text-align: left; /* Center the text */
-    top: 10px; /* Adjust as needed */
-    width: 100%; /* Ensure text spans the width of the container */
+    font-weight: 450; 
+    font-size: 18px;
+    margin: 0; 
+    text-align: left; 
+    top: 10px; 
+    width: 100%; 
     left: 0;
     font-family: "Inter", sans-serif;
 }

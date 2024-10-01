@@ -3,7 +3,7 @@ import Hero from '../components/Dashboard/Components/Hero';
 import DashTaskList from '../components/Dashboard/Components/DashTaskList';
 import MyProjects from '../components/Dashboard/Components/MyProjects';
 import Overview from '../components/Dashboard/Components/Overview';
-import useTasks from '../hooks/useTasks'; // Import your useTasks hook
+import useTasks from '../hooks/useTasks'; 
 import './Styles/DashboardPage.css';
 
 const DashboardPage = () => {
@@ -33,7 +33,6 @@ const DashboardPage = () => {
 
     return (
         <div className="dashboard-page">
-            {/* Pass the count of tasks due today to the Hero component */}
             <Hero userName={userName} title={`You've got ${todayTasks.length} tasks today`} />
             <div className="dashboard-content">
                 <div className="TaskListItem">

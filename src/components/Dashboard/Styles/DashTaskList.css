@@ -3,14 +3,14 @@
 }
 
 .DueTodayContainer {
-    max-height: 570px; /* Set a fixed height; adjust as needed */
-    overflow-y: auto;  /* Enable vertical scrolling if content overflows */
-    overflow-x: hidden; /* Prevent horizontal scrolling */
+    max-height: 570px; 
+    overflow-y: auto;  
+    overflow-x: hidden; 
 }
 
 .TaskListTitle {
     font-family: "Inter";
     font-size: 30px; 
-    margin-bottom: 5px; /* Space between title and tasks */
+    margin-bottom: 5px; 
     font-weight: normal;
 }

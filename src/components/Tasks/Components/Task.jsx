@@ -8,7 +8,7 @@ const Task = ({ title, description, startDate, endDate, priority, status, onEdit
     setDetailsVisible(prevState => !prevState);
   };
 
-  // Utility function to format date
+  // Utility function to format date to dd/mm/yy
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     const day = String(date.getDate()).padStart(2, '0');
@@ -51,6 +51,7 @@ const Task = ({ title, description, startDate, endDate, priority, status, onEdit
 };
 
 export default Task;
+
 
 
 

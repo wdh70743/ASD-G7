@@ -4,23 +4,23 @@ body {
 }
 
 .rectangle-box {
-    height: 130px; /* Set a fixed height to make the box taller */
-    padding: 10px; /* Keep padding to align text closer to edges */
+    height: 130px;
+    padding: 10px; 
     padding-left: 3%;
     padding-top: 3%;
-    border-radius: 15px; /* Rounded edges */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Shadow for better visibility */
-    margin: 9px auto; /* Center the box horizontally */
-    position: relative; /* Position context for any absolutely positioned children */
-    box-sizing: border-box; /* Include padding in the width and height calculation */
+    border-radius: 15px; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+    margin: 9px auto;
+    position: relative; 
+    box-sizing: border-box; 
 }
 
 .title {
     font-size: 25px;
     font-weight: 500;
-    color: #000000; /* Changed to black for visibility on white background */
+    color: #000000; 
     font-family: "Inter";
-    margin: 0; /* No margin to align text at the top */
+    margin: 0; 
     padding-bottom: 2%;
  
 }
@@ -28,9 +28,9 @@ body {
 .subtitle {
     font-size: 15px;
     font-weight: normal;
-    color: #000000; /* Changed to black for visibility on white background */
+    color: #000000; 
     font-family: "Inter";
-    margin: 0; /* No margin to align text at the top */
-    padding: 0; /* No padding to ensure text stays at the top */
+    margin: 0; 
+    padding: 0; 
 }
 
