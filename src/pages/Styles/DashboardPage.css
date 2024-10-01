@@ -4,20 +4,20 @@
   }
   
 .dashboard-content {
-    display: grid; /* Use grid layout */
-    grid-template-columns: repeat(3, 1fr); /* Create three equal columns */
-    width: 100%; /* Ensure the grid container takes up full width */
-    max-width: none; /* Allow the container to span full width */
+    display: grid; 
+    grid-template-columns: repeat(3, 1fr); 
+    width: 100%; 
+    max-width: none; 
   }
   
 .TaskListItem {
-    padding: 10px; /* Padding inside each component */
+    padding: 10px; 
     padding-left: 6%;
     padding-right: 0%;
   }
 
 .OverviewItem {
-    padding: 10px; /* Padding inside each component */
+    padding: 10px; 
 
   }
 

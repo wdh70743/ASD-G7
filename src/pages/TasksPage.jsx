@@ -7,7 +7,7 @@ import './Styles/TasksPage.css';
 
 const TasksPage = () => {
   const userId = localStorage.getItem('userId');
-  const { fetchTasksByProject, deleteTask, tasks, loading } = useTasks();
+  const { fetchTasksByProject, deleteTask, createTask, updateTask, tasks, loading } = useTasks();
   const { id } = useParams(); // project_ID
 
   const stableFetchTasks = useCallback(() => {
@@ -27,7 +27,7 @@ const TasksPage = () => {
       <SimpleHero />
       {userId ? (
         <>
-          <TaskList userId={userId} tasks={tasks} deleteTask={deleteTask} />
+          <TaskList userId={userId} tasks={tasks} projectId={id} deleteTask={deleteTask} createTask={createTask} updateTask={updateTask}/>
           {tasks.length === 0}
         </>
       ) : (

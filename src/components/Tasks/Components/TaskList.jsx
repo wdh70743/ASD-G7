@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import '../Styles/TaskList.css';
 import Task from './Task';
 
-const TaskList = ({ userId, tasks, deleteTask }) => {
+const TaskList = ({ userId, tasks, projectId, deleteTask, createTask, updateTask }) => {
   const navigate = useNavigate();
-
   const [taskList, setTaskList] = useState(tasks || []);
-  const [taskForm, showTaskForm] = useState(false);
+  const [taskForm, setTaskForm] = useState(false);
   const [taskName, setTaskName] = useState('');
   const [taskDescription, setTaskDescription] = useState('');
   const [taskPriority, setTaskPriority] = useState('Medium');
@@ -16,17 +15,13 @@ const TaskList = ({ userId, tasks, deleteTask }) => {
   const [newTaskButtonColor, setNewTaskButtonColor] = useState('#007BFF');
   const [editingIndex, setEditingIndex] = useState(null);
 
-  const handleBack = () => {
-    navigate('/Projects'); 
-  };
+  const handleBack = () => navigate('/Projects'); 
 
   const toggleForm = () => {
     const newColor = !taskForm ? 'red' : '#007BFF';
     setNewTaskButtonColor(newColor);
-    showTaskForm(!taskForm);
-    if (taskForm) {
-      resetForm();
-    }
+    setTaskForm(!taskForm);
+    if (taskForm) resetForm();
   };
 
   const resetForm = () => {
@@ -38,55 +33,62 @@ const TaskList = ({ userId, tasks, deleteTask }) => {
     setEditingIndex(null);
   };
 
-  const handleSubmit = (e) => {
+  const formatDateForAPI = (dateString) => {
+    return new Date(dateString).toISOString();
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const newTask = { 
-      id: Date.now(), // Unique ID based on timestamp
       title: taskName, 
       description: taskDescription, 
-      start_date: taskStartDate,
-      due_date: taskEndDate,
+      start_date: formatDateForAPI(taskStartDate),
+      due_date: formatDateForAPI(taskEndDate),
       priority: taskPriority,
-      status: false, 
+      status: false,
+      repeat_interval: null,
+      is_archived: false,
+      archived_at: null,
+      owner: userId,
+      project: projectId,
     };
 
     if (editingIndex !== null) {
-      setTaskList(prevTasks => {
-        const updatedTasks = [...prevTasks];
-        updatedTasks[editingIndex] = newTask; // Update the task
-        return updatedTasks;
-      });
+      const taskId = taskList[editingIndex].id;
+      await updateTask(taskId, newTask);
     } else {
-      setTaskList(prevTasks => [...prevTasks, newTask]); // Add new task
+      await createTask(newTask);
     }
 
     resetForm();
-    showTaskForm(false);
+    setTaskForm(false);
     setNewTaskButtonColor('#007BFF');
   };
 
-  const handleEditTask = (index, task) => {
-    setTaskName(task.title);
-    setTaskDescription(task.description);
-    setTaskStartDate(task.start_date);
-    setTaskEndDate(task.due_date);
-    setTaskPriority(task.priority);
-    showTaskForm(true);
-    setEditingIndex(index);
-    setNewTaskButtonColor('red');
+  const handleEditTask = (taskId) => {
+    const task = taskList.find(t => t.id === taskId);
+    if (task) {
+      setTaskName(task.title);
+      setTaskDescription(task.description);
+      setTaskStartDate(task.start_date.split('T')[0]); // Setting to YYYY-MM-DD for input
+      setTaskEndDate(task.due_date.split('T')[0]); // Setting to YYYY-MM-DD for input
+      setTaskPriority(task.priority);
+      setEditingIndex(taskList.findIndex(t => t.id === taskId));
+      setTaskForm(true);
+      setNewTaskButtonColor('red');
+    } else {
+      console.error('Task not found for ID:', taskId);
+    }
   };
 
-  const handleDeleteTask = (taskId) => {
-    deleteTask(taskId); // Call the hook's deleteTask with the task ID
-};
+  const handleDeleteTask = (taskId) => deleteTask(taskId);
 
-  const toggleTaskStatus = (index) => {
-    setTaskList(prevTasks => prevTasks.map((task, i) => {
-      if (i === index) {
-        return { ...task, status: !task.status };
-      }
-      return task;
-    }));
+  const toggleTaskStatus = (taskId) => {
+    setTaskList(prevTasks => 
+      prevTasks.map(task => 
+        task.id === taskId ? { ...task, status: !task.status } : task
+      )
+    );
   };
 
   useEffect(() => {
@@ -109,8 +111,8 @@ const TaskList = ({ userId, tasks, deleteTask }) => {
           {taskForm ? "Cancel Task" : "New Task"}
         </button>
       </div>
-      <div className="task-form-list">
-        {taskForm &&           
+      {taskForm && (
+        <div className="task-form-list">
           <form className="new-task-form" onSubmit={handleSubmit}>
             <div className="form-group">
               <label htmlFor="taskName">Task Name</label>
@@ -175,13 +177,13 @@ const TaskList = ({ userId, tasks, deleteTask }) => {
               </button>
             </div>
           </form>
-        }
-      </div>
+        </div>
+      )}
       <div>
         {taskList.length === 0 ? (
           <p>No tasks available.</p>
         ) : (
-          taskList.map((task, index) => (
+          taskList.map((task) => (
             <Task 
               key={task.id}
               title={task.title}
@@ -202,4 +204,5 @@ const TaskList = ({ userId, tasks, deleteTask }) => {
 };
 
 export default TaskList;
+
 
