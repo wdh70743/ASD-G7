@@ -6,6 +6,7 @@ const useTasks = () => {
   const [error, setError] = useState(null);
   const [tasks, setTasks] = useState([]);
   const [todayTasks, setTodayTasks] = useState([]);
+  const [archivedTasks, setArchivedTasks] = useState([]);
 
   const fetchTasksByUser = useCallback(async (userId) => {
     setLoading(true);
@@ -34,6 +35,28 @@ const useTasks = () => {
       }
     } catch (err) {
       setError(err.response?.data?.message || 'Failed to fetch tasks');
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  const fetchArchivedTasksByUser = useCallback(async (userId) => {
+    setLoading(true);
+    setError(null);
+    console.log(`Fetching archived tasks for user ID: ${userId}`);
+
+    try {
+      const response = await taskService.getArchivedTasksByUser(userId);
+      console.log('Archived Tasks API Response:', response.data);
+
+      if (response && response.data) {
+        const allArchivedTasks = response.data.tasks || response.data;
+        setArchivedTasks(allArchivedTasks);
+      } else {
+        setArchivedTasks([]);
+      }
+    } catch (err) {
+      setError(err.response?.data?.message || 'Failed to fetch archived tasks');
     } finally {
       setLoading(false);
     }
@@ -116,7 +139,19 @@ const updateTask = useCallback(async (taskId, updatedTask) => {
 }, []);
 
 
-  return { fetchTasksByUser, fetchTasksByProject, deleteTask, createTask, updateTask, tasks, todayTasks, loading, error };
+return { 
+  fetchTasksByUser, 
+  fetchArchivedTasksByUser,
+  fetchTasksByProject, 
+  deleteTask, 
+  createTask, 
+  updateTask, 
+  tasks, 
+  todayTasks, 
+  archivedTasks,
+  loading, 
+  error 
+};
 };
 
 export default useTasks;

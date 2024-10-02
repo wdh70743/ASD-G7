@@ -1,44 +1,58 @@
-import React, { useState } from 'react';
-import Hero from '../components/Dashboard/Components/Hero';
+import React, { useState, useEffect } from 'react';
+import Hero from '../components/Dashboard/Components/SimpleHero';
 import SearchBar from '../components/Archive/Components/SearchBar';
-import ArchiveList from '../components/Archive/Components/ArchiveList';
-import './Styles/ArchivePage.css'; 
+import ArchiveList from '../components/Archive/Components/ArchiveList'; // Use existing ArchiveList
+import useTasks from '../hooks/useTasks';
+import './Styles/ArchivePage.css';
 
 const ArchivePage = () => {
-    const [searchResults, setSearchResults] = useState([]);
+  const { fetchArchivedTasksByUser, archivedTasks, loading, error } = useTasks();
+  const [searchResults, setSearchResults] = useState([]);
 
-    const handleSearch = ({ searchTerm, sortOption }) => {
-        const archivedTasks = [
-            { id: 1, name: 'Archived Project 1', date: '2024-09-01', priority: 'High' },
-            { id: 2, name: 'Archived Project 2', date: '2024-08-15', priority: 'Low' },
-            { id: 3, name: 'Archived Project 3', date: '2024-07-30', priority: 'Medium' }
-        ];
+  const userId = localStorage.getItem('userId');
 
-        let filteredResults = archivedTasks.filter(task =>
-            task.name.toLowerCase().includes(searchTerm.toLowerCase())
-        );
+  useEffect(() => {
+    if (userId) {
+      fetchArchivedTasksByUser(userId);
+    }
+  }, [userId, fetchArchivedTasksByUser]);
 
-        if (sortOption === 'date') {
-            filteredResults.sort((a, b) => new Date(b.date) - new Date(a.date));
-        } else if (sortOption === 'name') {
-            filteredResults.sort((a, b) => a.name.localeCompare(b.name));
-        } else if (sortOption === 'priority') {
-            const priorityOrder = { High: 1, Medium: 2, Low: 3 };
-            filteredResults.sort((a, b) => priorityOrder[a.priority] - priorityOrder[b.priority]);
-        }
+  useEffect(() => {
+    setSearchResults(archivedTasks);
+  }, [archivedTasks]);
 
-        setSearchResults(filteredResults);
-    };
-
-    return (
-        <div className="dashboard-page">
-            <Hero />
-            <div className="archive-layout">
-                <SearchBar onSearch={handleSearch} />
-                <ArchiveList archivedTasks={searchResults} />
-            </div>
-        </div>
+  const handleSearch = ({ searchTerm, sortOption }) => {
+    let filteredResults = archivedTasks.filter(task =>
+      task.title.toLowerCase().includes(searchTerm.toLowerCase())
     );
+
+    if (sortOption === 'date') {
+      filteredResults.sort((a, b) => new Date(b.archived_at) - new Date(a.archived_at));
+    } else if (sortOption === 'name') {
+      filteredResults.sort((a, b) => a.title.localeCompare(b.title));
+    } else if (sortOption === 'priority') {
+      const priorityOrder = { High: 1, Medium: 2, Low: 3 };
+      filteredResults.sort((a, b) => priorityOrder[a.priority] - priorityOrder[b.priority]);
+    }
+
+    setSearchResults(filteredResults);
+  };
+
+  return (
+    <div className="dashboard-page">
+      <Hero title="Archived Projects" />
+      <div className="archive-layout">
+        <SearchBar onSearch={handleSearch} />
+        {loading ? (
+          <p>Loading archived tasks...</p>
+        ) : error ? (
+          <p className="error-message">Error: {error}</p>
+        ) : (
+          <ArchiveList archivedTasks={searchResults} /> // Use existing ArchiveList component
+        )}
+      </div>
+    </div>
+  );
 };
 
 export default ArchivePage;

@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import LoginBox from '../components/Login/Components/loginBox.jsx';
 import useAuth from '../hooks/useAuth';
+import Modal from '../components/Login/Components/Modal.jsx';
 
 const RegisterPage = () => {
   const navigate = useNavigate();
@@ -10,30 +11,60 @@ const RegisterPage = () => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [username, setUsername] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
+  const [isValidationModalOpen, setIsValidationModalOpen] = useState(false);
+  const [isServerErrorModalOpen, setIsServerErrorModalOpen] = useState(false);
+  const [validationMessage, setValidationMessage] = useState('');
+  const [serverErrorMessage, setServerErrorMessage] = useState('');
+
+  useEffect(() => {
+    if (error) {
+      setServerErrorMessage(error);
+      setIsServerErrorModalOpen(true);
+    }
+  }, [error]);
 
   const handleRegister = async () => {
+    setValidationMessage('');
+    setIsValidationModalOpen(false);
+    setIsServerErrorModalOpen(false);
+    setServerErrorMessage('');
+
+    if (!email || !password || !confirmPassword || !username) {
+      setValidationMessage('All fields are required');
+      setIsValidationModalOpen(true);
+      return;
+    }
+
     if (password !== confirmPassword) {
-        setErrorMessage('Passwords do not match');
-        return;
+      setValidationMessage('Passwords do not match');
+      setIsValidationModalOpen(true);
+      return;
     }
 
     const user = {
       email,
       password,
-      username
+      username,
     };
 
     const result = await register(user);
 
     if (result && result.status === 201) {
-        console.log('Registration successful:', result);
-        navigate('/');
+      navigate('/');
     } else {
-        setErrorMessage(error);
+      if (result && result.status === 400 && result.data.message) {
+        setServerErrorMessage(result.data.message);
+      } else {
+        setServerErrorMessage('Registration failed. Please try again.');
+      }
+      setIsServerErrorModalOpen(true);
     }
-};
+  };
 
+  const closeServerErrorModal = () => {
+    setIsServerErrorModalOpen(false);
+    setServerErrorMessage('');
+  };
 
   const handleBackToLogin = () => {
     navigate('/');
@@ -78,7 +109,21 @@ const RegisterPage = () => {
   return (
     <div className="loginPageBackground">
       <LoginBox title="Register" inputs={inputs} buttons={buttons} />
-      {errorMessage && <p className="error-message">{errorMessage}</p>}
+
+      <Modal
+        title="Validation Error"
+        message={validationMessage}
+        isOpen={isValidationModalOpen}
+        onClose={() => setIsValidationModalOpen(false)}
+      />
+
+      <Modal
+        title="Registration Failed"
+        message={serverErrorMessage}
+        isOpen={isServerErrorModalOpen}
+        onClose={closeServerErrorModal}
+      />
+
       {loading && <p>Loading...</p>}
     </div>
   );

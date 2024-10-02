@@ -1,0 +1,33 @@
+.project-container {
+    border: 1px solid #ddd;
+    margin: 10px 0;
+    padding: 15px;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+  }
+  
+  .project-header {
+    display: flex;
+    justify-content: space-between;
+    cursor: pointer;
+  }
+  
+  .project-header h3 {
+    margin: 0;
+  }
+  
+  .project-tasks {
+    margin-top: 15px;
+  }
+  
+  .task-item {
+    background: #fff;
+    padding: 10px;
+    border: 1px solid #eee;
+    margin: 5px 0;
+    border-radius: 5px;
+  }
+  
+  .task-actions {
+    margin-top: 10px;
+  }
