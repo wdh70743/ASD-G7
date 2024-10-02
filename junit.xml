@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuites name="jest tests" tests="1" failures="0" errors="0" time="1.142">
-  <testsuite name="undefined" errors="0" failures="0" skipped="0" timestamp="2024-09-30T01:09:03" time="0.818" tests="1">
-    <testcase classname=" renders the login page header" name=" renders the login page header" time="0.059">
+<testsuites name="jest tests" tests="3" failures="0" errors="0" time="5.797">
+  <testsuite name="undefined" errors="0" failures="0" skipped="0" timestamp="2024-10-02T09:39:58" time="3.26" tests="2">
+    <testcase classname=" renders loading state" name=" renders loading state" time="0.044">
+    </testcase>
+    <testcase classname=" renders login prompt if user is not logged in" name=" renders login prompt if user is not logged in" time="0.16">
+    </testcase>
+  </testsuite>
+  <testsuite name="undefined" errors="0" failures="0" skipped="0" timestamp="2024-10-02T09:39:58" time="3.812" tests="1">
+    <testcase classname=" renders the login page header" name=" renders the login page header" time="0.103">
     </testcase>
   </testsuite>
 </testsuites>
