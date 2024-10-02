@@ -15,7 +15,7 @@ const ProjectList = () => {
       status: 'Not Started', 
     },
     {
-      id: 21212,
+      id: 2,
       projectName: "Project 2",
       description: "This is a description for Project 1.",
       startDate: "2024-09-01",
@@ -25,7 +25,7 @@ const ProjectList = () => {
     },
 
     {
-      id: 6746,
+      id: 3,
       projectName: "Project 3",
       description: "This is a description for Project 1.",
       startDate: "2024-09-01",

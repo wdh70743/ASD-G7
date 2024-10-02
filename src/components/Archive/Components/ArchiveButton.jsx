@@ -1,16 +1,12 @@
 import React from 'react';
-import '../Styles/ArchiveButton.css'
+import '../Styles/ArchiveButton.css';
 
-const ArchiveButton = ({ name }) => {
-    const handleClick = () => {
-        console.log(`${name} button clicked`);
-    };
-
-    return (
-        <button className="archive-button" onClick={handleClick}>
-            {name}
-        </button>
-    );
+const ArchiveButton = ({ name, onClick }) => {
+  return (
+    <button className="archive-button" onClick={onClick}>
+      {name}
+    </button>
+  );
 };
 
 export default ArchiveButton;
