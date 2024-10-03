@@ -1,14 +1,29 @@
-import React from 'react';
+import React, { useEffect, useCallback } from 'react';
 import SimpleHero from '../components/Dashboard/Components/SimpleHero';
-import ShareToggleSection from '../components/Share/ShareToggle.jsx';
+import useProjects from '../hooks/useProjects';
 import ProjectList from '../components/ProjectList/ProjectList.jsx';
 
+
 const ProjectsPage = () => {
+  const userId = localStorage.getItem('userId');
+  const {fetchProjectsByUser, createProject, loading, projects} = useProjects();
+
+  const stableFetchTasks = useCallback(() => {
+    if (userId) {
+      fetchProjectsByUser(userId);
+    }
+  }, [fetchProjectsByUser, userId]);
+
+  useEffect(() => {
+    stableFetchTasks();
+  }, [stableFetchTasks]);
+
+  if (loading) return <p>Loading tasks...</p>;
+
   return (
     <>
       <SimpleHero />
-      {/* <ShareToggleSection /> */}
-      <ProjectList />
+      <ProjectList projects={projects} createProject={createProject}/>
     </>
   );
 };

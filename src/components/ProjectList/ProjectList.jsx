@@ -2,39 +2,10 @@ import React, { useState } from 'react';
 import Project from './Project';
 import './ProjectList.css'; 
 
-const ProjectList = () => {
+const ProjectList = ({projects, createProject}) => {
 
-  const [projects, setProjects] = useState([
-    {
-      id: 1,
-      projectName: "Project 1",
-      description: "This is a description for Project 1.",
-      startDate: "2024-09-01",
-      endDate: "2024-09-10",
-      priority: "High",
-      status: 'Not Started', 
-    },
-    {
-      id: 21212,
-      projectName: "Project 2",
-      description: "This is a description for Project 1.",
-      startDate: "2024-09-01",
-      endDate: "2024-09-10",
-      priority: "High",
-      status: 'Not Started', 
-    },
-
-    {
-      id: 6746,
-      projectName: "Project 3",
-      description: "This is a description for Project 1.",
-      startDate: "2024-09-01",
-      endDate: "2024-09-10",
-      priority: "High",
-      status: 'Not Started', 
-    },
-
-  ]);
+  const [projectList, setProjects] = useState(projects || []);
+  
   return (
     <section className="ProjectListContainer">
     <section className="AdditionContainer">
@@ -42,7 +13,7 @@ const ProjectList = () => {
     <h1 className="title">New Project</h1>
     </div>
     </section>    
-        {projects.map((project, index) => (
+        {projectList.map((project, index) => (
             <Project 
             key = {index}
             id = {project.id}

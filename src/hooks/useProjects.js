@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-import taskService from '../services/TaskService.js';
+import ProjectService from '../services/ProjectService.js';
 
 const useProjects = () => {
   const [loading, setLoading] = useState(false);
@@ -13,7 +13,7 @@ const useProjects = () => {
     console.log(`Fetching projects for user ID: ${userId}`);
 
     try {
-      const response = await taskService.fetchProjectsByUser(userId);
+      const response = await ProjectService.getProjectsByUser(userId);
       console.log('API Response:', response.data);
 
       if (response && response.data) {
@@ -27,7 +27,23 @@ const useProjects = () => {
     }
   }, []);
 
-  return { fetchProjectsByUser};
+  const createProject = useCallback(async (newProject) => {
+    console.log('Creating project:', newProject); // Log to see the payload
+    setLoading(true);
+    setError(null);
+    try {
+        const response = await ProjectService.createProject(newProject);
+        console.log('Create response:', response.data);
+        setProjects(prevProjects => [...prevProjects, response.data]);
+    } catch (err) {
+        console.error('Create task error:', err.response?.data || err); // Log the full error response
+        setError(err.response?.data?.message || 'Failed to create task');
+    } finally {
+        setLoading(false);
+    }
+}, []);
+
+  return { fetchProjectsByUser, createProject, loading, projects, error};
 };
 
 export default useProjects;
