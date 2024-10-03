@@ -1,40 +1,55 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react';
 import './Styles/DashboardPage.css';
 import Hero from '../components/Dashboard/Components/SimpleHero';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
+import useTasks from '../hooks/useTasks';
 
 const localizer = momentLocalizer(moment);
 
-const events = [
-    {
-        title: 'Big Meeting',
-        start: new Date(2024, 8, 10, 10, 0),
-        end: new Date(2024, 8, 10, 12, 0),
-    },
-    {
-        title: 'Vacation',
-        start: new Date(2024, 8, 20),
-        end: new Date(2024, 8, 30),
-    },
-];
 const CalendarPage = () => {
-    return (
-        <div className="dashboard-page">
-            <Hero />
-            <div style={{ padding: 20}}>
-                <div style={{ height: 700 }}>
-                    <Calendar
-                        localizer={localizer}
-                        events={events}
-                        startAccessor="start"
-                        endAccessor="end"
-                    />
-                </div>
-            </div>
-        </div>
-    );
-}
+  const { fetchTasksByUser, tasks, loading, error } = useTasks();
+  const [events, setEvents] = useState([]);
 
-export default CalendarPage
+  const userId = localStorage.getItem('userId');
+
+  useEffect(() => {
+    if (userId) {
+      fetchTasksByUser(userId);
+    }
+  }, [fetchTasksByUser, userId]);
+
+  useEffect(() => {
+    const formattedEvents = tasks.map((task) => ({
+      title: task.title,
+      start: new Date(task.start_date),
+      end: new Date(task.due_date),
+    }));
+    setEvents(formattedEvents);
+  }, [tasks]);
+
+  return (
+    <div className="dashboard-page">
+      <Hero />
+      <div style={{ padding: 20 }}>
+        <div style={{ height: 700 }}>
+          {loading ? (
+            <p>Loading tasks...</p>
+          ) : error ? (
+            <p className="error-message">Error: {error}</p>
+          ) : (
+            <Calendar
+              localizer={localizer}
+              events={events}
+              startAccessor="start"
+              endAccessor="end"
+            />
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default CalendarPage;

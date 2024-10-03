@@ -18,7 +18,7 @@ const ProjectList = ({projects, createProject}) => {
             key = {index}
             id = {project.id}
             color="#f0f0f0" 
-            title= {project.projectName} 
+            title= {project.projectname} 
             description={project.description}
           />
         ))}

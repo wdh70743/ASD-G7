@@ -1,0 +1,41 @@
+.modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .modalContainer {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    width: 300px;
+    text-align: center;
+  }
+  
+  .modalContainer h2 {
+    margin: 0 0 10px 0;
+  }
+  
+  .modalContainer p {
+    margin: 0 0 20px 0;
+  }
+  
+  .modalContainer button {
+    padding: 10px 20px;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  
+  .modalContainer button:hover {
+    background-color: #0056b3;
+  }
+  
