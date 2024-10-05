@@ -6,24 +6,24 @@ import ProjectList from '../components/ProjectList/ProjectList.jsx';
 
 const ProjectsPage = () => {
   const userId = localStorage.getItem('userId');
-  const {fetchProjectsByUser, createProject, deleteProject, loading, projects} = useProjects();
+  const {updateProject, fetchProjectsByUser, createProject, deleteProject, loading, projects} = useProjects();
 
-  const stableFetchTasks = useCallback(() => {
+  const stableFetchProjects = useCallback(() => {
     if (userId) {
       fetchProjectsByUser(userId);
     }
   }, [fetchProjectsByUser, userId]);
 
   useEffect(() => {
-    stableFetchTasks();
-  }, [stableFetchTasks]);
+    stableFetchProjects();
+  }, [stableFetchProjects]);
 
   if (loading) return <p>Loading tasks...</p>;
 
   return (
     <>
       <SimpleHero />
-      <ProjectList userId={userId} projects={projects} createProject={createProject} deleteProject={deleteProject}/>
+      <ProjectList userId={userId} projects={projects} createProject={createProject} deleteProject={deleteProject} updateProject={updateProject}/>
     </>
   );
 };

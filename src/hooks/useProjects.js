@@ -1,5 +1,6 @@
 import { useState, useCallback } from 'react';
 import ProjectService from '../services/ProjectService.js';
+import projectService from '../services/ProjectService.js';
 
 const useProjects = () => {
   const [loading, setLoading] = useState(false);
@@ -28,8 +29,24 @@ const useProjects = () => {
     }
   }, []);
 
+  const deleteProject = useCallback(async (id) => {
+    console.log(`Attempting to delete task with ID: ${id}`);
+    setLoading(true);
+    setError(null);
+    try {
+      const response = await projectService.deleteProject(id);
+      console.log('Delete response:', response);
+      setProjects(prevTasks => prevTasks.filter(project => project.id !== id));
+    } catch (err) {
+      console.error('Delete error:', err);
+      setError(err.response?.data?.message || 'Failed to delete task');
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
   const createProject = useCallback(async (newProject) => {
-    console.log('Creating project:', newProject); // Log to see the payload
+    console.log('Creating project:', newProject);
     setLoading(true);
     setError(null);
     try {
@@ -37,11 +54,29 @@ const useProjects = () => {
         console.log('Create response:', response.data);
         setProjects(prevProjects => [...prevProjects, response.data]);
     } catch (err) {
-        console.error('Create task error:', err.response?.data || err); // Log the full error response
+        console.error('Create task error:', err.response?.data || err); 
         setError(err.response?.data?.message || 'Failed to create task');
     } finally {
         setLoading(false);
     }
+}, []);
+
+const updateProject = useCallback(async (id, updatedProject) => {
+  console.log('Updating project:', id); 
+  setLoading(true);
+  setError(null);
+  try {
+      const response = await projectService.updateProject(id, updatedProject); 
+      console.log('Update response:', response.data);
+      setProjects(prevTasks => 
+          prevTasks.map(project => (project.id === id ? response.data : project)) 
+      );
+  } catch (err) {
+      console.error('Update task error:', err.response?.data || err);
+      setError(err.response?.data?.message || 'Failed to update project');
+  } finally {
+      setLoading(false);
+  }
 }, []);
 
 const fetchProjectByProjectID = useCallback(async (projectID) => {
@@ -64,7 +99,7 @@ const fetchProjectByProjectID = useCallback(async (projectID) => {
   }
 }, []);
 
-  return { fetchProjectsByUser, fetchProjectByProjectID, createProject, loading, projects, project, error};
+  return {updateProject,deleteProject, fetchProjectsByUser, fetchProjectByProjectID, createProject, loading, projects, project, error};
 };
 
 export default useProjects;
