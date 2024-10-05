@@ -6,6 +6,7 @@ import CalendarPage from './pages/CalendarPage';
 import ArchivePage from './pages/ArchivePage';
 import ProjectsPage from './pages/ProjectsPage';
 import TasksPage from './pages/TasksPage';
+import ProfilePage from './pages/ProfilePage';
 
 
 const routes = [
@@ -34,9 +35,14 @@ const routes = [
     element : <ProjectsPage />
   },
   {
+    path: '/Profile',
+    element : <ProfilePage />
+  },
+  {
     path: '/Projects/:id',
     element : <TasksPage />
   },
+  
 ];
 
 export default routes;

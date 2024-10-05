@@ -8,15 +8,15 @@ const ProjectsPage = () => {
   const userId = localStorage.getItem('userId');
   const {fetchProjectsByUser, createProject, deleteProject, loading, projects} = useProjects();
 
-  const stableFetchTasks = useCallback(() => {
+  const stableFetchProjects = useCallback(() => {
     if (userId) {
       fetchProjectsByUser(userId);
     }
   }, [fetchProjectsByUser, userId]);
 
   useEffect(() => {
-    stableFetchTasks();
-  }, [stableFetchTasks]);
+    stableFetchProjects();
+  }, [stableFetchProjects]);
 
   if (loading) return <p>Loading tasks...</p>;
 
