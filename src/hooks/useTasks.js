@@ -7,6 +7,7 @@ const useTasks = () => {
   const [tasks, setTasks] = useState([]);
   const [todayTasks, setTodayTasks] = useState([]);
   const [archivedTasks, setArchivedTasks] = useState([]);
+  const [taskCompletionRate, setTaskCompletionRate] = useState(null);
 
   const fetchTasksByUser = useCallback(async (userId) => {
     setLoading(true);
@@ -32,6 +33,8 @@ const useTasks = () => {
           );
         });
         setTodayTasks(dueToday);
+
+        setTaskCompletionRate(Math.floor((dueToday.filter(task => task.status === true).length / dueToday.length)*100))
       }
     } catch (err) {
       setError(err.response?.data?.message || 'Failed to fetch tasks');
@@ -148,6 +151,7 @@ return {
   updateTask, 
   tasks, 
   todayTasks, 
+  taskCompletionRate,
   archivedTasks,
   loading, 
   error 

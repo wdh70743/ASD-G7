@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import '../Styles/TaskList.css';
 import Task from './Task';
 
-const TaskList = ({ userId, tasks, projectId, deleteTask, createTask, updateTask }) => {
+const TaskList = ({ userId, tasks, projectId, projectName, projectDescription, deleteTask, createTask, updateTask }) => {
   const navigate = useNavigate();
   const [taskList, setTaskList] = useState(tasks || []);
   const [taskForm, setTaskForm] = useState(false);
@@ -39,6 +39,7 @@ const TaskList = ({ userId, tasks, projectId, deleteTask, createTask, updateTask
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log(projectId)
     const newTask = { 
       title: taskName, 
       description: taskDescription, 
@@ -83,13 +84,26 @@ const TaskList = ({ userId, tasks, projectId, deleteTask, createTask, updateTask
 
   const handleDeleteTask = (taskId) => deleteTask(taskId);
 
-  const toggleTaskStatus = (taskId) => {
+  const toggleTaskStatus = async (taskId) => {
+    //add the API call here to chnage the status of this taskID to true/false
+    const taskToUpdate = taskList.find(task => task.id === taskId);
+    if (taskToUpdate) {
+      const newStatus = !taskToUpdate.status; // Toggle status
+      await updateTask(taskToUpdate.id, { ...taskToUpdate, status: newStatus });
+    }
     setTaskList(prevTasks => 
       prevTasks.map(task => 
         task.id === taskId ? { ...task, status: !task.status } : task
       )
     );
   };
+
+  // if (editingIndex !== null) {
+  //   const taskId = taskList[editingIndex].id;
+  //   await updateTask(taskId, newTask);
+  // } else {
+  //   await createTask(newTask);
+  // }
 
   useEffect(() => {
     console.log('Current tasks:', taskList);
@@ -100,8 +114,8 @@ const TaskList = ({ userId, tasks, projectId, deleteTask, createTask, updateTask
       <div className="task-list-header">
         <button className="back-button" onClick={handleBack}>Back</button>
         <div className="projectTitleDescription">
-          <h2>Project Name</h2>
-          <p>This project will be based on xxxxxxxj djnejejnqewekqfwefon xxxxxxxj</p>
+          <h2>{projectName}</h2>
+          <p>{projectDescription}</p>
         </div>
         <button 
           onClick={toggleForm} 

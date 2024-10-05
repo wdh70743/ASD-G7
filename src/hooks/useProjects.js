@@ -5,6 +5,7 @@ const useProjects = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [projects, setProjects] = useState([]);
+  const [project, setProject] = useState([])
 
 
   const fetchProjectsByUser = useCallback(async (userId) => {
@@ -43,7 +44,27 @@ const useProjects = () => {
     }
 }, []);
 
-  return { fetchProjectsByUser, createProject, loading, projects, error};
+const fetchProjectByProjectID = useCallback(async (projectID) => {
+  setLoading(true);
+  setError(null);
+  console.log(`Fetching projects for project ID: ${projectID}`);
+
+  try {
+    const response = await ProjectService.getProjectByProjectId(projectID);
+    console.log('API Response:', response.data);
+
+    if (response && response.data) {
+      const project = response.data.projects || response.data;
+      setProject(project);
+    }
+  } catch (err) {
+    setError(err.response?.data?.message || 'Failed to fetch project');
+  } finally {
+    setLoading(false);
+  }
+}, []);
+
+  return { fetchProjectsByUser, fetchProjectByProjectID, createProject, loading, projects, project, error};
 };
 
 export default useProjects;
