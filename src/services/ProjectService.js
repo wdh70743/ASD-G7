@@ -15,7 +15,7 @@ class ProjectService {
         return axios.get(`${this.BASE_URL}user/${userId}`);  
     }
     
-    getProjectsByProjectId(projectID) {
+    getProjectByProjectId(projectID) {
         return axios.get(`${this.BASE_URL}${projectID}`);  
     }
 
@@ -26,6 +26,7 @@ class ProjectService {
     deleteProject(projectID) {
         return axios.delete(`${this.BASE_URL}${projectID}/`);  
     }
+
 
 
 

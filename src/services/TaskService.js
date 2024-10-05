@@ -8,7 +8,7 @@ class TaskService {
   }
 
   getTasksByProject(projectID) { 
-    return axios.get(`${this.BASE_URL}users/${projectID}/tasks/`);  
+    return axios.get(`${this.BASE_URL}projects/${projectID}/tasks/`);  
   }
 
   deleteTask(taskId) {

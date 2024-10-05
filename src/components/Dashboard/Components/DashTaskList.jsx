@@ -29,6 +29,7 @@ const DashTaskList = ({ tasks, loading, error }) => {
               color= {getRandomColor()}
               subtitle={task.description} 
               project = {task.project}
+              priority = {task.priority}
             />
           ))}
         </div>
