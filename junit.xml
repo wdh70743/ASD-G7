@@ -1,13 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuites name="jest tests" tests="3" failures="0" errors="0" time="5.797">
-  <testsuite name="undefined" errors="0" failures="0" skipped="0" timestamp="2024-10-02T09:39:58" time="3.26" tests="2">
-    <testcase classname=" renders loading state" name=" renders loading state" time="0.044">
-    </testcase>
-    <testcase classname=" renders login prompt if user is not logged in" name=" renders login prompt if user is not logged in" time="0.16">
+<testsuites name="jest tests" tests="6" failures="1" errors="0" time="6.11">
+  <testsuite name="DashboardPage" errors="0" failures="1" skipped="0" timestamp="2024-10-05T07:31:34" time="3.723" tests="1">
+    <testcase classname="DashboardPage renders loading state for task summary" name="DashboardPage renders loading state for task summary" time="0.212">
+      <failure>TypeError: Cannot read properties of undefined (reading &apos;length&apos;)
+    at DashboardPage (/Users/alexnosatti/Desktop/ /Uni/4th Year/Spring/IT/ASD/Taskbee/Code/ASD-G7-Frontend/src/pages/DashboardPage.jsx:39:65)
+    at renderWithHooks (/Users/alexnosatti/Desktop/ /Uni/4th Year/Spring/IT/ASD/Taskbee/Code/ASD-G7-Frontend/node_modules/react-dom/cjs/react-dom.development.js:15486:18)
+    at mountIndeterminateComponent (/Users/alexnosatti/Desktop/ /Uni/4th Year/Spring/IT/ASD/Taskbee/Code/ASD-G7-Frontend/node_modules/react-dom/cjs/react-dom.development.js:20103:13)
+    at beginWork (/Users/alexnosatti/Desktop/ /Uni/4th Year/Spring/IT/ASD/Taskbee/Code/ASD-G7-Frontend/node_modules/react-dom/cjs/react-dom.development.js:21626:16)
+    at beginWork$1 (/Users/alexnosatti/Desktop/ /Uni/4th Year/Spring/IT/ASD/Taskbee/Code/ASD-G7-Frontend/node_modules/react-dom/cjs/react-dom.development.js:27465:14)
+    at performUnitOfWork (/Users/alexnosatti/Desktop/ /Uni/4th Year/Spring/IT/ASD/Taskbee/Code/ASD-G7-Frontend/node_modules/react-dom/cjs/react-dom.development.js:26599:12)
+    at workLoopSync (/Users/alexnosatti/Desktop/ /Uni/4th Year/Spring/IT/ASD/Taskbee/Code/ASD-G7-Frontend/node_modules/react-dom/cjs/react-dom.development.js:26505:5)
+    at renderRootSync (/Users/alexnosatti/Desktop/ /Uni/4th Year/Spring/IT/ASD/Taskbee/Code/ASD-G7-Frontend/node_modules/react-dom/cjs/react-dom.development.js:26473:7)
+    at recoverFromConcurrentError (/Users/alexnosatti/Desktop/ /Uni/4th Year/Spring/IT/ASD/Taskbee/Code/ASD-G7-Frontend/node_modules/react-dom/cjs/react-dom.development.js:25889:20)
+    at performConcurrentWorkOnRoot (/Users/alexnosatti/Desktop/ /Uni/4th Year/Spring/IT/ASD/Taskbee/Code/ASD-G7-Frontend/node_modules/react-dom/cjs/react-dom.development.js:25789:22)
+    at flushActQueue (/Users/alexnosatti/Desktop/ /Uni/4th Year/Spring/IT/ASD/Taskbee/Code/ASD-G7-Frontend/node_modules/react/cjs/react.development.js:2667:24)
+    at act (/Users/alexnosatti/Desktop/ /Uni/4th Year/Spring/IT/ASD/Taskbee/Code/ASD-G7-Frontend/node_modules/react/cjs/react.development.js:2582:11)
+    at actWithWarning (/Users/alexnosatti/Desktop/ /Uni/4th Year/Spring/IT/ASD/Taskbee/Code/ASD-G7-Frontend/node_modules/react-dom/cjs/react-dom-test-utils.development.js:1740:10)
+    at /Users/alexnosatti/Desktop/ /Uni/4th Year/Spring/IT/ASD/Taskbee/Code/ASD-G7-Frontend/node_modules/@testing-library/react/dist/act-compat.js:63:25
+    at renderRoot (/Users/alexnosatti/Desktop/ /Uni/4th Year/Spring/IT/ASD/Taskbee/Code/ASD-G7-Frontend/node_modules/@testing-library/react/dist/pure.js:159:26)
+    at render (/Users/alexnosatti/Desktop/ /Uni/4th Year/Spring/IT/ASD/Taskbee/Code/ASD-G7-Frontend/node_modules/@testing-library/react/dist/pure.js:246:10)
+    at Object.&lt;anonymous&gt; (/Users/alexnosatti/Desktop/ /Uni/4th Year/Spring/IT/ASD/Taskbee/Code/ASD-G7-Frontend/src/DashboardPage.test.js:22:11)
+    at Promise.then.completed (/Users/alexnosatti/Desktop/ /Uni/4th Year/Spring/IT/ASD/Taskbee/Code/ASD-G7-Frontend/node_modules/jest-circus/build/utils.js:391:28)
+    at new Promise (&lt;anonymous&gt;)
+    at callAsyncCircusFn (/Users/alexnosatti/Desktop/ /Uni/4th Year/Spring/IT/ASD/Taskbee/Code/ASD-G7-Frontend/node_modules/jest-circus/build/utils.js:316:10)
+    at _callCircusTest (/Users/alexnosatti/Desktop/ /Uni/4th Year/Spring/IT/ASD/Taskbee/Code/ASD-G7-Frontend/node_modules/jest-circus/build/run.js:218:40)
+    at processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at _runTest (/Users/alexnosatti/Desktop/ /Uni/4th Year/Spring/IT/ASD/Taskbee/Code/ASD-G7-Frontend/node_modules/jest-circus/build/run.js:155:3)
+    at _runTestsForDescribeBlock (/Users/alexnosatti/Desktop/ /Uni/4th Year/Spring/IT/ASD/Taskbee/Code/ASD-G7-Frontend/node_modules/jest-circus/build/run.js:66:9)
+    at _runTestsForDescribeBlock (/Users/alexnosatti/Desktop/ /Uni/4th Year/Spring/IT/ASD/Taskbee/Code/ASD-G7-Frontend/node_modules/jest-circus/build/run.js:60:9)
+    at run (/Users/alexnosatti/Desktop/ /Uni/4th Year/Spring/IT/ASD/Taskbee/Code/ASD-G7-Frontend/node_modules/jest-circus/build/run.js:25:3)
+    at runAndTransformResultsToJestFormat (/Users/alexnosatti/Desktop/ /Uni/4th Year/Spring/IT/ASD/Taskbee/Code/ASD-G7-Frontend/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapterInit.js:170:21)
+    at jestAdapter (/Users/alexnosatti/Desktop/ /Uni/4th Year/Spring/IT/ASD/Taskbee/Code/ASD-G7-Frontend/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapter.js:82:19)
+    at runTestInternal (/Users/alexnosatti/Desktop/ /Uni/4th Year/Spring/IT/ASD/Taskbee/Code/ASD-G7-Frontend/node_modules/jest-runner/build/runTest.js:389:16)
+    at runTest (/Users/alexnosatti/Desktop/ /Uni/4th Year/Spring/IT/ASD/Taskbee/Code/ASD-G7-Frontend/node_modules/jest-runner/build/runTest.js:475:34)
+    at Object.worker (/Users/alexnosatti/Desktop/ /Uni/4th Year/Spring/IT/ASD/Taskbee/Code/ASD-G7-Frontend/node_modules/jest-runner/build/testWorker.js:133:12)</failure>
     </testcase>
   </testsuite>
-  <testsuite name="undefined" errors="0" failures="0" skipped="0" timestamp="2024-10-02T09:39:58" time="3.812" tests="1">
-    <testcase classname=" renders the login page header" name=" renders the login page header" time="0.103">
+  <testsuite name="undefined" errors="0" failures="0" skipped="0" timestamp="2024-10-05T07:31:33" time="4.106" tests="1">
+    <testcase classname=" renders the login page header" name=" renders the login page header" time="0.151">
+    </testcase>
+  </testsuite>
+  <testsuite name="undefined" errors="0" failures="0" skipped="0" timestamp="2024-10-05T07:31:33" time="4.339" tests="4">
+    <testcase classname=" renders loading state" name=" renders loading state" time="0.177">
+    </testcase>
+    <testcase classname=" renders login prompt if user is not logged in" name=" renders login prompt if user is not logged in" time="0.137">
+    </testcase>
+    <testcase classname=" renders task list when tasks are fetched" name=" renders task list when tasks are fetched" time="0.227">
+    </testcase>
+    <testcase classname=" allows user to access the edit task form" name=" allows user to access the edit task form" time="0.054">
     </testcase>
   </testsuite>
 </testsuites>
