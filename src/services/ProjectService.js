@@ -19,12 +19,12 @@ class ProjectService {
         return axios.get(`${this.BASE_URL}${projectID}`);  
     }
 
-    updateProjectsByProjectId(projectID) {
-        return axios.put(`${this.BASE_URL}${projectID}`);  
+    updateProject(id, updatedProject) {
+        return axios.put(`${this.BASE_URL}${id}/`, updatedProject);  
     }
 
-    deleteProjectsByProjectId(projectID) {
-        return axios.delete(`${this.BASE_URL}${projectID}`);  
+    deleteProject(projectID) {
+        return axios.delete(`${this.BASE_URL}${projectID}/`);  
     }
 
 

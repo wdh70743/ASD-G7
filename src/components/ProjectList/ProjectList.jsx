@@ -42,14 +42,16 @@ const ProjectList = ({userId, projects, createProject, updateProject, deleteProj
       start_date: projectStartDate,
       end_date: projectEndDate,
       priority: projectPriority,
-      status: false,
+      status: true,
     };
 
     if (editingIndex !== null) {
+      console.log('Editing project with ID:', projectList[editingIndex].id);
       const projectId = projectList[editingIndex].id;
       await updateProject(projectId, newProject);
     } else {
       await createProject(newProject);
+
     }
 
     resetForm();
@@ -60,10 +62,10 @@ const ProjectList = ({userId, projects, createProject, updateProject, deleteProj
   const handleEditProject = (projectId) => {
     const project = projectList.find(t => t.id === projectId);
     if (project) {
-      setProjectName(project.title);
+      setProjectName(project.projectname);
       setProjectDescription(project.description);
-      setProjectStartDate(project.start_date.split('T')[0]); // Setting to YYYY-MM-DD for input
-      setProjectEndDate(project.due_date.split('T')[0]); // Setting to YYYY-MM-DD for input
+      setProjectStartDate(project.start_date);
+      setProjectEndDate(project.end_date);
       setProjectPriority(project.priority);
       setEditingIndex(projectList.findIndex(t => t.id === projectId));
       setProjectForm(true);
@@ -75,13 +77,6 @@ const ProjectList = ({userId, projects, createProject, updateProject, deleteProj
 
   const handleDeleteProject = (projectId) => deleteProject(projectId);
 
-  const toggleProjectStatus = (projectId) => {
-    setProjectList(prevProjects => 
-      prevProjects.map(project => 
-        project.id === projectId ? { ...project, status: !project.status } : project
-      )
-    );
-  };
 
   useEffect(() => {
     console.log('Current projects:', projectList);
@@ -181,7 +176,6 @@ const ProjectList = ({userId, projects, createProject, updateProject, deleteProj
             description={project.description}
             onEdit={() => handleEditProject(project.id)}
             onDelete={() => handleDeleteProject(project.id)}
-            onToggleStatus={() => toggleProjectStatus(project.id)}
           />
         ))
       )}

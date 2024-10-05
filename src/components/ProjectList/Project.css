@@ -17,6 +17,8 @@ body {
 
 }
 
+
+
 .title {
     font-size: 25px;
     font-weight: 500;
@@ -37,3 +39,27 @@ body {
     margin: 0; 
     padding: 0; 
 }
+
+.rectangle-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    text-align: center; 
+    padding: 20px; 
+  }
+  
+  .centered-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .alter-project {
+    margin-top: 10px; 
+  }
+  
+  .project-details {
+    margin-top: 10px; 
+  }
+  
+
