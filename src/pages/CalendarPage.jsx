@@ -21,11 +21,16 @@ const CalendarPage = () => {
   }, [fetchTasksByUser, userId]);
 
   useEffect(() => {
-    const formattedEvents = tasks.map((task) => ({
+    // Filter out tasks where `is_archived` is true
+    const filteredTasks = tasks.filter((task) => !task.is_archived);
+
+    // Map the filtered tasks to calendar events
+    const formattedEvents = filteredTasks.map((task) => ({
       title: task.title,
       start: new Date(task.start_date),
       end: new Date(task.due_date),
     }));
+
     setEvents(formattedEvents);
   }, [tasks]);
 

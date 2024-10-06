@@ -98,7 +98,10 @@ const useTasks = () => {
     try {
       const response = await taskService.deleteTask(taskId);
       console.log('Delete response:', response);
-      setTasks(prevTasks => prevTasks.filter(task => task.id !== taskId));
+  
+      // Update both `tasks` and `archivedTasks` states to reflect the deletion
+      setTasks((prevTasks) => prevTasks.filter((task) => task.id !== taskId));
+      setArchivedTasks((prevArchivedTasks) => prevArchivedTasks.filter((task) => task.id !== taskId)); // Ensure archivedTasks state is updated
     } catch (err) {
       console.error('Delete error:', err);
       setError(err.response?.data?.message || 'Failed to delete task');
@@ -106,6 +109,7 @@ const useTasks = () => {
       setLoading(false);
     }
   }, []);
+  
 
   const createTask = useCallback(async (newTask) => {
     console.log('Creating task:', newTask); // Log to see the payload

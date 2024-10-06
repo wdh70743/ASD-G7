@@ -22,7 +22,7 @@ const SearchBar = ({ onSearch }) => {
             <select value={sortOption} onChange={handleSortChange} className="sort-dropdown">
                 <option value="">Sort by</option>
                 <option value="date">Date Archived</option>
-                <option value="name">Project Name</option>
+                <option value="name">Task Name</option>
                 <option value="priority">Priority</option>
             </select>
             <input

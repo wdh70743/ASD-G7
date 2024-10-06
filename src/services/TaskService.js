@@ -27,8 +27,11 @@ class TaskService {
     return axios.get(`${this.BASE_URL}users/${userId}/tasks/archived/`);
   }
 
-  archiveTask(taskId) {
-    return axios.post(`${this.BASE_URL}archive/`, { task_id: taskId });
+  archiveTask(taskId, archivedAt) {
+    return axios.post(`${this.BASE_URL}archive/`, { 
+      task_id: taskId, 
+      archived_at: archivedAt // Include the archived_at field in the request
+    });
   }
 }
 

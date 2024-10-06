@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import '../Styles/Task.css';
 
-const Task = ({ title, description, startDate, endDate, priority, status, onEdit, onDelete, onToggleStatus }) => {
+const Task = ({ title, description, startDate, endDate, priority, status, onEdit, onDelete, onToggleStatus, onArchive }) => {
   const [detailsVisible, setDetailsVisible] = useState(false);
 
   const toggleDetails = () => {
@@ -45,14 +45,10 @@ const Task = ({ title, description, startDate, endDate, priority, status, onEdit
           Edit
         </button>
         <button className='delete-button' onClick={onDelete}>Delete</button>
+        <button className='archive-button' onClick={onArchive}>Archive</button>
       </div>
     </div>
   );
 };
 
 export default Task;
-
-
-
-
-

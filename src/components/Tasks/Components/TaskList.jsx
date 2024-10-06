@@ -2,10 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../Styles/TaskList.css';
 import Task from './Task';
+import taskService from '../../../services/TaskService';
 
-const TaskList = ({ userId, tasks, projectId, projectName, projectDescription, deleteTask, createTask, updateTask }) => {
+const TaskList = ({ userId, tasks, projectId, projectName, projectDescription, deleteTask, createTask, updateTask, archiveTask }) => {
   const navigate = useNavigate();
-  const [taskList, setTaskList] = useState(tasks || []);
+  const [taskList, setTaskList] = useState([]);
+
   const [taskForm, setTaskForm] = useState(false);
   const [taskName, setTaskName] = useState('');
   const [taskDescription, setTaskDescription] = useState('');
@@ -15,14 +17,19 @@ const TaskList = ({ userId, tasks, projectId, projectName, projectDescription, d
   const [newTaskButtonColor, setNewTaskButtonColor] = useState('#007BFF');
   const [editingIndex, setEditingIndex] = useState(null);
 
+  // Filter out archived tasks from the initial task list
+  useEffect(() => {
+    setTaskList(tasks.filter(task => !task.is_archived));
+  }, [tasks]);
+
   const handleBack = () => navigate('/Projects'); 
 
   const toggleForm = () => {
-    const newColor = !taskForm ? 'red' : '#007BFF';
-    setNewTaskButtonColor(newColor);
-    setTaskForm(!taskForm);
-    if (taskForm) resetForm();
-  };
+  const newColor = !taskForm ? 'red' : '#007BFF';
+  setNewTaskButtonColor(newColor);
+  setTaskForm((prev) => !prev); // Use functional state update to ensure correct state transition
+};
+
 
   const resetForm = () => {
     setTaskName('');
@@ -39,7 +46,6 @@ const TaskList = ({ userId, tasks, projectId, projectName, projectDescription, d
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(projectId)
     const newTask = { 
       title: taskName, 
       description: taskDescription, 
@@ -71,8 +77,8 @@ const TaskList = ({ userId, tasks, projectId, projectName, projectDescription, d
     if (task) {
       setTaskName(task.title);
       setTaskDescription(task.description);
-      setTaskStartDate(task.start_date.split('T')[0]); // Setting to YYYY-MM-DD for input
-      setTaskEndDate(task.due_date.split('T')[0]); // Setting to YYYY-MM-DD for input
+      setTaskStartDate(task.start_date.split('T')[0]);
+      setTaskEndDate(task.due_date.split('T')[0]);
       setTaskPriority(task.priority);
       setEditingIndex(taskList.findIndex(t => t.id === taskId));
       setTaskForm(true);
@@ -84,11 +90,20 @@ const TaskList = ({ userId, tasks, projectId, projectName, projectDescription, d
 
   const handleDeleteTask = (taskId) => deleteTask(taskId);
 
+  const handleArchiveTask = async (taskId) => {
+    const currentTimestamp = new Date().toISOString();
+    try {
+      await taskService.archiveTask(taskId, currentTimestamp);
+      setTaskList((prevTasks) => prevTasks.filter((task) => task.id !== taskId));
+    } catch (error) {
+      console.error("Failed to archive task", error);
+    }
+  };  
+
   const toggleTaskStatus = async (taskId) => {
-    //add the API call here to chnage the status of this taskID to true/false
     const taskToUpdate = taskList.find(task => task.id === taskId);
     if (taskToUpdate) {
-      const newStatus = !taskToUpdate.status; // Toggle status
+      const newStatus = !taskToUpdate.status;
       await updateTask(taskToUpdate.id, { ...taskToUpdate, status: newStatus });
     }
     setTaskList(prevTasks => 
@@ -97,13 +112,6 @@ const TaskList = ({ userId, tasks, projectId, projectName, projectDescription, d
       )
     );
   };
-
-  // if (editingIndex !== null) {
-  //   const taskId = taskList[editingIndex].id;
-  //   await updateTask(taskId, newTask);
-  // } else {
-  //   await createTask(newTask);
-  // }
 
   useEffect(() => {
     console.log('Current tasks:', taskList);
@@ -208,6 +216,7 @@ const TaskList = ({ userId, tasks, projectId, projectName, projectDescription, d
               status={task.status}
               onEdit={() => handleEditTask(task.id)}
               onDelete={() => handleDeleteTask(task.id)}
+              onArchive={() => handleArchiveTask(task.id)}
               onToggleStatus={() => toggleTaskStatus(task.id)}
             />
           ))
@@ -218,5 +227,3 @@ const TaskList = ({ userId, tasks, projectId, projectName, projectDescription, d
 };
 
 export default TaskList;
-
-
