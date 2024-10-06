@@ -1,29 +1,37 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import ArchiveList from '../components/Archive/Components/ArchiveList';
+import useProjects from '../hooks/useProjects';
+import useTasks from '../hooks/useTasks';
 import Hero from '../components/Dashboard/Components/SimpleHero';
 import SearchBar from '../components/Archive/Components/SearchBar';
-import ArchiveList from '../components/Archive/Components/ArchiveList'; // Use existing ArchiveList
-import useTasks from '../hooks/useTasks';
 import './Styles/ArchivePage.css';
 
 const ArchivePage = () => {
-  const { fetchArchivedTasksByUser, archivedTasks, loading, error } = useTasks();
-  const [searchResults, setSearchResults] = useState([]);
+  const { fetchProjectsByUser, projects, loading: projectsLoading, error: projectsError } = useProjects();
+  const { fetchArchivedTasksByUser, archivedTasks, deleteTask, loading: tasksLoading, error: tasksError } = useTasks();
+
+  const [searchResults, setSearchResults] = useState([]); // State to hold the search results
 
   const userId = localStorage.getItem('userId');
 
+  // Fetch projects and tasks when the component is loaded
   useEffect(() => {
     if (userId) {
+      fetchProjectsByUser(userId);
       fetchArchivedTasksByUser(userId);
     }
-  }, [userId, fetchArchivedTasksByUser]);
+  }, [userId, fetchProjectsByUser, fetchArchivedTasksByUser]);
 
+  // Update search results whenever archived tasks change
   useEffect(() => {
     setSearchResults(archivedTasks);
   }, [archivedTasks]);
 
+  // Handle the search and sort operation from SearchBar
   const handleSearch = ({ searchTerm, sortOption }) => {
     let filteredResults = archivedTasks.filter(task =>
-      task.title.toLowerCase().includes(searchTerm.toLowerCase())
+      task.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      task.description.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
     if (sortOption === 'date') {
@@ -39,16 +47,17 @@ const ArchivePage = () => {
   };
 
   return (
-    <div className="dashboard-page">
+    <div className="archive-page">
       <Hero title="Archived Projects" />
       <div className="archive-layout">
-        <SearchBar onSearch={handleSearch} />
-        {loading ? (
-          <p>Loading archived tasks...</p>
-        ) : error ? (
-          <p className="error-message">Error: {error}</p>
+        <SearchBar onSearch={handleSearch} /> {/* Add SearchBar at the top */}
+        {projectsError && <p className="error-message">Error: {projectsError}</p>}
+        {tasksError && <p className="error-message">Error: {tasksError}</p>}
+        {(projectsLoading || tasksLoading) ? (
+          <p>Loading projects and tasks...</p>
         ) : (
-          <ArchiveList archivedTasks={searchResults} /> // Use existing ArchiveList component
+          // Use searchResults instead of archivedTasks for filtered results
+          <ArchiveList archivedTasks={searchResults} projects={projects} deleteTask={deleteTask} />
         )}
       </div>
     </div>
