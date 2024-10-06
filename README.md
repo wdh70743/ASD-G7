@@ -51,9 +51,9 @@
 
 ##  Features
 
-# Register/login/Logout/Archive/Calander/Projects (Jinsung Park)
-# Dashboard/Task (Alexander Nosatti)
-# Projects/Account management (Oscar Whymper Williams)
+Register/login/Logout/Archive/Calander/Projects (Jinsung Park)
+Dashboard/Task (Alexander Nosatti)
+Projects/Account management (Oscar Whymper Williams)
 
 ---
 
