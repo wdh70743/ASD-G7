@@ -5,8 +5,9 @@
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s;
+    background-color: transparent;
 }
 
 .archive-button:hover {
-    background-color: #ccc;
+    background-color: transparent;
 }

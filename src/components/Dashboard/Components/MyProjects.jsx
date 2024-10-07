@@ -1,6 +1,7 @@
 import React from 'react';
 import Project from '../../ProjectList/Project';
 import '../Styles/MyProjects.css'; 
+import DashMyProject from './DashMyProject';
 
 const MyProjects = ({ projects }) => {
   // Array of hex colors
@@ -17,7 +18,7 @@ const MyProjects = ({ projects }) => {
       <h1 className="MyProjectTitle">My Projects</h1>
       <div className="DueTodayContainer"> 
         {projects.map((project) => (
-          <Project 
+          <DashMyProject 
             key={project.id} 
             id={project.id}
             color={getRandomColor()} 

@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuites name="jest tests" tests="9" failures="0" errors="0" time="1.72">
-  <testsuite name="undefined" errors="0" failures="0" skipped="0" timestamp="2024-10-06T12:54:14" time="0.703" tests="4">
-    <testcase classname=" renders loading state" name=" renders loading state" time="0.019">
+<testsuites name="jest tests" tests="9" failures="0" errors="0" time="19.343">
+  <testsuite name="undefined" errors="0" failures="0" skipped="0" timestamp="2024-10-06T23:59:00" time="14.929" tests="4">
+    <testcase classname=" renders ArchivePage with projects and their archived tasks" name=" renders ArchivePage with projects and their archived tasks" time="0.691">
     </testcase>
-    <testcase classname=" renders login prompt if user is not logged in" name=" renders login prompt if user is not logged in" time="0.044">
+    <testcase classname=" searches and filters archived tasks using SearchBar" name=" searches and filters archived tasks using SearchBar" time="0.136">
     </testcase>
-    <testcase classname=" renders task list when tasks are fetched" name=" renders task list when tasks are fetched" time="0.063">
+    <testcase classname=" sorts archived tasks by priority using SearchBar" name=" sorts archived tasks by priority using SearchBar" time="0.342">
     </testcase>
-    <testcase classname=" allows user to access the edit task form" name=" allows user to access the edit task form" time="0.021">
-    </testcase>
-  </testsuite>
-  <testsuite name="undefined" errors="0" failures="0" skipped="0" timestamp="2024-10-06T12:54:15" time="0.303" tests="1">
-    <testcase classname=" renders the login page header" name=" renders the login page header" time="0.024">
+    <testcase classname=" calls deleteTask when delete button is clicked in ArchivePage" name=" calls deleteTask when delete button is clicked in ArchivePage" time="0.053">
     </testcase>
   </testsuite>
-  <testsuite name="undefined" errors="0" failures="0" skipped="0" timestamp="2024-10-06T12:54:15" time="0.345" tests="4">
-    <testcase classname=" renders ArchivePage with projects and their archived tasks" name=" renders ArchivePage with projects and their archived tasks" time="0.037">
+  <testsuite name="undefined" errors="0" failures="0" skipped="0" timestamp="2024-10-06T23:59:00" time="14.912" tests="4">
+    <testcase classname=" renders loading state" name=" renders loading state" time="0.145">
     </testcase>
-    <testcase classname=" searches and filters archived tasks using SearchBar" name=" searches and filters archived tasks using SearchBar" time="0.013">
+    <testcase classname=" renders login prompt if user is not logged in" name=" renders login prompt if user is not logged in" time="0.564">
     </testcase>
-    <testcase classname=" sorts archived tasks by priority using SearchBar" name=" sorts archived tasks by priority using SearchBar" time="0.017">
+    <testcase classname=" renders task list when tasks are fetched" name=" renders task list when tasks are fetched" time="0.578">
     </testcase>
-    <testcase classname=" calls deleteTask when delete button is clicked in ArchivePage" name=" calls deleteTask when delete button is clicked in ArchivePage" time="0.008">
+    <testcase classname=" allows user to access the edit task form" name=" allows user to access the edit task form" time="0.169">
+    </testcase>
+  </testsuite>
+  <testsuite name="undefined" errors="0" failures="0" skipped="0" timestamp="2024-10-06T23:59:00" time="15.939" tests="1">
+    <testcase classname=" renders the login page header" name=" renders the login page header" time="0.279">
     </testcase>
   </testsuite>
 </testsuites>
