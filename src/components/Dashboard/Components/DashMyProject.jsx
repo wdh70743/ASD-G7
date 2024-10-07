@@ -2,11 +2,11 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
 
-const DashTask = ({ color, title, description, project}) => {
+const DashMyProject = ({ color, title, description, id}) => {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate('/Projects/'+project); 
+    navigate('/Projects/'+ id); 
   };
 
   return (
@@ -20,4 +20,4 @@ const DashTask = ({ color, title, description, project}) => {
   );
 }
 
-export default DashTask;
+export default DashMyProject;
