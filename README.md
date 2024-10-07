@@ -52,7 +52,7 @@
 ##  Features
 
 Register/login/Logout/Archive/Calander/Projects (Jinsung Park) <br>
-Dashboard/Task (Alexander Nosatti) <br>
+Dashboard/Task Page (Alexander Nosatti) <br>
 Projects/Account management (Oscar Whymper Williams)
 
 ---

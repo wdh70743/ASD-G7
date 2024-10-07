@@ -157,7 +157,7 @@ const ProjectList = ({userId, projects, createProject, updateProject, deleteProj
             </div>
             <div className="submit-button-container">
               <button type="submit" className="submit-button">
-                {editingIndex !== null ? "Update Task" : "Add Task"}
+                {editingIndex !== null ? "Update Project" : "Add Project"}
               </button>
             </div>
           </form>
