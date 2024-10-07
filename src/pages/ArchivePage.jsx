@@ -11,10 +11,11 @@ const ArchivePage = () => {
   const { fetchArchivedTasksByUser, archivedTasks, deleteTask, loading: tasksLoading, error: tasksError } = useTasks();
 
   const [searchResults, setSearchResults] = useState([]);
-  const [archivedTaskState, setArchivedTaskState] = useState([]);
+  const [archivedTaskState, setArchivedTaskState] = useState([]); // Local state for archived tasks
 
   const userId = localStorage.getItem('userId');
 
+  // Fetch projects and tasks when the component is loaded
   useEffect(() => {
     if (userId) {
       fetchProjectsByUser(userId);
@@ -22,11 +23,13 @@ const ArchivePage = () => {
     }
   }, [userId, fetchProjectsByUser, fetchArchivedTasksByUser]);
 
+  // Set local states based on fetched tasks
   useEffect(() => {
     setSearchResults([...archivedTasks]);
-    setArchivedTaskState([...archivedTasks]);
+    setArchivedTaskState([...archivedTasks]); // Ensure new reference
   }, [archivedTasks]);
 
+  // Handle the search and sort operation from SearchBar
   const handleSearch = ({ searchTerm, sortOption }) => {
     let filteredResults = archivedTaskState.filter(task =>
       task.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -42,25 +45,25 @@ const ArchivePage = () => {
       filteredResults.sort((a, b) => priorityOrder[a.priority] - priorityOrder[b.priority]);
     }
 
-    setSearchResults([...filteredResults]);
+    setSearchResults([...filteredResults]); // Ensure new reference
   };
 
   return (
     <div className="archive-page">
       <Hero title="Archived Projects" />
       <div className="archive-layout">
-        <SearchBar onSearch={handleSearch} />
+        <SearchBar onSearch={handleSearch} /> {/* Add SearchBar at the top */}
         {projectsError && <p className="error-message">Error: {projectsError}</p>}
         {tasksError && <p className="error-message">Error: {tasksError}</p>}
         {(projectsLoading || tasksLoading) ? (
           <p>Loading projects and tasks...</p>
         ) : (
           <ArchiveList
-            key={archivedTaskState.length}
             archivedTasks={searchResults}
             projects={projects}
             deleteTask={deleteTask}
-            setArchivedTasks={setArchivedTaskState}
+            setArchivedTasks={setArchivedTaskState} // Pass setArchivedTasks correctly
+            setSearchResults={setSearchResults} // Pass setSearchResults for consistency
           />
         )}
       </div>
