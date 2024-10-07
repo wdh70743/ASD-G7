@@ -56,7 +56,7 @@ const DashboardPage = () => {
           <Overview dailyCompletionRate={taskCompletionRate} />
         </div>
         <div className="ProjectListItem">
-          <MyProjects projects={projects} loading={projectsLoading} error={projectsError} />
+          <MyProjects project={projects} loading={projectsLoading} error={projectsError} />
         </div>
       </div>
     </div>

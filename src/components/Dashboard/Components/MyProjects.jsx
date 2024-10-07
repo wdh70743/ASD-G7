@@ -3,7 +3,7 @@ import Project from '../../ProjectList/Project';
 import '../Styles/MyProjects.css'; 
 import DashMyProject from './DashMyProject';
 
-const MyProjects = ({ projects }) => {
+const MyProjects = ({ project }) => {
   // Array of hex colors
   const colors = ['#e8544c', '#b787f1', '#e0ec5c', '#d8d4d4'];
 
@@ -17,7 +17,7 @@ const MyProjects = ({ projects }) => {
     <section className="ProjectListContainer">
       <h1 className="MyProjectTitle">My Projects</h1>
       <div className="DueTodayContainer"> 
-        {projects.map((project) => (
+        {project.map((project) => (
           <DashMyProject 
             key={project.id} 
             id={project.id}
