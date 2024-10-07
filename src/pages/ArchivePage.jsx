@@ -10,11 +10,11 @@ const ArchivePage = () => {
   const { fetchProjectsByUser, projects, loading: projectsLoading, error: projectsError } = useProjects();
   const { fetchArchivedTasksByUser, archivedTasks, deleteTask, loading: tasksLoading, error: tasksError } = useTasks();
 
-  const [searchResults, setSearchResults] = useState([]); // State to hold the search results
+  const [searchResults, setSearchResults] = useState([]);
+  const [archivedTaskState, setArchivedTaskState] = useState([]);
 
   const userId = localStorage.getItem('userId');
 
-  // Fetch projects and tasks when the component is loaded
   useEffect(() => {
     if (userId) {
       fetchProjectsByUser(userId);
@@ -22,14 +22,13 @@ const ArchivePage = () => {
     }
   }, [userId, fetchProjectsByUser, fetchArchivedTasksByUser]);
 
-  // Update search results whenever archived tasks change
   useEffect(() => {
-    setSearchResults(archivedTasks);
+    setSearchResults([...archivedTasks]);
+    setArchivedTaskState([...archivedTasks]);
   }, [archivedTasks]);
 
-  // Handle the search and sort operation from SearchBar
   const handleSearch = ({ searchTerm, sortOption }) => {
-    let filteredResults = archivedTasks.filter(task =>
+    let filteredResults = archivedTaskState.filter(task =>
       task.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
       task.description.toLowerCase().includes(searchTerm.toLowerCase())
     );
@@ -43,21 +42,26 @@ const ArchivePage = () => {
       filteredResults.sort((a, b) => priorityOrder[a.priority] - priorityOrder[b.priority]);
     }
 
-    setSearchResults(filteredResults);
+    setSearchResults([...filteredResults]);
   };
 
   return (
     <div className="archive-page">
       <Hero title="Archived Projects" />
       <div className="archive-layout">
-        <SearchBar onSearch={handleSearch} /> {/* Add SearchBar at the top */}
+        <SearchBar onSearch={handleSearch} />
         {projectsError && <p className="error-message">Error: {projectsError}</p>}
         {tasksError && <p className="error-message">Error: {tasksError}</p>}
         {(projectsLoading || tasksLoading) ? (
           <p>Loading projects and tasks...</p>
         ) : (
-          // Use searchResults instead of archivedTasks for filtered results
-          <ArchiveList archivedTasks={searchResults} projects={projects} deleteTask={deleteTask} />
+          <ArchiveList
+            key={archivedTaskState.length}
+            archivedTasks={searchResults}
+            projects={projects}
+            deleteTask={deleteTask}
+            setArchivedTasks={setArchivedTaskState}
+          />
         )}
       </div>
     </div>

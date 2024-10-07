@@ -12,11 +12,9 @@ const useProjects = () => {
   const fetchProjectsByUser = useCallback(async (userId) => {
     setLoading(true);
     setError(null);
-    console.log(`Fetching projects for user ID: ${userId}`);
 
     try {
       const response = await ProjectService.getProjectsByUser(userId);
-      console.log('API Response:', response.data);
 
       if (response && response.data) {
         const allProjects = response.data.projects || response.data;
@@ -30,12 +28,10 @@ const useProjects = () => {
   }, []);
 
   const deleteProject = useCallback(async (id) => {
-    console.log(`Attempting to delete task with ID: ${id}`);
     setLoading(true);
     setError(null);
     try {
       const response = await projectService.deleteProject(id);
-      console.log('Delete response:', response);
       setProjects(prevTasks => prevTasks.filter(project => project.id !== id));
     } catch (err) {
       console.error('Delete error:', err);
@@ -46,12 +42,10 @@ const useProjects = () => {
   }, []);
 
   const createProject = useCallback(async (newProject) => {
-    console.log('Creating project:', newProject);
     setLoading(true);
     setError(null);
     try {
         const response = await ProjectService.createProject(newProject);
-        console.log('Create response:', response.data);
         setProjects(prevProjects => [...prevProjects, response.data]);
     } catch (err) {
         console.error('Create task error:', err.response?.data || err); 
@@ -62,12 +56,10 @@ const useProjects = () => {
 }, []);
 
 const updateProject = useCallback(async (id, updatedProject) => {
-  console.log('Updating project:', id); 
   setLoading(true);
   setError(null);
   try {
       const response = await projectService.updateProject(id, updatedProject); 
-      console.log('Update response:', response.data);
       setProjects(prevTasks => 
           prevTasks.map(project => (project.id === id ? response.data : project)) 
       );
@@ -82,11 +74,9 @@ const updateProject = useCallback(async (id, updatedProject) => {
 const fetchProjectByProjectID = useCallback(async (projectID) => {
   setLoading(true);
   setError(null);
-  console.log(`Fetching projects for project ID: ${projectID}`);
 
   try {
     const response = await ProjectService.getProjectByProjectId(projectID);
-    console.log('API Response:', response.data);
 
     if (response && response.data) {
       const project = response.data.projects || response.data;

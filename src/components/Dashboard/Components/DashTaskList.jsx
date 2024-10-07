@@ -16,7 +16,6 @@ const DashTaskList = ({ tasks, loading, error }) => {
   };
 
   const randomColor = getRandomColor();
-  console.log(randomColor); // Logs a random color from the array
     
   return (
     <section className="TaskListContainer">

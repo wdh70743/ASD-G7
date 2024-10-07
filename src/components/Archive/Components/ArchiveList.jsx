@@ -1,28 +1,36 @@
 import React from 'react';
 import '../Styles/ArchiveList.css';
 import ArchiveButton from './ArchiveButton';
+import taskService from '../../../services/TaskService';
 
-const ArchiveList = ({ archivedTasks = [], deleteTask, projects = [] }) => {
-  // Create a mapping of project IDs to project names using the `projectname` field
+const ArchiveList = ({ archivedTasks = [], deleteTask, projects = [], setArchivedTasks }) => {
   const projectMapping = projects.reduce((acc, project) => {
-    acc[project.id.toString()] = project.projectname; // Ensure mapping uses `projectname`
+    acc[project.id.toString()] = project.projectname;
     return acc;
   }, {});
 
-  // Group tasks by project ID, using `archivedTasks` array
   const groupedTasks = archivedTasks.reduce((acc, task) => {
-    const projectId = task.project ? task.project.toString() : "Unknown"; // Ensure project ID is a string
+    const projectId = task.project ? task.project.toString() : "Unknown";
     if (!acc[projectId]) acc[projectId] = [];
     acc[projectId].push(task);
     return acc;
   }, {});
+
+  const handleReassignTask = async (taskId) => {
+    try {
+      await taskService.archiveTask(taskId);
+
+      setArchivedTasks((prevTasks) => prevTasks.filter((task) => task.id !== taskId));
+    } catch (error) {
+      console.error('Failed to reassign/archive task', error);
+    }
+  };
 
   return (
     <div className="archive-list">
       {Object.keys(groupedTasks).length > 0 ? (
         Object.keys(groupedTasks).map((projectId) => (
           <div key={projectId} className="project-container">
-            {/* Use `projectMapping` to get the project name */}
             <h2 className="project-title">
               {projectMapping[projectId] || `Unknown Project (${projectId})`}
             </h2>
@@ -35,10 +43,13 @@ const ArchiveList = ({ archivedTasks = [], deleteTask, projects = [] }) => {
                   <p>Description: {task.description}</p>
                 </div>
                 <div className="archive-buttons">
-                  <ArchiveButton name="Reassign" />
+                  <ArchiveButton
+                    name="Reassign"
+                    onClick={() => handleReassignTask(task.id)}
+                  />
                   <ArchiveButton
                     name="Delete"
-                    onClick={() => deleteTask(task.id)} // Call deleteTask with task ID
+                    onClick={() => deleteTask(task.id)}
                   />
                 </div>
               </div>

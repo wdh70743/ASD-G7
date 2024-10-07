@@ -46,7 +46,6 @@ const ProjectList = ({userId, projects, createProject, updateProject, deleteProj
     };
 
     if (editingIndex !== null) {
-      console.log('Editing project with ID:', projectList[editingIndex].id);
       const projectId = projectList[editingIndex].id;
       await updateProject(projectId, newProject);
     } else {
@@ -79,7 +78,6 @@ const ProjectList = ({userId, projects, createProject, updateProject, deleteProj
 
 
   useEffect(() => {
-    console.log('Current projects:', projectList);
   }, [projectList]);
   
   return (

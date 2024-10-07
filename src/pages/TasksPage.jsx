@@ -13,14 +13,12 @@ const TasksPage = () => {
   const { id } = useParams(); // project_ID
 
   const stableFetchTasks = useCallback(() => {
-    console.log(id)
     if (id) {
       fetchTasksByProject(id);
     }
   }, [fetchTasksByProject, id]);
 
   const stableFetchProject = useCallback(() => {
-    console.log(id)
     if (id) {
       fetchProjectByProjectID(id);
     }
