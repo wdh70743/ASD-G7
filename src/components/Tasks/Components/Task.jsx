@@ -1,29 +1,24 @@
 import React, { useState } from 'react';
 import '../Styles/Task.css';
 
-const Task = ({ title, description, startDate, endDate, priority, status, onEdit, onDelete, onToggleStatus, onArchive }) => {
+const Task = ({ title, description, startDate, endDate, priority, status, isArchived, onEdit, onDelete, onToggleStatus, onArchive }) => {
   const [detailsVisible, setDetailsVisible] = useState(false);
 
   const toggleDetails = () => {
-    setDetailsVisible(prevState => !prevState);
+    setDetailsVisible((prevState) => !prevState);
   };
 
-  // Utility function to format date to dd/mm/yy
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     const day = String(date.getDate()).padStart(2, '0');
-    const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-based
-    const year = String(date.getFullYear()).slice(-2); // Get last two digits of year
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = String(date.getFullYear()).slice(-2);
     return `${day}/${month}/${year}`;
   };
 
   return (
     <div className="task-box" style={{ backgroundColor: status ? 'rgba(64, 217, 43, 0.5)' : 'rgba(240, 240, 240, 0.8)' }}>
-      <input 
-        checked={status} 
-        onChange={onToggleStatus} 
-        type="checkbox" 
-      />
+      <input checked={status} onChange={onToggleStatus} type="checkbox" />
       <div>
         <div className="task-title" onClick={toggleDetails}>
           <h4>{title}</h4>
@@ -45,7 +40,10 @@ const Task = ({ title, description, startDate, endDate, priority, status, onEdit
           Edit
         </button>
         <button className='delete-button' onClick={onDelete}>Delete</button>
-        <button className='archive-button' onClick={onArchive}>Archive</button>
+        {/* Change button text based on archive status */}
+        <button className='archive-button' onClick={onArchive}>
+          {isArchived ? 'Reassign' : 'Archive'}
+        </button>
       </div>
     </div>
   );

@@ -12,11 +12,9 @@ const useTasks = () => {
   const fetchTasksByUser = useCallback(async (userId) => {
     setLoading(true);
     setError(null);
-    console.log(`Fetching tasks for user ID: ${userId}`);
 
     try {
       const response = await taskService.getTasksByUser(userId);
-      console.log('API Response:', response.data);
 
       if (response && response.data) {
         const allTasks = response.data.tasks || response.data;
@@ -46,11 +44,9 @@ const useTasks = () => {
   const fetchArchivedTasksByUser = useCallback(async (userId) => {
     setLoading(true);
     setError(null);
-    console.log(`Fetching archived tasks for user ID: ${userId}`);
 
     try {
       const response = await taskService.getArchivedTasksByUser(userId);
-      console.log('Archived Tasks API Response:', response.data);
 
       if (response && response.data) {
         const allArchivedTasks = response.data.tasks || response.data;
@@ -68,11 +64,9 @@ const useTasks = () => {
   const fetchTasksByProject = useCallback(async (projectID) => {
     setLoading(true);
     setError(null);
-    console.log(`Fetching tasks for project ID: ${projectID}`);
 
     try {
       const response = await taskService.getTasksByProject(projectID);
-      console.log('API Response:', response.data);
 
       if (response && response.data) {
         const allTasks = response.data.tasks || response.data;
@@ -92,12 +86,10 @@ const useTasks = () => {
   }, []);
 
   const deleteTask = useCallback(async (taskId) => {
-    console.log(`Attempting to delete task with ID: ${taskId}`);
     setLoading(true);
     setError(null);
     try {
       const response = await taskService.deleteTask(taskId);
-      console.log('Delete response:', response);
   
       // Update both `tasks` and `archivedTasks` states to reflect the deletion
       setTasks((prevTasks) => prevTasks.filter((task) => task.id !== taskId));
@@ -112,15 +104,12 @@ const useTasks = () => {
   
 
   const createTask = useCallback(async (newTask) => {
-    console.log('Creating task:', newTask); // Log to see the payload
     setLoading(true);
     setError(null);
     try {
         const response = await taskService.createTask(newTask);
-        console.log('Create response:', response.data);
         setTasks(prevTasks => [...prevTasks, response.data]); // Update state
     } catch (err) {
-        console.error('Create task error:', err.response?.data || err); // Log the full error response
         setError(err.response?.data?.message || 'Failed to create task');
     } finally {
         setLoading(false);
@@ -128,12 +117,10 @@ const useTasks = () => {
 }, []);
 
 const updateTask = useCallback(async (taskId, updatedTask) => {
-  console.log('Updating task:', taskId); // Log to see the payload
   setLoading(true);
   setError(null);
   try {
       const response = await taskService.updateTask(taskId, updatedTask); // Call the updated service method
-      console.log('Update response:', response.data);
       setTasks(prevTasks => 
           prevTasks.map(task => (task.id === taskId ? response.data : task)) // Update the task in state
       );

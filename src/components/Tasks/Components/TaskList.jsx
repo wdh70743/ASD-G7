@@ -4,10 +4,9 @@ import '../Styles/TaskList.css';
 import Task from './Task';
 import taskService from '../../../services/TaskService';
 
-const TaskList = ({ userId, tasks, projectId, projectName, projectDescription, deleteTask, createTask, updateTask, archiveTask }) => {
+const TaskList = ({ userId, tasks, projectId, projectName, projectDescription, deleteTask, createTask, updateTask }) => {
   const navigate = useNavigate();
   const [taskList, setTaskList] = useState([]);
-
   const [taskForm, setTaskForm] = useState(false);
   const [taskName, setTaskName] = useState('');
   const [taskDescription, setTaskDescription] = useState('');
@@ -17,19 +16,17 @@ const TaskList = ({ userId, tasks, projectId, projectName, projectDescription, d
   const [newTaskButtonColor, setNewTaskButtonColor] = useState('#007BFF');
   const [editingIndex, setEditingIndex] = useState(null);
 
-  // Filter out archived tasks from the initial task list
   useEffect(() => {
-    setTaskList(tasks.filter(task => !task.is_archived));
+    setTaskList(tasks);
   }, [tasks]);
 
-  const handleBack = () => navigate('/Projects'); 
+  const handleBack = () => navigate('/Projects');
 
   const toggleForm = () => {
-  const newColor = !taskForm ? 'red' : '#007BFF';
-  setNewTaskButtonColor(newColor);
-  setTaskForm((prev) => !prev); // Use functional state update to ensure correct state transition
-};
-
+    const newColor = !taskForm ? 'red' : '#007BFF';
+    setNewTaskButtonColor(newColor);
+    setTaskForm((prev) => !prev);
+  };
 
   const resetForm = () => {
     setTaskName('');
@@ -46,9 +43,9 @@ const TaskList = ({ userId, tasks, projectId, projectName, projectDescription, d
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const newTask = { 
-      title: taskName, 
-      description: taskDescription, 
+    const newTask = {
+      title: taskName,
+      description: taskDescription,
       start_date: formatDateForAPI(taskStartDate),
       due_date: formatDateForAPI(taskEndDate),
       priority: taskPriority,
@@ -91,14 +88,26 @@ const TaskList = ({ userId, tasks, projectId, projectName, projectDescription, d
   const handleDeleteTask = (taskId) => deleteTask(taskId);
 
   const handleArchiveTask = async (taskId) => {
-    const currentTimestamp = new Date().toISOString();
+    const taskToUpdate = taskList.find((task) => task.id === taskId);
+    if (!taskToUpdate) return;
+
+    const newArchivedState = !taskToUpdate.is_archived;
+    const currentTimestamp = newArchivedState ? new Date().toISOString() : null;
+
     try {
-      await taskService.archiveTask(taskId, currentTimestamp);
-      setTaskList((prevTasks) => prevTasks.filter((task) => task.id !== taskId));
+      await taskService.archiveTask(taskId);
+
+      setTaskList((prevTasks) =>
+        prevTasks.map((task) =>
+          task.id === taskId
+            ? { ...task, is_archived: newArchivedState, archived_at: currentTimestamp }
+            : task
+        )
+      );
     } catch (error) {
-      console.error("Failed to archive task", error);
+      console.error('Failed to archive/reassign task', error);
     }
-  };  
+  };
 
   const toggleTaskStatus = async (taskId) => {
     const taskToUpdate = taskList.find(task => task.id === taskId);
@@ -106,16 +115,12 @@ const TaskList = ({ userId, tasks, projectId, projectName, projectDescription, d
       const newStatus = !taskToUpdate.status;
       await updateTask(taskToUpdate.id, { ...taskToUpdate, status: newStatus });
     }
-    setTaskList(prevTasks => 
-      prevTasks.map(task => 
+    setTaskList(prevTasks =>
+      prevTasks.map(task =>
         task.id === taskId ? { ...task, status: !task.status } : task
       )
     );
   };
-
-  useEffect(() => {
-    console.log('Current tasks:', taskList);
-  }, [taskList]);
 
   return (
     <div className="main-container">
@@ -125,9 +130,9 @@ const TaskList = ({ userId, tasks, projectId, projectName, projectDescription, d
           <h2>{projectName}</h2>
           <p>{projectDescription}</p>
         </div>
-        <button 
-          onClick={toggleForm} 
-          className="new-task-button" 
+        <button
+          onClick={toggleForm}
+          className="new-task-button"
           style={{ backgroundColor: newTaskButtonColor }}
         >
           {taskForm ? "Cancel Task" : "New Task"}
@@ -206,7 +211,7 @@ const TaskList = ({ userId, tasks, projectId, projectName, projectDescription, d
           <p>No tasks available.</p>
         ) : (
           taskList.map((task) => (
-            <Task 
+            <Task
               key={task.id}
               title={task.title}
               description={task.description}
@@ -214,6 +219,7 @@ const TaskList = ({ userId, tasks, projectId, projectName, projectDescription, d
               endDate={task.due_date}
               priority={task.priority}
               status={task.status}
+              isArchived={task.is_archived} 
               onEdit={() => handleEditTask(task.id)}
               onDelete={() => handleDeleteTask(task.id)}
               onArchive={() => handleArchiveTask(task.id)}
