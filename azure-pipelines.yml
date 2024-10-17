@@ -66,5 +66,28 @@ stages:
         command: buildAndPush
         dockerfile: '**/Dockerfile'
         tags: |
-          $(tag)
+          latest
+
+- stage: DeployIntoAzureVM
+  displayName: Deploy the server into Azure VM
+  dependsOn: ContaineriseAndPush
+  jobs:
+  - job: DeployServer
+    displayName: Deploy the server Through SSH
+    steps:
+    - task: SSH@0
+      displayName: "SSH into Azure VM"
+      inputs:
+        sshEndPoint: 'ASD-Group7-Frontend-Server'
+        runOptions: inline
+        inline: |
+          CONTAINER_ID=$(sudo docker ps -q --filter ancestor=dohunwon/asd-group7-frontend:latest)
+          if [ "$CONTAINER_ID" ]; then
+            sudo docker stop $CONTAINER_ID
+            sudo docker rm $CONTAINER_ID
+          fi
+          sudo docker rmi dohunwon/asd-group7-frontend:latest
+          sudo docker pull dohunwon/asd-group7-frontend:latest
+          sudo docker run -d -p 80:3000 dohunwon/asd-group7-frontend:latest
+      condition: succeededOrFailed()
 
