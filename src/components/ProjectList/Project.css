@@ -1,63 +1,68 @@
 body {
-    margin: 0;
-    padding: 0;
+  margin: 0;
+  padding: 0;
 }
 
 .rectangle-box {
-    height: 130px;
-    padding: 10px; 
-    padding-left: 3%;
-    padding-top: 3%;
-    border-radius: 15px; 
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin: 9px auto; 
-    position: relative;
-    box-sizing: border-box; 
-    cursor: pointer;
-
+  height: auto;
+  min-height: 100px; 
+  padding: 10px; 
+  border-radius: 15px; 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin: 9px auto; 
+  position: relative;
+  box-sizing: border-box; 
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; 
 }
-
-
 
 .title {
-    font-size: 25px;
-    font-weight: 500;
-    color: #000000; 
-    font-family: "Inter";
-    margin: 0;
-    padding-bottom: 2%;
-    text-align: center;
- 
+  font-size: 20px; 
+  font-weight: 500;
+  color: #000000; 
+  font-family: "Inter";
+  margin: 0;
+  text-align: center;
 }
 
-
-.subtitle {
-    font-size: 15px;
-    font-weight: normal;
-    color: #000000; 
-    font-family: "Inter";
-    margin: 0; 
-    padding: 0; 
+.centered-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.rectangle-box {
-    display: flex;
-    flex-direction: column;
-    padding: 20px; 
-  }
-  
-  .centered-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .alter-project {
-    margin-top: 10px; 
-  }
-  
-  .project-details {
-    margin-top: 10px; 
-  }
-  
+.alter-project {
+  margin-top: 10px; 
+}
 
+.project-details {
+  margin-top: 10px; 
+  display: flex;
+  flex-direction: column; 
+  gap: 5px; 
+}
+
+.project-details p {
+  margin: 0; 
+  flex: 1; 
+  min-width: 150px;
+}
+
+.edit-button {
+  border: none; 
+  cursor: pointer; 
+  background-color: transparent;
+}
+
+.project-title {
+  display: flex;
+  align-items: center;
+}
+
+.project-title input[type=checkbox] {
+  height: 16px; 
+  width: 16px; 
+  accent-color: green;
+}

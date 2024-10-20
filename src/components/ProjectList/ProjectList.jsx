@@ -2,11 +2,10 @@ import React, { useState, useEffect } from 'react';
 import Project from './Project';
 import '../Tasks/Styles/TaskList.css';
 
-const ProjectList = ({userId, projects, createProject, updateProject, deleteProject}) => {
-
+const ProjectList = ({ userId, projects, createProject, updateProject, deleteProject }) => {
   const [projectList, setProjectList] = useState(projects || []);
   const [projectForm, setProjectForm] = useState(false);
-  const [newTaskButtonColor, setNewTaskButtonColor] = useState('#007BFF');
+  const [newProjectButtonColor, setNewProjectButtonColor] = useState('#007BFF');
   const [projectName, setProjectName] = useState('');
   const [projectDescription, setProjectDescription] = useState('');
   const [projectStartDate, setProjectStartDate] = useState('');
@@ -14,10 +13,9 @@ const ProjectList = ({userId, projects, createProject, updateProject, deleteProj
   const [projectPriority, setProjectPriority] = useState('Medium');
   const [editingIndex, setEditingIndex] = useState(null);
 
-
   const toggleForm = () => {
     const newColor = !projectForm ? 'red' : '#007BFF';
-    setNewTaskButtonColor(newColor);
+    setNewProjectButtonColor(newColor);
     setProjectForm(!projectForm);
     if (projectForm) resetForm();
   };
@@ -30,7 +28,6 @@ const ProjectList = ({userId, projects, createProject, updateProject, deleteProj
     setProjectEndDate('');
     setEditingIndex(null);
   };
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -50,12 +47,11 @@ const ProjectList = ({userId, projects, createProject, updateProject, deleteProj
       await updateProject(projectId, newProject);
     } else {
       await createProject(newProject);
-
     }
 
     resetForm();
     setProjectForm(false);
-    setNewTaskButtonColor('#007BFF');
+    setNewProjectButtonColor('#007BFF');
   };
 
   const handleEditProject = (projectId) => {
@@ -68,7 +64,7 @@ const ProjectList = ({userId, projects, createProject, updateProject, deleteProj
       setProjectPriority(project.priority);
       setEditingIndex(projectList.findIndex(t => t.id === projectId));
       setProjectForm(true);
-      setNewTaskButtonColor('red');
+      setNewProjectButtonColor('red');
     } else {
       console.error('Project not found for ID:', projectId);
     }
@@ -76,19 +72,44 @@ const ProjectList = ({userId, projects, createProject, updateProject, deleteProj
 
   const handleDeleteProject = (projectId) => deleteProject(projectId);
 
+  const handleArchiveProject = async (projectId) => {
+    const projectToUpdate = projectList.find(p => p.id === projectId);
+    if (!projectToUpdate) return;
+
+    const newArchivedState = !projectToUpdate.isArchived;
+    // Assuming there's an API to update the archived state
+    await updateProject(projectId, { ...projectToUpdate, isArchived: newArchivedState });
+    setProjectList(prevProjects =>
+      prevProjects.map(project =>
+        project.id === projectId ? { ...project, isArchived: newArchivedState } : project
+      )
+    );
+  };
+
+  const toggleProjectStatus = async (projectId) => {
+    const projectToUpdate = projectList.find(project => project.id === projectId);
+    if (projectToUpdate) {
+      const newStatus = !projectToUpdate.status;
+      await updateProject(projectId, { ...projectToUpdate, status: newStatus });
+      setProjectList(prevProjects =>
+        prevProjects.map(project =>
+          project.id === projectId ? { ...project, status: newStatus } : project
+        )
+      );
+    }
+  };
 
   useEffect(() => {
-  }, [projectList]);
-  
+    setProjectList(projects);
+  }, [projects]);
+
   return (
     <div className="main-container">
       <div className="task-list-header">
-        <div className="projectTitleDescription">
-        </div>
         <button 
           onClick={toggleForm} 
           className="new-task-button" 
-          style={{ backgroundColor: newTaskButtonColor }}
+          style={{ backgroundColor: newProjectButtonColor }}
         >
           {projectForm ? "Cancel Project" : "New Project"}
         </button>
@@ -101,7 +122,7 @@ const ProjectList = ({userId, projects, createProject, updateProject, deleteProj
               <input
                 id="projectName"
                 type="text"
-                placeholder="Enter task name"
+                placeholder="Enter project name"
                 value={projectName}
                 onChange={(e) => setProjectName(e.target.value)}
                 required
@@ -112,7 +133,7 @@ const ProjectList = ({userId, projects, createProject, updateProject, deleteProj
               <input
                 id="projectDescription"
                 type="text"
-                placeholder="Enter task description"
+                placeholder="Enter project description"
                 value={projectDescription}
                 onChange={(e) => setProjectDescription(e.target.value)}
                 required
@@ -161,25 +182,32 @@ const ProjectList = ({userId, projects, createProject, updateProject, deleteProj
           </form>
         </div>
       )}
-    <div>
-      {projectList.length === 0 ? (
+      <div>
+        {projectList.length === 0 ? (
           <p>No projects available.</p>
         ) : (
-        projectList.map((project) => (
+          projectList.map((project) => (
             <Project 
-            key = {project.id}
-            id = {project.id}
-            color="#f0f0f0" 
-            title= {project.projectname} 
-            description={project.description}
-            onEdit={() => handleEditProject(project.id)}
-            onDelete={() => handleDeleteProject(project.id)}
-          />
-        ))
-      )}
+              key={project.id}
+              id={project.id}
+              color="#f0f0f0" 
+              title={project.projectname} 
+              description={project.description}
+              startDate={project.start_date}
+              endDate={project.end_date}
+              priority={project.priority}
+              status={project.status}
+              isArchived={project.isArchived}
+              onEdit={() => handleEditProject(project.id)}
+              onDelete={() => handleDeleteProject(project.id)}
+              onToggleStatus={() => toggleProjectStatus(project.id)}
+              onArchive={() => handleArchiveProject(project.id)}
+            />
+          ))
+        )}
+      </div>
     </div>
-  </div>
-);
+  );
 };
-export default ProjectList;
 
+export default ProjectList;
