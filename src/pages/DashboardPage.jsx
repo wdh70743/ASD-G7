@@ -10,6 +10,7 @@ import './Styles/DashboardPage.css';
 
 const DashboardPage = () => {
   const [userName, setUserName] = useState('');
+  const [savedNotes, setSavedNotes] = useState('');
   const { fetchTasksByUser, todayTasks, taskCompletionRate, loading: tasksLoading, error: tasksError } = useTasks();
   const { fetchProjectsByUser, projects, loading: projectsLoading, error: projectsError } = useProjects();
 
@@ -18,11 +19,13 @@ const DashboardPage = () => {
   useEffect(() => {
     const userId = localStorage.getItem('userId');
     const savedUserName = localStorage.getItem('username');
+    const savedNotes = localStorage.getItem('note') || '';
 
     if (!userId || !savedUserName) {
       navigate('/');
     } else {
       setUserName(savedUserName);
+      setSavedNotes(savedNotes || '');
     }
   }, [navigate]);
 
@@ -53,7 +56,7 @@ const DashboardPage = () => {
           <DashTaskList tasks={todayTasks} loading={tasksLoading} error={tasksError} />
         </div>
         <div className="OverviewItem">
-          <Overview dailyCompletionRate={taskCompletionRate} />
+          <Overview dailyCompletionRate={taskCompletionRate} savedNotes={savedNotes} />
         </div>
         <div className="ProjectListItem">
           <MyProjects project={projects} loading={projectsLoading} error={projectsError} />

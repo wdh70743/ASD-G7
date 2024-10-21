@@ -36,7 +36,7 @@ const Task = ({ title, description, startDate, endDate, priority, status, isArch
         <button className='detail-button' onClick={toggleDetails}>
           {detailsVisible ? 'Hide Details' : 'Show Details'}
         </button>
-        <button className='edit-button' onClick={onEdit}>
+        <button className='TaskEdit-button' onClick={onEdit}>
           Edit
         </button>
         <button className='delete-button' onClick={onDelete}>Delete</button>

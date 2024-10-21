@@ -25,10 +25,11 @@ const DashTaskList = ({ tasks, loading, error }) => {
             <DashTask 
               key={task.id}
               title={task.title} 
-              color= {getRandomColor()}
+              color= '#e8544c'
               subtitle={task.description} 
               project = {task.project}
               priority = {task.priority}
+              status = {task.status}
             />
           ))}
         </div>

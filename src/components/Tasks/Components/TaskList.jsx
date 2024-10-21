@@ -4,7 +4,7 @@ import '../Styles/TaskList.css';
 import Task from './Task';
 import taskService from '../../../services/TaskService';
 
-const TaskList = ({ userId, tasks, projectId, projectName, projectDescription, deleteTask, createTask, updateTask }) => {
+const TaskList = ({ userId, tasks, projectId, projectName, projectDescription, deleteTask, createTask, updateTask, taskFiles }) => {
   const navigate = useNavigate();
   const [taskList, setTaskList] = useState([]);
   const [taskForm, setTaskForm] = useState(false);
@@ -13,6 +13,7 @@ const TaskList = ({ userId, tasks, projectId, projectName, projectDescription, d
   const [taskPriority, setTaskPriority] = useState('Medium');
   const [taskStartDate, setTaskStartDate] = useState('');
   const [taskEndDate, setTaskEndDate] = useState('');
+  const [taskFile, setTaskFile] = useState(null); // State for file upload
   const [newTaskButtonColor, setNewTaskButtonColor] = useState('#007BFF');
   const [editingIndex, setEditingIndex] = useState(null);
 
@@ -34,6 +35,7 @@ const TaskList = ({ userId, tasks, projectId, projectName, projectDescription, d
     setTaskPriority('Medium');
     setTaskStartDate('');
     setTaskEndDate('');
+    setTaskFile(null);
     setEditingIndex(null);
   };
 
@@ -57,11 +59,15 @@ const TaskList = ({ userId, tasks, projectId, projectName, projectDescription, d
       project: projectId,
     };
 
-    if (editingIndex !== null) {
-      const taskId = taskList[editingIndex].id;
-      await updateTask(taskId, newTask);
-    } else {
-      await createTask(newTask);
+    try {
+      if (editingIndex !== null) {
+        const taskId = taskList[editingIndex].id;
+        await updateTask(taskId, newTask, taskFile); // Pass file for update
+      } else {
+        await createTask(newTask, taskFile); // Pass file for creation
+      }
+    } catch (error) {
+      console.error('Error creating/updating task:', error);
     }
 
     resetForm();
@@ -198,6 +204,14 @@ const TaskList = ({ userId, tasks, projectId, projectName, projectDescription, d
                 <option value="Low">Low</option>
               </select>
             </div>
+            <div className="form-group">
+              <label htmlFor="taskFile">Attach File</label>
+              <input
+                id="taskFile"
+                type="file"
+                onChange={(e) => setTaskFile(e.target.files[0])}
+              />
+            </div>
             <div className="submit-button-container">
               <button type="submit" className="submit-button">
                 {editingIndex !== null ? "Update Task" : "Add Task"}
@@ -211,20 +225,34 @@ const TaskList = ({ userId, tasks, projectId, projectName, projectDescription, d
           <p>No tasks available.</p>
         ) : (
           taskList.map((task) => (
-            <Task
-              key={task.id}
-              title={task.title}
-              description={task.description}
-              startDate={task.start_date}
-              endDate={task.due_date}
-              priority={task.priority}
-              status={task.status}
-              isArchived={task.is_archived} 
-              onEdit={() => handleEditTask(task.id)}
-              onDelete={() => handleDeleteTask(task.id)}
-              onArchive={() => handleArchiveTask(task.id)}
-              onToggleStatus={() => toggleTaskStatus(task.id)}
-            />
+            <div key={task.id}>
+              <Task
+                title={task.title}
+                description={task.description}
+                startDate={task.start_date}
+                endDate={task.due_date}
+                priority={task.priority}
+                status={task.status}
+                isArchived={task.is_archived} 
+                onEdit={() => handleEditTask(task.id)}
+                onDelete={() => handleDeleteTask(task.id)}
+                onArchive={() => handleArchiveTask(task.id)}
+                onToggleStatus={() => toggleTaskStatus(task.id)}
+              />
+              {/* Display links to attached files */}
+              {taskFiles[task.id] && taskFiles[task.id].length > 0 && (
+                <div>
+                  <h4>Attached Files:</h4>
+                  <ul>
+                    {taskFiles[task.id].map((file, index) => (
+                      <li key={index}>
+                        <a href={file.url} target="_blank" rel="noopener noreferrer">{file.name}</a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </div>
           ))
         )}
       </div>
@@ -233,3 +261,4 @@ const TaskList = ({ userId, tasks, projectId, projectName, projectDescription, d
 };
 
 export default TaskList;
+
