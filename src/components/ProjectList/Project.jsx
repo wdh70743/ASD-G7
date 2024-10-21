@@ -34,7 +34,7 @@ const Project = ({ color, title, description, startDate, endDate, priority, stat
   };
 
   return (
-    <div className="rectangle-box" style={boxStyle} onClick={handleClick}>
+    <div className="Project-rectangle-box" style={boxStyle} onClick={handleClick}>
       <div className="project-title" onClick={(e) => e.stopPropagation()}>
         <input 
           type="checkbox" 

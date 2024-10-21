@@ -1,9 +1,27 @@
-// Overview.js
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import OverviewChartSummary from './OverviewChartSummary'; 
 import '../Styles/Overview.css';
 
-const Overview = ({dailyCompletionRate}) => {
+const Overview = ({ dailyCompletionRate, savedNotes }) => {
+  const [isEditing, setIsEditing] = useState(false);
+  const [notes, setNotes] = useState(savedNotes);
+
+  // Update notes when savedNotes prop changes
+  useEffect(() => {
+    setNotes(savedNotes);
+  }, [savedNotes]);
+
+  const handleEditClick = () => {
+    if (isEditing) {
+      // Save notes to local storage when saving
+      localStorage.setItem('note', notes);
+    }
+    setIsEditing(!isEditing); // Toggle edit state
+  };
+
+  const handleNotesChange = (e) => {
+    setNotes(e.target.value); // Update notes as user types
+  };
 
   return (
     <section className="OverviewContainer">
@@ -14,8 +32,23 @@ const Overview = ({dailyCompletionRate}) => {
           <OverviewChartSummary percentage={dailyCompletionRate} />
         </div>
         <div className="OverviewItem item2">
-          <p className="Notes-title">NOTES</p>
+          <div className="headingTitle">
+            <div className="Notes-title">NOTES</div>
+            <button className="edit-button" onClick={handleEditClick}>
+                  {isEditing ? 'Save' : 'Edit'}
+            </button>
+          </div>
           <div className="notes-content">
+            {isEditing ? (
+              <textarea 
+                className="notes-textarea" 
+                value={notes} 
+                onChange={handleNotesChange} 
+                rows={4} 
+              />
+            ) : (
+              <p className="notes-display">{notes || 'No notes available.'}</p>
+            )}
           </div>
         </div>
         <div className="OverviewItem item3">
@@ -27,4 +60,5 @@ const Overview = ({dailyCompletionRate}) => {
 }
 
 export default Overview;
+
 

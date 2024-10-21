@@ -21,7 +21,7 @@ const MyProjects = ({ project }) => {
           <DashMyProject 
             key={project.id} 
             id={project.id}
-            color={getRandomColor()} 
+            color='#e0ec5c'
             title={project.projectname}
             description={project.description} 
           />

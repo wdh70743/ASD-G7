@@ -8,6 +8,8 @@ const useTasks = () => {
   const [todayTasks, setTodayTasks] = useState([]);
   const [archivedTasks, setArchivedTasks] = useState([]);
   const [taskCompletionRate, setTaskCompletionRate] = useState(null);
+  const [taskFiles, setTaskFiles] = useState([]);
+
 
   const fetchTasksByUser = useCallback(async (userId) => {
     setLoading(true);
@@ -101,6 +103,21 @@ const useTasks = () => {
       setLoading(false);
     }
   }, []);
+
+  const fetchTaskFilesByTask = useCallback(async (taskId) => {
+    setLoading(true);
+    setError(null);
+    try {
+      const response = await taskService.getTaskFilesByTask(taskId);
+      setTaskFiles(response.data.files || []); // Store fetched task files in state
+      return response.data; // Return the fetched files for further use
+    } catch (err) {
+      console.error('Fetch task files error:', err);
+      setError(err.response?.data?.message || 'Failed to fetch task files');
+    } finally {
+      setLoading(false);
+    }
+  }, []);
   
 
   const createTask = useCallback(async (newTask) => {
@@ -137,6 +154,7 @@ return {
   fetchTasksByUser, 
   fetchArchivedTasksByUser,
   fetchTasksByProject, 
+  fetchTaskFilesByTask,
   deleteTask, 
   createTask, 
   updateTask, 
@@ -144,6 +162,7 @@ return {
   todayTasks, 
   taskCompletionRate,
   archivedTasks,
+  taskFiles,
   loading, 
   error 
 };
