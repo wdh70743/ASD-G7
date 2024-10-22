@@ -48,6 +48,8 @@ const DashboardPage = () => {
     stableFetchProjects();
   }, [stableFetchTasks, stableFetchProjects]);
 
+  const completedProjects = projects.filter(project => project.status === true); // Get completed projects
+
   return (
     <div className="dashboard-page">
       <Hero userName={userName} title={`You've got ${todayTasks.length} tasks today`} />
@@ -56,7 +58,7 @@ const DashboardPage = () => {
           <DashTaskList tasks={todayTasks} loading={tasksLoading} error={tasksError} />
         </div>
         <div className="OverviewItem">
-          <Overview dailyCompletionRate={taskCompletionRate} savedNotes={savedNotes} />
+          <Overview dailyCompletionRate={taskCompletionRate} savedNotes={savedNotes} projects={projects} completedProjects={completedProjects}  />
         </div>
         <div className="ProjectListItem">
           <MyProjects project={projects} loading={projectsLoading} error={projectsError} />
