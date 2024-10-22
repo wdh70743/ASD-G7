@@ -16,6 +16,10 @@ COPY . .
 # Build the React application
 RUN npm run build
 
+# Set the HOST environment variable
+ENV HOST=0.0.0.0
+
 EXPOSE 3000
 
+# Start the React application
 CMD ["npm", "start"]
