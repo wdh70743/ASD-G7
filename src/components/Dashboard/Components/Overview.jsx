@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import OverviewChartSummary from './OverviewChartSummary'; 
+import CompletedProjectsList from './CompletedProjectsList';
 import '../Styles/Overview.css';
 
-const Overview = ({ dailyCompletionRate, savedNotes }) => {
+const Overview = ({ dailyCompletionRate, savedNotes, projects, completedProjects }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [notes, setNotes] = useState(savedNotes);
 
@@ -53,6 +54,7 @@ const Overview = ({ dailyCompletionRate, savedNotes }) => {
         </div>
         <div className="OverviewItem item3">
           <p className="CompletedProjectsTitle">COMPLETED PROJECTS</p>
+          <CompletedProjectsList completedProjects ={completedProjects}/>
         </div>
       </div>
     </section>

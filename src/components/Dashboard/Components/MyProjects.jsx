@@ -24,6 +24,7 @@ const MyProjects = ({ project }) => {
             color='#e0ec5c'
             title={project.projectname}
             description={project.description} 
+            status = {project.status} 
           />
         ))}
       </div>

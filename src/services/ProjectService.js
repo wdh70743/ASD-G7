@@ -26,10 +26,6 @@ class ProjectService {
     deleteProject(projectID) {
         return axios.delete(`${this.BASE_URL}projects/${projectID}/`);  
     }
-
-
-
-
 }
 
 const projectService = new ProjectService();
