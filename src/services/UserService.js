@@ -4,11 +4,11 @@ class UserService {
   BASE_URL = `http://asd-g7-backend.australiaeast.cloudapp.azure.com/`;
 
   register(user) {
-    return axios.post(this.BASE_URL + 'create/', user);  // Create a new user
+    return axios.post(this.BASE_URL +'users/'+'create/', user);  // Create a new user
   }
 
   login(email, password) {
-    return axios.post(this.BASE_URL + 'login/', { email, password });  // User login
+    return axios.post(this.BASE_URL + 'users/'+'login/', { email, password });  // User login
   }
 
   getUserData(userId) {
