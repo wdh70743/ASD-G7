@@ -8,7 +8,6 @@ const useTasks = () => {
   const [todayTasks, setTodayTasks] = useState([]);
   const [archivedTasks, setArchivedTasks] = useState([]);
   const [taskCompletionRate, setTaskCompletionRate] = useState(null);
-  const [taskFiles, setTaskFiles] = useState([]);
 
 
   const fetchTasksByUser = useCallback(async (userId) => {
@@ -103,29 +102,14 @@ const useTasks = () => {
       setLoading(false);
     }
   }, []);
-
-  const fetchTaskFilesByTask = useCallback(async (taskId) => {
-    setLoading(true);
-    setError(null);
-    try {
-      const response = await taskService.getTaskFilesByTask(taskId);
-      setTaskFiles(response.data.files || []); // Store fetched task files in state
-      return response.data; // Return the fetched files for further use
-    } catch (err) {
-      console.error('Fetch task files error:', err);
-      setError(err.response?.data?.message || 'Failed to fetch task files');
-    } finally {
-      setLoading(false);
-    }
-  }, []);
   
 
-  const createTask = useCallback(async (newTask) => {
+  const createTask = useCallback(async (newTask, taskFile) => {
     setLoading(true);
     setError(null);
     try {
-        const response = await taskService.createTask(newTask);
-        setTasks(prevTasks => [...prevTasks, response.data]); // Update state
+        const response = await taskService.createTask(newTask, taskFile);
+        setTasks(prevTasks => [...prevTasks, response.data.data]); // Update state
     } catch (err) {
         setError(err.response?.data?.message || 'Failed to create task');
     } finally {
@@ -154,7 +138,6 @@ return {
   fetchTasksByUser, 
   fetchArchivedTasksByUser,
   fetchTasksByProject, 
-  fetchTaskFilesByTask,
   deleteTask, 
   createTask, 
   updateTask, 
@@ -162,7 +145,6 @@ return {
   todayTasks, 
   taskCompletionRate,
   archivedTasks,
-  taskFiles,
   loading, 
   error 
 };
