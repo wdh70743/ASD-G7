@@ -13,14 +13,13 @@ const TasksPage = () => {
     deleteTask, 
     createTask, 
     updateTask, 
-    fetchTaskFilesByTask, 
     tasks, 
     loading 
   } = useTasks();
   
   const { fetchProjectByProjectID, project } = useProjects();
   const { id } = useParams(); // project_ID
-  const [taskFiles, setTaskFiles] = useState({}); // State to store task files by task ID
+
 
   const stableFetchTasks = useCallback(() => {
     if (id) {
@@ -33,17 +32,6 @@ const TasksPage = () => {
       fetchProjectByProjectID(id);
     }
   }, [fetchProjectByProjectID, id]);
-
-  // Fetch files for each task when tasks are fetched
-  useEffect(() => {
-    if (tasks.length > 0) {
-      tasks.forEach(task => {
-        fetchTaskFilesByTask(task.id).then(files => {
-          setTaskFiles(prev => ({ ...prev, [task.id]: files.files || [] })); // Assuming the response has a `files` array
-        });
-      });
-    }
-  }, [tasks, fetchTaskFilesByTask]);
 
   useEffect(() => {
     stableFetchTasks();
@@ -66,7 +54,6 @@ const TasksPage = () => {
             deleteTask={deleteTask} 
             createTask={createTask} 
             updateTask={updateTask} 
-            taskFiles={taskFiles} // Pass taskFiles to TaskList
           />
           {tasks.length === 0 && <p>No tasks available for this project.</p>}
         </>

@@ -4,7 +4,7 @@ import '../Styles/TaskList.css';
 import Task from './Task';
 import taskService from '../../../services/TaskService';
 
-const TaskList = ({ userId, tasks, projectId, projectName, projectDescription, deleteTask, createTask, updateTask, taskFiles }) => {
+const TaskList = ({ userId, tasks, projectId, projectName, projectDescription, deleteTask, createTask, updateTask}) => {
   const navigate = useNavigate();
   const [taskList, setTaskList] = useState([]);
   const [taskForm, setTaskForm] = useState(false);
@@ -20,6 +20,7 @@ const TaskList = ({ userId, tasks, projectId, projectName, projectDescription, d
   useEffect(() => {
     setTaskList(tasks);
   }, [tasks]);
+
 
   const handleBack = () => navigate('/Projects');
 
@@ -54,17 +55,26 @@ const TaskList = ({ userId, tasks, projectId, projectName, projectDescription, d
       status: false,
       repeat_interval: null,
       is_archived: false,
-      archived_at: null,
+      // archived_at: null,
       owner: userId,
       project: projectId,
     };
+    // console.log(taskFile)
+    // const formData = new FormData();
+    // formData.append("name", name); // Add text data
+    // if (file) {
+    //   formData.append("file", file); // Add file data
+    // }
 
     try {
       if (editingIndex !== null) {
         const taskId = taskList[editingIndex].id;
         await updateTask(taskId, newTask, taskFile); // Pass file for update
       } else {
+        
         await createTask(newTask, taskFile); // Pass file for creation
+        console.log(taskFile)
+        
       }
     } catch (error) {
       console.error('Error creating/updating task:', error);
@@ -126,6 +136,9 @@ const TaskList = ({ userId, tasks, projectId, projectName, projectDescription, d
         task.id === taskId ? { ...task, status: !task.status } : task
       )
     );
+
+
+
   };
 
   return (
@@ -233,25 +246,13 @@ const TaskList = ({ userId, tasks, projectId, projectName, projectDescription, d
                 endDate={task.due_date}
                 priority={task.priority}
                 status={task.status}
-                isArchived={task.is_archived} 
+                files={task.files}
+                isArchived={task.is_archived}
                 onEdit={() => handleEditTask(task.id)}
                 onDelete={() => handleDeleteTask(task.id)}
                 onArchive={() => handleArchiveTask(task.id)}
                 onToggleStatus={() => toggleTaskStatus(task.id)}
-              />
-              {/* Display links to attached files */}
-              {taskFiles[task.id] && taskFiles[task.id].length > 0 && (
-                <div>
-                  <h4>Attached Files:</h4>
-                  <ul>
-                    {taskFiles[task.id].map((file, index) => (
-                      <li key={index}>
-                        <a href={file.url} target="_blank" rel="noopener noreferrer">{file.name}</a>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
+              />            
             </div>
           ))
         )}
