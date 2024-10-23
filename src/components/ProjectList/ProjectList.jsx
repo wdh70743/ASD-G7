@@ -39,7 +39,7 @@ const ProjectList = ({ userId, projects, createProject, updateProject, deletePro
       start_date: projectStartDate,
       end_date: projectEndDate,
       priority: projectPriority,
-      status: true,
+      status: false,
     };
 
     if (editingIndex !== null) {
@@ -77,7 +77,6 @@ const ProjectList = ({ userId, projects, createProject, updateProject, deletePro
     if (!projectToUpdate) return;
 
     const newArchivedState = !projectToUpdate.isArchived;
-    // Assuming there's an API to update the archived state
     await updateProject(projectId, { ...projectToUpdate, isArchived: newArchivedState });
     setProjectList(prevProjects =>
       prevProjects.map(project =>
@@ -90,7 +89,7 @@ const ProjectList = ({ userId, projects, createProject, updateProject, deletePro
     const projectToUpdate = projectList.find(project => project.id === projectId);
     if (projectToUpdate) {
       const newStatus = !projectToUpdate.status;
-      await updateProject(projectId, { ...projectToUpdate, status: newStatus });
+      await updateProject(projectId, {projectToUpdate, status: newStatus });
       setProjectList(prevProjects =>
         prevProjects.map(project =>
           project.id === projectId ? { ...project, status: newStatus } : project
