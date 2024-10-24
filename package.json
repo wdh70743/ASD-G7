@@ -18,7 +18,7 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start --host 0.0.0.0",
+    "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "jest --ci --reporters=default --reporters=jest-junit",
     "eject": "react-scripts eject"
@@ -41,6 +41,7 @@
       "last 1 safari version"
     ]
   },
+  "proxy": "http://asd-g7-backend.australiaeast.cloudapp.azure.com",
   "devDependencies": {
     "@babel/core": "^7.25.2",
     "@babel/preset-env": "^7.25.4",
