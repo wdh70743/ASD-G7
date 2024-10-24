@@ -26,7 +26,7 @@ const Project = ({ color, title, description, startDate, endDate, priority, stat
 
   const handleCheckboxChange = (event) => {
     event.stopPropagation(); 
-    onToggleStatus(); 
+    onToggleStatus(id);
   };
   
   const boxStyle = {

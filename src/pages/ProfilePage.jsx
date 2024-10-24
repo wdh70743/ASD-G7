@@ -2,6 +2,7 @@ import React, { useEffect, useCallback, useState } from 'react';
 import SimpleHero from '../components/Dashboard/Components/SimpleHero.jsx';
 import useUserData from '../hooks/useUserData.js';
 import { useNavigate } from 'react-router-dom';
+import './Styles/ProfilePage.css';
 
 const ProjectsPage = () => {
   const navigate = useNavigate();
@@ -11,7 +12,7 @@ const ProjectsPage = () => {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [isEditing, setIsEditing] = useState(false); // New state for toggling edit view
+  const [isEditing, setIsEditing] = useState(false);
 
   const stableFetchUserData = useCallback(() => {
     if (userId) {
@@ -37,12 +38,11 @@ const ProjectsPage = () => {
     };
     
     try {
-      await updateUser(userId, user); // assuming updateUser returns a promise
-      stableFetchUserData(); // refetch user data after successful update
-      setIsEditing(false); // Hide the form after updating
+      await updateUser(userId, user); 
+      stableFetchUserData();
+      setIsEditing(false); 
     } catch (err) {
       console.error('Error updating user:', err);
-      // Optionally handle the error state
     }
   };
 
@@ -60,24 +60,24 @@ const ProjectsPage = () => {
     <>
       <SimpleHero />
       <div className="user-profile">
-        <h2>User Profile</h2>
+        <h2 className="user-profile__title">User Profile</h2>
         {userData ? (
           <div>
-            <p><strong>User ID:</strong> {userData.id}</p>
-            <p><strong>Username:</strong> {userData.username}</p>
-            <p><strong>Email:</strong> {userData.email}</p>
+            <p className="user-profile__info"><strong className="user-profile__strong">User ID:</strong> {userData.id}</p>
+            <p className="user-profile__info"><strong className="user-profile__strong">Username:</strong> {userData.username}</p>
+            <p className="user-profile__info"><strong className="user-profile__strong">Email:</strong> {userData.email}</p>
 
-            {/* Button to toggle edit view */}
-            <button onClick={() => setIsEditing((prev) => !prev)}>
+            <button className="user-profile__button" onClick={() => setIsEditing((prev) => !prev)}>
               {isEditing ? 'Cancel Edit' : 'Edit Profile'}
             </button>
 
-            {isEditing && ( // Conditionally render the edit form
-              <form onSubmit={handleUpdateUser}>
-                <div>
-                  <label>
+            {isEditing && ( 
+              <form className="user-profile__form" onSubmit={handleUpdateUser}>
+                <div className="user-profile__form-group">
+                  <label className="user-profile__form-label">
                     Username:
                     <input
+                      className="user-profile__form-input"
                       type="text"
                       value={username}
                       onChange={(e) => setUsername(e.target.value)}
@@ -85,10 +85,11 @@ const ProjectsPage = () => {
                     />
                   </label>
                 </div>
-                <div>
-                  <label>
+                <div className="user-profile__form-group">
+                  <label className="user-profile__form-label">
                     Email:
                     <input
+                      className="user-profile__form-input"
                       type="email"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
@@ -96,10 +97,11 @@ const ProjectsPage = () => {
                     />
                   </label>
                 </div>
-                <div>
-                  <label>
+                <div className="user-profile__form-group">
+                  <label className="user-profile__form-label">
                     Password:
                     <input
+                      className="user-profile__form-input"
                       type="password"
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
@@ -107,11 +109,11 @@ const ProjectsPage = () => {
                     />
                   </label>
                 </div>
-                <button type="submit">Update Profile</button>
+                <button className="user-profile__button" type="submit">Update Profile</button>
               </form>
             )}
 
-            <button onClick={handleDeleteUser}>Delete your account</button>
+            <button className="user-profile__button" onClick={handleDeleteUser}>Delete your account</button>
           </div>
         ) : (
           <p>No user data available.</p>

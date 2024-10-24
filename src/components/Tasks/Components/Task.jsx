@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import '../Styles/Task.css';
 
-const Task = ({ title, description, startDate, endDate, priority, status, isArchived, onEdit, onDelete, onToggleStatus, onArchive }) => {
+const Task = ({ title, description, startDate, endDate, priority, status, isArchived, onEdit, onDelete, onToggleStatus, onArchive, files }) => {
   const [detailsVisible, setDetailsVisible] = useState(false);
 
   const toggleDetails = () => {
@@ -29,6 +29,9 @@ const Task = ({ title, description, startDate, endDate, priority, status, isArch
             <p><strong>Start Date:</strong> {formatDate(startDate)}</p>
             <p><strong>Due Date:</strong> {formatDate(endDate)}</p>
             <p><strong>Priority:</strong> {priority}</p>
+            {files && (
+              files.map((file) => (<div><strong>Task File:</strong> <a href={file.file_uri} download>Download</a></div>))
+            )}
           </div>
         )}
       </div>

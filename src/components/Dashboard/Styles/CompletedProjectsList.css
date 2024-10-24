@@ -1,0 +1,25 @@
+
+.No-Projects-Warnings{
+    font-weight: 450; 
+    font-size: 15px;
+    margin: 6px; 
+    padding-top: 5px;
+    text-align: left; 
+    top: 10px; 
+    width: 100%; 
+    left: 0;
+    font-family: "Inter", sans-serif;
+}
+
+.CompletedProjectsContainer{
+    margin: 6px; 
+    padding-top: 5px;
+    
+
+}
+
+.ProjectContainer{
+    margin: 6px; 
+    padding-top: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+}
