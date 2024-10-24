@@ -1,27 +1,108 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuites name="jest tests" tests="9" failures="0" errors="0" time="19.343">
-  <testsuite name="undefined" errors="0" failures="0" skipped="0" timestamp="2024-10-06T23:59:00" time="14.929" tests="4">
-    <testcase classname=" renders ArchivePage with projects and their archived tasks" name=" renders ArchivePage with projects and their archived tasks" time="0.691">
+<testsuites name="jest tests" tests="9" failures="2" errors="0" time="2.918">
+  <testsuite name="undefined" errors="0" failures="2" skipped="0" timestamp="2024-10-22T01:41:23" time="2.178" tests="4">
+    <testcase classname=" renders loading state" name=" renders loading state" time="0.014">
     </testcase>
-    <testcase classname=" searches and filters archived tasks using SearchBar" name=" searches and filters archived tasks using SearchBar" time="0.136">
+    <testcase classname=" renders login prompt if user is not logged in" name=" renders login prompt if user is not logged in" time="0.048">
     </testcase>
-    <testcase classname=" sorts archived tasks by priority using SearchBar" name=" sorts archived tasks by priority using SearchBar" time="0.342">
+    <testcase classname=" renders task list when tasks are fetched" name=" renders task list when tasks are fetched" time="0.015">
+      <failure>TypeError: fetchTaskFilesByTask is not a function
+    at forEach (/Users/jin/taskbee-frontend/src/pages/TasksPage.jsx:41:9)
+    at Array.forEach (&lt;anonymous&gt;)
+    at /Users/jin/taskbee-frontend/src/pages/TasksPage.jsx:40:13
+    at commitHookEffectListMount (/Users/jin/taskbee-frontend/node_modules/react-dom/cjs/react-dom.development.js:23189:26)
+    at commitPassiveMountOnFiber (/Users/jin/taskbee-frontend/node_modules/react-dom/cjs/react-dom.development.js:24970:11)
+    at commitPassiveMountEffects_complete (/Users/jin/taskbee-frontend/node_modules/react-dom/cjs/react-dom.development.js:24930:9)
+    at commitPassiveMountEffects_begin (/Users/jin/taskbee-frontend/node_modules/react-dom/cjs/react-dom.development.js:24917:7)
+    at commitPassiveMountEffects (/Users/jin/taskbee-frontend/node_modules/react-dom/cjs/react-dom.development.js:24905:3)
+    at flushPassiveEffectsImpl (/Users/jin/taskbee-frontend/node_modules/react-dom/cjs/react-dom.development.js:27078:3)
+    at flushPassiveEffects (/Users/jin/taskbee-frontend/node_modules/react-dom/cjs/react-dom.development.js:27023:14)
+    at /Users/jin/taskbee-frontend/node_modules/react-dom/cjs/react-dom.development.js:26808:9
+    at flushActQueue (/Users/jin/taskbee-frontend/node_modules/react/cjs/react.development.js:2667:24)
+    at act (/Users/jin/taskbee-frontend/node_modules/react/cjs/react.development.js:2582:11)
+    at actWithWarning (/Users/jin/taskbee-frontend/node_modules/react-dom/cjs/react-dom-test-utils.development.js:1740:10)
+    at /Users/jin/taskbee-frontend/node_modules/@testing-library/react/dist/act-compat.js:63:25
+    at renderRoot (/Users/jin/taskbee-frontend/node_modules/@testing-library/react/dist/pure.js:159:26)
+    at render (/Users/jin/taskbee-frontend/node_modules/@testing-library/react/dist/pure.js:246:10)
+    at call (/Users/jin/taskbee-frontend/src/TaskPage.test.js:85:9)
+    at tryCatch (/Users/jin/taskbee-frontend/src/TaskPage.test.js:2:1)
+    at Generator._invoke (/Users/jin/taskbee-frontend/src/TaskPage.test.js:2:1)
+    at Generator.next (/Users/jin/taskbee-frontend/src/TaskPage.test.js:2:1)
+    at asyncGeneratorStep (/Users/jin/taskbee-frontend/src/TaskPage.test.js:2:1)
+    at _next (/Users/jin/taskbee-frontend/src/TaskPage.test.js:2:1)
+    at /Users/jin/taskbee-frontend/src/TaskPage.test.js:2:1
+    at new Promise (&lt;anonymous&gt;)
+    at Object.&lt;anonymous&gt; (/Users/jin/taskbee-frontend/src/TaskPage.test.js:2:1)
+    at Promise.then.completed (/Users/jin/taskbee-frontend/node_modules/jest-circus/build/utils.js:391:28)
+    at new Promise (&lt;anonymous&gt;)
+    at callAsyncCircusFn (/Users/jin/taskbee-frontend/node_modules/jest-circus/build/utils.js:316:10)
+    at _callCircusTest (/Users/jin/taskbee-frontend/node_modules/jest-circus/build/run.js:218:40)
+    at processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at _runTest (/Users/jin/taskbee-frontend/node_modules/jest-circus/build/run.js:155:3)
+    at _runTestsForDescribeBlock (/Users/jin/taskbee-frontend/node_modules/jest-circus/build/run.js:66:9)
+    at run (/Users/jin/taskbee-frontend/node_modules/jest-circus/build/run.js:25:3)
+    at runAndTransformResultsToJestFormat (/Users/jin/taskbee-frontend/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapterInit.js:170:21)
+    at jestAdapter (/Users/jin/taskbee-frontend/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapter.js:82:19)
+    at runTestInternal (/Users/jin/taskbee-frontend/node_modules/jest-runner/build/runTest.js:389:16)
+    at runTest (/Users/jin/taskbee-frontend/node_modules/jest-runner/build/runTest.js:475:34)
+    at Object.worker (/Users/jin/taskbee-frontend/node_modules/jest-runner/build/testWorker.js:133:12)</failure>
     </testcase>
-    <testcase classname=" calls deleteTask when delete button is clicked in ArchivePage" name=" calls deleteTask when delete button is clicked in ArchivePage" time="0.053">
+    <testcase classname=" allows user to access the edit task form" name=" allows user to access the edit task form" time="0.013">
+      <failure>TypeError: Cannot read properties of undefined (reading &apos;1&apos;)
+    at map (/Users/jin/taskbee-frontend/src/components/Tasks/Components/TaskList.jsx:243:25)
+    at Array.map (&lt;anonymous&gt;)
+    at TaskList (/Users/jin/taskbee-frontend/src/components/Tasks/Components/TaskList.jsx:227:20)
+    at renderWithHooks (/Users/jin/taskbee-frontend/node_modules/react-dom/cjs/react-dom.development.js:15486:18)
+    at updateFunctionComponent (/Users/jin/taskbee-frontend/node_modules/react-dom/cjs/react-dom.development.js:19617:20)
+    at beginWork (/Users/jin/taskbee-frontend/node_modules/react-dom/cjs/react-dom.development.js:21640:16)
+    at beginWork$1 (/Users/jin/taskbee-frontend/node_modules/react-dom/cjs/react-dom.development.js:27465:14)
+    at performUnitOfWork (/Users/jin/taskbee-frontend/node_modules/react-dom/cjs/react-dom.development.js:26599:12)
+    at workLoopSync (/Users/jin/taskbee-frontend/node_modules/react-dom/cjs/react-dom.development.js:26505:5)
+    at renderRootSync (/Users/jin/taskbee-frontend/node_modules/react-dom/cjs/react-dom.development.js:26473:7)
+    at recoverFromConcurrentError (/Users/jin/taskbee-frontend/node_modules/react-dom/cjs/react-dom.development.js:25889:20)
+    at performConcurrentWorkOnRoot (/Users/jin/taskbee-frontend/node_modules/react-dom/cjs/react-dom.development.js:25789:22)
+    at flushActQueue (/Users/jin/taskbee-frontend/node_modules/react/cjs/react.development.js:2667:24)
+    at act (/Users/jin/taskbee-frontend/node_modules/react/cjs/react.development.js:2582:11)
+    at actWithWarning (/Users/jin/taskbee-frontend/node_modules/react-dom/cjs/react-dom-test-utils.development.js:1740:10)
+    at /Users/jin/taskbee-frontend/node_modules/@testing-library/react/dist/act-compat.js:63:25
+    at renderRoot (/Users/jin/taskbee-frontend/node_modules/@testing-library/react/dist/pure.js:159:26)
+    at render (/Users/jin/taskbee-frontend/node_modules/@testing-library/react/dist/pure.js:246:10)
+    at call (/Users/jin/taskbee-frontend/src/TaskPage.test.js:117:9)
+    at tryCatch (/Users/jin/taskbee-frontend/src/TaskPage.test.js:2:1)
+    at Generator._invoke (/Users/jin/taskbee-frontend/src/TaskPage.test.js:2:1)
+    at Generator.next (/Users/jin/taskbee-frontend/src/TaskPage.test.js:2:1)
+    at asyncGeneratorStep (/Users/jin/taskbee-frontend/src/TaskPage.test.js:2:1)
+    at _next (/Users/jin/taskbee-frontend/src/TaskPage.test.js:2:1)
+    at /Users/jin/taskbee-frontend/src/TaskPage.test.js:2:1
+    at new Promise (&lt;anonymous&gt;)
+    at Object.&lt;anonymous&gt; (/Users/jin/taskbee-frontend/src/TaskPage.test.js:2:1)
+    at Promise.then.completed (/Users/jin/taskbee-frontend/node_modules/jest-circus/build/utils.js:391:28)
+    at new Promise (&lt;anonymous&gt;)
+    at callAsyncCircusFn (/Users/jin/taskbee-frontend/node_modules/jest-circus/build/utils.js:316:10)
+    at _callCircusTest (/Users/jin/taskbee-frontend/node_modules/jest-circus/build/run.js:218:40)
+    at processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at _runTest (/Users/jin/taskbee-frontend/node_modules/jest-circus/build/run.js:155:3)
+    at _runTestsForDescribeBlock (/Users/jin/taskbee-frontend/node_modules/jest-circus/build/run.js:66:9)
+    at run (/Users/jin/taskbee-frontend/node_modules/jest-circus/build/run.js:25:3)
+    at runAndTransformResultsToJestFormat (/Users/jin/taskbee-frontend/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapterInit.js:170:21)
+    at jestAdapter (/Users/jin/taskbee-frontend/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapter.js:82:19)
+    at runTestInternal (/Users/jin/taskbee-frontend/node_modules/jest-runner/build/runTest.js:389:16)
+    at runTest (/Users/jin/taskbee-frontend/node_modules/jest-runner/build/runTest.js:475:34)
+    at Object.worker (/Users/jin/taskbee-frontend/node_modules/jest-runner/build/testWorker.js:133:12)</failure>
     </testcase>
   </testsuite>
-  <testsuite name="undefined" errors="0" failures="0" skipped="0" timestamp="2024-10-06T23:59:00" time="14.912" tests="4">
-    <testcase classname=" renders loading state" name=" renders loading state" time="0.145">
+  <testsuite name="undefined" errors="0" failures="0" skipped="0" timestamp="2024-10-22T01:41:23" time="2.211" tests="4">
+    <testcase classname=" renders ArchivePage with projects and their archived tasks" name=" renders ArchivePage with projects and their archived tasks" time="0.062">
     </testcase>
-    <testcase classname=" renders login prompt if user is not logged in" name=" renders login prompt if user is not logged in" time="0.564">
+    <testcase classname=" searches and filters archived tasks using SearchBar" name=" searches and filters archived tasks using SearchBar" time="0.016">
     </testcase>
-    <testcase classname=" renders task list when tasks are fetched" name=" renders task list when tasks are fetched" time="0.578">
+    <testcase classname=" sorts archived tasks by priority using SearchBar" name=" sorts archived tasks by priority using SearchBar" time="0.049">
     </testcase>
-    <testcase classname=" allows user to access the edit task form" name=" allows user to access the edit task form" time="0.169">
+    <testcase classname=" calls deleteTask when delete button is clicked in ArchivePage" name=" calls deleteTask when delete button is clicked in ArchivePage" time="0.016">
     </testcase>
   </testsuite>
-  <testsuite name="undefined" errors="0" failures="0" skipped="0" timestamp="2024-10-06T23:59:00" time="15.939" tests="1">
-    <testcase classname=" renders the login page header" name=" renders the login page header" time="0.279">
+  <testsuite name="undefined" errors="0" failures="0" skipped="0" timestamp="2024-10-22T01:41:23" time="2.417" tests="1">
+    <testcase classname=" renders the login page header" name=" renders the login page header" time="0.045">
     </testcase>
   </testsuite>
 </testsuites>
