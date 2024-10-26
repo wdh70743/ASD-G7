@@ -71,6 +71,8 @@ const TaskList = ({ userId, userEmail, tasks, projectId, projectName, projectDes
       owner: userId,
       project: projectId,
     };
+
+    let taskId;
     try {
       // Create or update the task
       if (editingIndex !== null) {
