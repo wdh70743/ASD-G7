@@ -3,8 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import '../Styles/TaskList.css';
 import Task from './Task';
 import taskService from '../../../services/TaskService';
+import userService from '../../../services/UserService';
 
-const TaskList = ({ userId, tasks, projectId, projectName, projectDescription, deleteTask, createTask, updateTask}) => {
+const TaskList = ({ userId, userEmail, tasks, projectId, projectName, projectDescription, deleteTask, createTask, updateTask }) => {
   const navigate = useNavigate();
   const [taskList, setTaskList] = useState([]);
   const [taskForm, setTaskForm] = useState(false);
@@ -16,6 +17,8 @@ const TaskList = ({ userId, tasks, projectId, projectName, projectDescription, d
   const [taskFile, setTaskFile] = useState(null); // State for file upload
   const [newTaskButtonColor, setNewTaskButtonColor] = useState('#007BFF');
   const [editingIndex, setEditingIndex] = useState(null);
+  const [users, setUsers] = useState([]);
+  const [selectedUserIds, setSelectedUserIds] = useState([]); // Selected user ID
 
   useEffect(() => {
     setTaskList(tasks);
@@ -24,11 +27,22 @@ const TaskList = ({ userId, tasks, projectId, projectName, projectDescription, d
 
   const handleBack = () => navigate('/Projects');
 
-  const toggleForm = () => {
+  const toggleForm = async () => {
     const newColor = !taskForm ? 'red' : '#007BFF';
     setNewTaskButtonColor(newColor);
     setTaskForm((prev) => !prev);
+
+    if (!taskForm) {
+      try {
+        const response = await userService.searchUsers();
+        const filteredUsers = response.data.filter((user) => user.email !== userEmail);
+        setUsers(filteredUsers);
+      } catch (error) {
+        console.error('Error fetching users:', error);
+      }
+    }
   };
+
 
   const resetForm = () => {
     setTaskName('');
@@ -46,6 +60,7 @@ const TaskList = ({ userId, tasks, projectId, projectName, projectDescription, d
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+  
     const newTask = {
       title: taskName,
       description: taskDescription,
@@ -53,49 +68,64 @@ const TaskList = ({ userId, tasks, projectId, projectName, projectDescription, d
       due_date: formatDateForAPI(taskEndDate),
       priority: taskPriority,
       status: false,
-      repeat_interval: null,
-      is_archived: false,
-      // archived_at: null,
       owner: userId,
       project: projectId,
     };
-    // console.log(taskFile)
-    // const formData = new FormData();
-    // formData.append("name", name); // Add text data
-    // if (file) {
-    //   formData.append("file", file); // Add file data
-    // }
-
+  
+    let taskId;
+  
     try {
+      // Create or update the task
       if (editingIndex !== null) {
-        const taskId = taskList[editingIndex].id;
-        await updateTask(taskId, newTask, taskFile); // Pass file for update
+        taskId = taskList[editingIndex].id;
+        await updateTask(taskId, newTask, taskFile);
+  
+        // Update assigned users
+        if (selectedUserIds.length > 0) {
+          await taskService.updateAssignedUsers(userId, taskId, selectedUserIds);
+          console.log(`Task ${taskId} users updated to: ${selectedUserIds}`);
+        }
       } else {
-        
-        await createTask(newTask, taskFile); // Pass file for creation
-        console.log(taskFile)
-        
+        const response = await createTask(newTask, taskFile);
+        taskId = response.data.id;
+  
+        // Assign users to newly created task
+        if (selectedUserIds.length > 0) {
+          await taskService.assignTask(userId, taskId, selectedUserIds);
+          console.log(`Task ${taskId} assigned to user IDs: ${selectedUserIds}`);
+        }
       }
     } catch (error) {
-      console.error('Error creating/updating task:', error);
+      console.error('Error creating/updating task or assigning users:', error);
     }
-
+  
     resetForm();
     setTaskForm(false);
     setNewTaskButtonColor('#007BFF');
   };
+  
 
-  const handleEditTask = (taskId) => {
-    const task = taskList.find(t => t.id === taskId);
+  const handleEditTask = async (taskId) => {
+    const task = taskList.find((t) => t.id === taskId);
     if (task) {
       setTaskName(task.title);
       setTaskDescription(task.description);
       setTaskStartDate(task.start_date.split('T')[0]);
       setTaskEndDate(task.due_date.split('T')[0]);
       setTaskPriority(task.priority);
-      setEditingIndex(taskList.findIndex(t => t.id === taskId));
-      setTaskForm(true);
+      setSelectedUserIds(task.assigned_users ? task.assigned_users.map(user => user.id) : []);
       setNewTaskButtonColor('red');
+
+      try {
+        const response = await userService.searchUsers();
+        const filteredUsers = response.data.filter((user) => user.email !== userEmail);
+        setUsers(filteredUsers);
+      } catch (error) {
+        console.error('Error fetching users:', error);
+      }
+
+      setEditingIndex(taskList.findIndex((t) => t.id === taskId));
+      setTaskForm(true);
     } else {
       console.error('Task not found for ID:', taskId);
     }
@@ -136,9 +166,6 @@ const TaskList = ({ userId, tasks, projectId, projectName, projectDescription, d
         task.id === taskId ? { ...task, status: !task.status } : task
       )
     );
-
-
-
   };
 
   return (
@@ -225,6 +252,33 @@ const TaskList = ({ userId, tasks, projectId, projectName, projectDescription, d
                 onChange={(e) => setTaskFile(e.target.files[0])}
               />
             </div>
+            <div className="form-group">
+              <label htmlFor="assignUsers">Assign to Users</label>
+              <select
+                id="assignUsers"
+                multiple
+                value={selectedUserIds}
+                onChange={(e) => {
+                  const options = e.target.options;
+                  const selectedValues = [];
+                  for (let i = 0; i < options.length; i++) {
+                    if (options[i].selected) {
+                      selectedValues.push(options[i].value);
+                    }
+                  }
+                  setSelectedUserIds(selectedValues);
+                  console.log("Selected User IDs:", selectedValues); // Debugging line
+                }}
+                className="user-dropdown"
+              >
+                {users.map((user) => (
+                  <option key={user.id} value={user.id}>
+                    {user.email} - {user.username}
+                  </option>
+                ))}
+              </select>
+            </div>
+
             <div className="submit-button-container">
               <button type="submit" className="submit-button">
                 {editingIndex !== null ? "Update Task" : "Add Task"}
@@ -248,11 +302,12 @@ const TaskList = ({ userId, tasks, projectId, projectName, projectDescription, d
                 status={task.status}
                 files={task.files}
                 isArchived={task.is_archived}
+                assignedUsers={(task.assigned_users || []).map((user) => user.username)} // Display multiple assigned users
                 onEdit={() => handleEditTask(task.id)}
                 onDelete={() => handleDeleteTask(task.id)}
                 onArchive={() => handleArchiveTask(task.id)}
                 onToggleStatus={() => toggleTaskStatus(task.id)}
-              />            
+              />
             </div>
           ))
         )}
