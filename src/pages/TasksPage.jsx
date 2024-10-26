@@ -8,6 +8,7 @@ import './Styles/TasksPage.css';
 
 const TasksPage = () => {
   const userId = localStorage.getItem('userId');
+  const userEmail = localStorage.getItem('email')
   const { 
     fetchTasksByProject, 
     deleteTask, 
@@ -46,7 +47,8 @@ const TasksPage = () => {
       {userId ? (
         <>
           <TaskList 
-            userId={userId} 
+            userId={userId}
+            userEmail={userEmail}
             tasks={tasks} 
             projectId={id} 
             projectName={project.projectname} 

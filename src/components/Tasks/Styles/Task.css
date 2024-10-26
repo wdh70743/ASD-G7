@@ -53,5 +53,11 @@
     font-size: small;
 }
 
-
-
+.user-dropdown {
+    width: 100%;
+    padding: 8px;
+    margin-top: 4px;
+    margin-bottom: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }

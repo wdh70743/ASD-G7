@@ -82,7 +82,45 @@ class TaskService {
 
   archiveTask(taskId) {
     return axios.post(`${this.BASE_URL}tasks/archive/`, { task_id: taskId });
-  }  
+  }
+
+  assignTask(assignedBy, taskId, userIds) {
+    const data = {
+      assigned_by: assignedBy,
+      task_id: taskId,
+      user_ids: Array.isArray(userIds) ? userIds : [userIds], // Ensure it's an array
+    };
+
+    console.log("Assign Task Payload:", data); // Debugging line
+
+    return axios.post(`${this.BASE_URL}tasks/assign/`, data, {
+      headers: {
+        "Content-Type": "application/json", // Use JSON content type
+      },
+    });
+  }
+
+  // Get tasks assigned to a user within a specific project
+  getAssignedTasksByProject(projectId, userId) {
+    return axios.get(`${this.BASE_URL}tasks/projects/${projectId}/users/${userId}/assigned/`);
+  }
+
+  // Update users assigned to a task
+  updateAssignedUsers(assignedBy, taskId, userIds) {
+    const data = {
+      assigned_by: assignedBy,
+      task_id: taskId,
+      user_ids: Array.isArray(userIds) ? userIds : [userIds], // Ensure it's an array
+    };
+
+    console.log("Update Assigned Users Payload:", data); // Debugging line
+
+    return axios.post(`${this.BASE_URL}tasks/update-assigned-users/`, data, {
+      headers: {
+        "Content-Type": "application/json", // Use JSON content type
+      },
+    });
+  }
 }
 
 const taskService = new TaskService();

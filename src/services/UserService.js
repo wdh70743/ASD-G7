@@ -22,6 +22,11 @@ class UserService {
   updateUser(userId, updatedUser) {
     return axios.patch(`${this.BASE_URL}users/${userId}/`, updatedUser);
   }
+  
+  searchUsers() {
+    return axios.get(`${this.BASE_URL}users/search/?email=@`);
+  }
+  
 }
 
 const userService = new UserService();
