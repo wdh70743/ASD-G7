@@ -50,13 +50,31 @@ class TaskService {
     });
   }
 
-  updateTask(taskId, updatedTask) {
-    return axios.patch(`${this.BASE_URL}tasks/${taskId}/`, updatedTask,
-      { headers: {
-        "Content-Type": "multipart/form-data",
-      },}
-    );
-  }
+  updateTask(taskId, updatedTask, taskFile) {
+    const formData = new FormData();
+  
+    // Override archived_at date
+    updatedTask.archived_at = '2024-10-29T02:06:08.855885+11:00';
+
+    // Append all properties of updatedTask to formData
+    for (const key in updatedTask) {
+        if (updatedTask.hasOwnProperty(key)) {
+            formData.append(key, updatedTask[key]);
+        }
+    }
+  
+    // Append the file if it exists
+    if (taskFile) {
+        formData.append('uploaded_files', taskFile); // Use a specific key for the file
+    }
+    console.log(taskFile);
+    
+    return axios.patch(`${this.BASE_URL}tasks/${taskId}/`, formData, {
+        headers: {
+            "Content-Type": "multipart/form-data",
+        },
+    });
+}
 
   getArchivedTasksByUser(userId) {
     return axios.get(`${this.BASE_URL}tasks/users/${userId}/tasks/archived/`);
