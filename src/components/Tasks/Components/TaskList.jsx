@@ -59,12 +59,6 @@ const TaskList = ({ userId, tasks, projectId, projectName, projectDescription, d
       owner: userId,
       project: projectId,
     };
-    // console.log(taskFile)
-    // const formData = new FormData();
-    // formData.append("name", name); // Add text data
-    // if (file) {
-    //   formData.append("file", file); // Add file data
-    // }
 
     try {
       if (editingIndex !== null) {
@@ -123,6 +117,7 @@ const TaskList = ({ userId, tasks, projectId, projectName, projectDescription, d
     } catch (error) {
       console.error('Failed to archive/reassign task', error);
     }
+    console.log('Archived At:', currentTimestamp);
   };
 
   const toggleTaskStatus = async (taskId) => {
@@ -130,10 +125,13 @@ const TaskList = ({ userId, tasks, projectId, projectName, projectDescription, d
     if (taskToUpdate) {
       const newStatus = !taskToUpdate.status;
       await updateTask(taskToUpdate.id, { ...taskToUpdate, status: newStatus });
+      
     }
+
     setTaskList(prevTasks =>
       prevTasks.map(task =>
         task.id === taskId ? { ...task, status: !task.status } : task
+        
       )
     );
 

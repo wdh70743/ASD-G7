@@ -117,11 +117,11 @@ const useTasks = () => {
     }
 }, []);
 
-const updateTask = useCallback(async (taskId, updatedTask) => {
+const updateTask = useCallback(async (taskId, updatedTask, taskFile) => {
   setLoading(true);
   setError(null);
   try {
-      const response = await taskService.updateTask(taskId, updatedTask); // Call the updated service method
+      const response = await taskService.updateTask(taskId, updatedTask, taskFile); // Call the updated service method
       setTasks(prevTasks => 
           prevTasks.map(task => (task.id === taskId ? response.data : task)) // Update the task in state
       );
