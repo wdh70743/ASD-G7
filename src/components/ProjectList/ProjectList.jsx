@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Project from './Project';
+import userService from '../../services/UserService';
 import '../Tasks/Styles/TaskList.css';
 
 const ProjectList = ({ userId, projects, createProject, updateProject, deleteProject }) => {
@@ -12,6 +13,24 @@ const ProjectList = ({ userId, projects, createProject, updateProject, deletePro
   const [projectEndDate, setProjectEndDate] = useState('');
   const [projectPriority, setProjectPriority] = useState('Medium');
   const [editingIndex, setEditingIndex] = useState(null);
+  const [users, setUsers] = useState([]);
+  const [selectedUserIds, setSelectedUserIds] = useState([]); // Selected user IDs for project
+
+  useEffect(() => {
+    setProjectList(projects);
+  }, [projects]);
+
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const response = await userService.searchUsers();
+        setUsers(response.data);
+      } catch (error) {
+        console.error('Error fetching users:', error);
+      }
+    };
+    fetchUsers();
+  }, []);
 
   const toggleForm = () => {
     const newColor = !projectForm ? 'red' : '#007BFF';
@@ -26,16 +45,18 @@ const ProjectList = ({ userId, projects, createProject, updateProject, deletePro
     setProjectPriority('Medium');
     setProjectStartDate('');
     setProjectEndDate('');
+    setSelectedUserIds([]); // Reset selected users
     setEditingIndex(null);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const newProject = { 
-      user_ids: [userId],
+
+    const newProject = {
+      user_ids: selectedUserIds,
       owner: userId,
-      projectname: projectName, 
-      description: projectDescription, 
+      projectname: projectName,
+      description: projectDescription,
       start_date: projectStartDate,
       end_date: projectEndDate,
       priority: projectPriority,
@@ -55,14 +76,15 @@ const ProjectList = ({ userId, projects, createProject, updateProject, deletePro
   };
 
   const handleEditProject = (projectId) => {
-    const project = projectList.find(t => t.id === projectId);
+    const project = projectList.find((p) => p.id === projectId);
     if (project) {
       setProjectName(project.projectname);
       setProjectDescription(project.description);
       setProjectStartDate(project.start_date);
       setProjectEndDate(project.end_date);
       setProjectPriority(project.priority);
-      setEditingIndex(projectList.findIndex(t => t.id === projectId));
+      setSelectedUserIds(project.user_ids || []); // Set assigned users
+      setEditingIndex(projectList.findIndex((p) => p.id === projectId));
       setProjectForm(true);
       setNewProjectButtonColor('red');
     } else {
@@ -97,17 +119,13 @@ const ProjectList = ({ userId, projects, createProject, updateProject, deletePro
       );
     }
   };
-
-  useEffect(() => {
-    setProjectList(projects);
-  }, [projects]);
-
+  
   return (
     <div className="main-container">
       <div className="task-list-header">
-        <button 
-          onClick={toggleForm} 
-          className="new-task-button" 
+        <button
+          onClick={toggleForm}
+          className="new-task-button"
           style={{ backgroundColor: newProjectButtonColor }}
         >
           {projectForm ? "Cancel Project" : "New Project"}
@@ -173,6 +191,31 @@ const ProjectList = ({ userId, projects, createProject, updateProject, deletePro
                 <option value="Low">Low</option>
               </select>
             </div>
+            <div className="form-group">
+              <label htmlFor="assignUsers">Assign Users</label>
+              <select
+                id="assignUsers"
+                multiple
+                value={selectedUserIds}
+                onChange={(e) => {
+                  const options = e.target.options;
+                  const selectedValues = [];
+                  for (let i = 0; i < options.length; i++) {
+                    if (options[i].selected) {
+                      selectedValues.push(parseInt(options[i].value));
+                    }
+                  }
+                  setSelectedUserIds(selectedValues);
+                }}
+                className="user-dropdown"
+              >
+                {users.map((user) => (
+                  <option key={user.id} value={user.id}>
+                    {user.email} - {user.username}
+                  </option>
+                ))}
+              </select>
+            </div>
             <div className="submit-button-container">
               <button type="submit" className="submit-button">
                 {editingIndex !== null ? "Update Project" : "Add Project"}
@@ -186,11 +229,11 @@ const ProjectList = ({ userId, projects, createProject, updateProject, deletePro
           <p>No projects available.</p>
         ) : (
           projectList.map((project) => (
-            <Project 
+            <Project
               key={project.id}
               id={project.id}
-              color="#f0f0f0" 
-              title={project.projectname} 
+              color="#f0f0f0"
+              title={project.projectname}
               description={project.description}
               startDate={project.start_date}
               endDate={project.end_date}

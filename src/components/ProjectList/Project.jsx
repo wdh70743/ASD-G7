@@ -50,7 +50,7 @@ const Project = ({ color, title, description, startDate, endDate, priority, stat
           <p><strong>Start Date:</strong> {formatDate(startDate)}</p>
           <p><strong>Due Date:</strong> {formatDate(endDate)}</p>
           <p><strong>Priority:</strong> {priority}</p>
-          <p><strong>Status:</strong> {status ? 'Active' : 'Inactive'}</p>
+          <p><strong>Status:</strong> {status ? 'Inactive' : 'Active'}</p>
         </div>
       )}
       <div className="centered-content">
