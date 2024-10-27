@@ -6,6 +6,7 @@ import ProjectList from '../components/ProjectList/ProjectList.jsx';
 
 const ProjectsPage = () => {
   const userId = localStorage.getItem('userId');
+  const userEmail = localStorage.getItem('email')
   const {updateProject, fetchProjectsByUser, createProject, deleteProject, loading, projects} = useProjects();
 
   const stableFetchProjects = useCallback(() => {
@@ -23,7 +24,7 @@ const ProjectsPage = () => {
   return (
     <>
       <SimpleHero />
-      <ProjectList userId={userId} projects={projects} createProject={createProject} deleteProject={deleteProject} updateProject={updateProject}/>
+      <ProjectList userId={userId} userEmail={userEmail} projects={projects} createProject={createProject} deleteProject={deleteProject} updateProject={updateProject}/>
     </>
   );
 };

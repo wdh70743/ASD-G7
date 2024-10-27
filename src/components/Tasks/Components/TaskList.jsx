@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import '../Styles/TaskList.css';
 import Task from './Task';
 import taskService from '../../../services/TaskService';
-import userService from '../../../services/UserService';
+import projectService from '../../../services/ProjectService';
 
 const TaskList = ({ userId, userEmail, tasks, projectId, projectName, projectDescription, deleteTask, createTask, updateTask }) => {
   const navigate = useNavigate();
@@ -14,7 +14,7 @@ const TaskList = ({ userId, userEmail, tasks, projectId, projectName, projectDes
   const [taskPriority, setTaskPriority] = useState('Medium');
   const [taskStartDate, setTaskStartDate] = useState('');
   const [taskEndDate, setTaskEndDate] = useState('');
-  const [taskFile, setTaskFile] = useState(null); // State for file upload
+  const [taskFile, setTaskFile] = useState(null);
   const [newTaskButtonColor, setNewTaskButtonColor] = useState('#007BFF');
   const [editingIndex, setEditingIndex] = useState(null);
   const [users, setUsers] = useState([]);
@@ -24,7 +24,6 @@ const TaskList = ({ userId, userEmail, tasks, projectId, projectName, projectDes
     setTaskList(tasks);
   }, [tasks]);
 
-
   const handleBack = () => navigate('/Projects');
 
   const toggleForm = async () => {
@@ -32,9 +31,9 @@ const TaskList = ({ userId, userEmail, tasks, projectId, projectName, projectDes
     setNewTaskButtonColor(newColor);
     setTaskForm((prev) => !prev);
 
-    if (!taskForm) {
+    if (!taskForm && editingIndex !== null) { // Fetch users only in edit mode
       try {
-        const response = await userService.searchUsers();
+        const response = await projectService.searchProjectsByEmail(projectId);
         const filteredUsers = response.data.filter((user) => user.email !== userEmail);
         setUsers(filteredUsers);
       } catch (error) {
@@ -42,7 +41,6 @@ const TaskList = ({ userId, userEmail, tasks, projectId, projectName, projectDes
       }
     }
   };
-
 
   const resetForm = () => {
     setTaskName('');
@@ -52,6 +50,7 @@ const TaskList = ({ userId, userEmail, tasks, projectId, projectName, projectDes
     setTaskEndDate('');
     setTaskFile(null);
     setEditingIndex(null);
+    setSelectedUserIds([]); // Reset selected users
   };
 
   const formatDateForAPI = (dateString) => {
@@ -74,12 +73,10 @@ const TaskList = ({ userId, userEmail, tasks, projectId, projectName, projectDes
 
     let taskId;
     try {
-      // Create or update the task
       if (editingIndex !== null) {
         taskId = taskList[editingIndex].id;
         await updateTask(taskId, newTask, taskFile);
-  
-        // Update assigned users
+
         if (selectedUserIds.length > 0) {
           await taskService.updateAssignedUsers(userId, taskId, selectedUserIds);
           console.log(`Task ${taskId} users updated to: ${selectedUserIds}`);
@@ -87,22 +84,16 @@ const TaskList = ({ userId, userEmail, tasks, projectId, projectName, projectDes
       } else {
         const response = await createTask(newTask, taskFile);
         taskId = response.data.id;
-  
-        // Assign users to newly created task
-        if (selectedUserIds.length > 0) {
-          await taskService.assignTask(userId, taskId, selectedUserIds);
-          console.log(`Task ${taskId} assigned to user IDs: ${selectedUserIds}`);
-        }
+        console.log(`Task ${taskId} created successfully`);
       }
     } catch (error) {
-      console.error('Error creating/updating task or assigning users:', error);
+      console.error('Error creating/updating task:', error);
     }
   
     resetForm();
     setTaskForm(false);
     setNewTaskButtonColor('#007BFF');
   };
-  
 
   const handleEditTask = async (taskId) => {
     const task = taskList.find((t) => t.id === taskId);
@@ -116,7 +107,7 @@ const TaskList = ({ userId, userEmail, tasks, projectId, projectName, projectDes
       setNewTaskButtonColor('red');
 
       try {
-        const response = await userService.searchUsers();
+        const response = await projectService.searchProjectsByEmail(projectId);
         const filteredUsers = response.data.filter((user) => user.email !== userEmail);
         setUsers(filteredUsers);
       } catch (error) {
@@ -135,38 +126,32 @@ const TaskList = ({ userId, userEmail, tasks, projectId, projectName, projectDes
   const handleArchiveTask = async (taskId) => {
     const taskToUpdate = taskList.find((task) => task.id === taskId);
     if (!taskToUpdate) return;
-  
+
     const newArchivedState = !taskToUpdate.is_archived;
     const currentTimestamp = newArchivedState ? new Date().toISOString() : null;
-  
+
     try {
       await taskService.updateTask(taskId, { ...taskToUpdate, is_archived: newArchivedState }, null, currentTimestamp);
-  
       setTaskList((prevTasks) =>
         prevTasks.map((task) =>
-          task.id === taskId
-            ? { ...task, is_archived: newArchivedState, archived_at: currentTimestamp }
-            : task
+          task.id === taskId ? { ...task, is_archived: newArchivedState, archived_at: currentTimestamp } : task
         )
       );
     } catch (error) {
       console.error('Failed to archive task:', error);
     }
   };
-  
 
   const toggleTaskStatus = async (taskId) => {
     const taskToUpdate = taskList.find(task => task.id === taskId);
     if (taskToUpdate) {
       const newStatus = !taskToUpdate.status;
-      await updateTask(taskToUpdate.id, { ...taskToUpdate, status: newStatus });
-      
+      const { archived_at, ...rest } = taskToUpdate;
+      await updateTask(taskToUpdate.id, { ...rest, status: newStatus });
     }
-
     setTaskList(prevTasks =>
       prevTasks.map(task =>
         task.id === taskId ? { ...task, status: !task.status } : task
-        
       )
     );
   };
@@ -255,32 +240,34 @@ const TaskList = ({ userId, userEmail, tasks, projectId, projectName, projectDes
                 onChange={(e) => setTaskFile(e.target.files[0])}
               />
             </div>
-            <div className="form-group">
-              <label htmlFor="assignUsers">Assign to Users</label>
-              <select
-                id="assignUsers"
-                multiple
-                value={selectedUserIds}
-                onChange={(e) => {
-                  const options = e.target.options;
-                  const selectedValues = [];
-                  for (let i = 0; i < options.length; i++) {
-                    if (options[i].selected) {
-                      selectedValues.push(options[i].value);
+            {editingIndex !== null && ( // Display assign users only in edit mode
+              <div className="form-group">
+                <label htmlFor="assignUsers">Assign to Users</label>
+                <select
+                  id="assignUsers"
+                  multiple
+                  value={selectedUserIds}
+                  onChange={(e) => {
+                    const options = e.target.options;
+                    const selectedValues = [];
+                    for (let i = 0; i < options.length; i++) {
+                      if (options[i].selected) {
+                        selectedValues.push(options[i].value);
+                      }
                     }
-                  }
-                  setSelectedUserIds(selectedValues);
-                  console.log("Selected User IDs:", selectedValues); // Debugging line
-                }}
-                className="user-dropdown"
-              >
-                {users.map((user) => (
-                  <option key={user.id} value={user.id}>
-                    {user.email} - {user.username}
-                  </option>
-                ))}
-              </select>
-            </div>
+                    setSelectedUserIds(selectedValues);
+                    console.log("Selected User IDs:", selectedValues); // Debugging line
+                  }}
+                  className="user-dropdown"
+                >
+                  {users.map((user) => (
+                    <option key={user.id} value={user.id}>
+                      {user.email} - {user.username}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            )}
 
             <div className="submit-button-container">
               <button type="submit" className="submit-button">
@@ -305,7 +292,7 @@ const TaskList = ({ userId, userEmail, tasks, projectId, projectName, projectDes
                 status={task.status}
                 files={task.files}
                 isArchived={task.is_archived}
-                assignedUsers={(task.assigned_users || []).map((user) => user.username)} // Display multiple assigned users
+                assignedUsers={(task.assigned_users || []).map((user) => user.username)}
                 onEdit={() => handleEditTask(task.id)}
                 onDelete={() => handleDeleteTask(task.id)}
                 onArchive={() => handleArchiveTask(task.id)}
@@ -320,4 +307,3 @@ const TaskList = ({ userId, userEmail, tasks, projectId, projectName, projectDes
 };
 
 export default TaskList;
-

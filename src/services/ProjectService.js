@@ -3,7 +3,7 @@ import axios from "axios";
 class ProjectService {
     BASE_URL = `http://asd-g7-backend.australiaeast.cloudapp.azure.com/`;
 
-    getWholeProjectList() { 
+    getWholeProjectList() {
         return axios.get(`${this.BASE_URL}/projects/`);
     }
 
@@ -12,19 +12,23 @@ class ProjectService {
     }
 
     getProjectsByUser(userId) {
-        return axios.get(`${this.BASE_URL}projects/user/${userId}`);  
+        return axios.get(`${this.BASE_URL}projects/user/${userId}`);
     }
-    
+
     getProjectByProjectId(projectID) {
-        return axios.get(`${this.BASE_URL}projects/${projectID}`);  
+        return axios.get(`${this.BASE_URL}projects/${projectID}`);
     }
 
     updateProject(id, updatedProject) {
-        return axios.put(`${this.BASE_URL}projects/${id}/`, updatedProject);  
+        return axios.put(`${this.BASE_URL}projects/${id}/`, updatedProject);
     }
 
     deleteProject(projectID) {
-        return axios.delete(`${this.BASE_URL}projects/${projectID}/`);  
+        return axios.delete(`${this.BASE_URL}projects/${projectID}/`);
+    }
+
+    searchProjectsByEmail(projectID) {
+        return axios.get(`${this.BASE_URL}projects/${projectID}/search/?email=@`);
     }
 }
 

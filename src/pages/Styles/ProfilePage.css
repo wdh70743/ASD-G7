@@ -48,6 +48,10 @@
   margin-bottom: 15px;
 }
 
+.user-profile__form-group input {
+  width: auto;
+}
+
 .user-profile__form-label {
   display: block;
   margin-bottom: 5px;
