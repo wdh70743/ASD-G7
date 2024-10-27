@@ -35,26 +35,28 @@ class TaskService {
 
   createTask(newTask, taskFile) {
     const formData = new FormData();
-
+  
     // Append all properties of newTask to formData
     for (const key in newTask) {
       if (newTask.hasOwnProperty(key)) {
         formData.append(key, newTask[key]);
       }
     }
-
+  
     // Append the file if it exists
     if (taskFile) {
-      formData.append('uploaded_files', taskFile); // Use a specific key for the file
+      formData.append('uploaded_files', taskFile);
     }
-    console.log(taskFile)
-
+  
+    console.log('Create Task FormData:', formData); // Debugging line
+  
     return axios.post(`${this.BASE_URL}tasks/create/`, formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
     });
   }
+  
 
   updateTask(taskId, updatedTask, taskFile, archivedAt = null) {
     const formData = new FormData();
@@ -95,17 +97,18 @@ class TaskService {
     const data = {
       assigned_by: assignedBy,
       task_id: taskId,
-      user_ids: Array.isArray(userIds) ? userIds : [userIds], // Ensure it's an array
+      user_ids: Array.isArray(userIds) ? userIds.map(id => parseInt(id, 10)) : [parseInt(userIds, 10)], // Ensure it's an array of integers
     };
-
-    console.log("Assign Task Payload:", data); // Debugging line
-
+  
+    console.log("Assign Task Payload:", JSON.stringify(data)); // Debugging payload structure
+  
     return axios.post(`${this.BASE_URL}tasks/assign/`, data, {
       headers: {
         "Content-Type": "application/json", // Use JSON content type
       },
     });
   }
+  
 
   // Get tasks assigned to a user within a specific project
   getAssignedTasksByProject(projectId, userId) {

@@ -3,7 +3,7 @@ import Project from './Project';
 import userService from '../../services/UserService';
 import '../Tasks/Styles/TaskList.css';
 
-const ProjectList = ({ userId, projects, createProject, updateProject, deleteProject }) => {
+const ProjectList = ({ userId, userEmail, projects, createProject, updateProject, deleteProject }) => {
   const [projectList, setProjectList] = useState(projects || []);
   const [projectForm, setProjectForm] = useState(false);
   const [newProjectButtonColor, setNewProjectButtonColor] = useState('#007BFF');
@@ -24,13 +24,15 @@ const ProjectList = ({ userId, projects, createProject, updateProject, deletePro
     const fetchUsers = async () => {
       try {
         const response = await userService.searchUsers();
-        setUsers(response.data);
+        const filteredUsers = response.data.filter((user) => user.email !== userEmail);
+        setUsers(filteredUsers);
       } catch (error) {
         console.error('Error fetching users:', error);
       }
     };
     fetchUsers();
-  }, []);
+  }, [userEmail]); // Add userEmail to the dependency array
+  
 
   const toggleForm = () => {
     const newColor = !projectForm ? 'red' : '#007BFF';

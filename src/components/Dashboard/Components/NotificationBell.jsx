@@ -24,6 +24,24 @@ const NotificationBell = () => {
     setIsDropdownVisible((prevState) => !prevState);
   };
 
+  const handleNotificationClick = async (notificationId) => {
+    const userId = localStorage.getItem('userId');
+
+    if (userId) {
+      try {
+        // Mark the notification as read
+        await notificationService.markNotificationAsRead(notificationId, userId);
+        
+        // Remove the notification from the list
+        setNotifications((prevNotifications) =>
+          prevNotifications.filter((notification) => notification.id !== notificationId)
+        );
+      } catch (error) {
+        console.error('Failed to mark notification as read:', error);
+      }
+    }
+  };
+
   return (
     <div className="notification-bell">
       <FaBell className="nav-icon bell-icon" onClick={handleBellClick} />
@@ -31,7 +49,11 @@ const NotificationBell = () => {
         <div className="notification-dropdown">
           {notifications.length > 0 ? (
             notifications.map((notification) => (
-              <div key={notification.id} className="notification-item">
+              <div
+                key={notification.id}
+                className="notification-item"
+                onClick={() => handleNotificationClick(notification.id)}
+              >
                 {notification.message}
               </div>
             ))
