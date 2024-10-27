@@ -135,13 +135,13 @@ const TaskList = ({ userId, userEmail, tasks, projectId, projectName, projectDes
   const handleArchiveTask = async (taskId) => {
     const taskToUpdate = taskList.find((task) => task.id === taskId);
     if (!taskToUpdate) return;
-
+  
     const newArchivedState = !taskToUpdate.is_archived;
     const currentTimestamp = newArchivedState ? new Date().toISOString() : null;
-
+  
     try {
-      await taskService.archiveTask(taskId);
-
+      await taskService.updateTask(taskId, { ...taskToUpdate, is_archived: newArchivedState }, null, currentTimestamp);
+  
       setTaskList((prevTasks) =>
         prevTasks.map((task) =>
           task.id === taskId
@@ -150,10 +150,10 @@ const TaskList = ({ userId, userEmail, tasks, projectId, projectName, projectDes
         )
       );
     } catch (error) {
-      console.error('Failed to archive/reassign task', error);
+      console.error('Failed to archive task:', error);
     }
-    console.log('Archived At:', currentTimestamp);
   };
+  
 
   const toggleTaskStatus = async (taskId) => {
     const taskToUpdate = taskList.find(task => task.id === taskId);
