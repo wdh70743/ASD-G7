@@ -45,7 +45,7 @@ const ProfileDropdown = () => {
         onClick={handleProfileClick}
       />
       {dropdownVisible && (
-        <div className="custom-dropdown-menu">
+        <div className="dropdown-menu custom-dropdown-menu">
           <button className="dropdown-item" onClick={handleUserMenu}>
             Profile
           </button>
@@ -55,6 +55,7 @@ const ProfileDropdown = () => {
         </div>
       )}
     </div>
+
   );
 };
 
