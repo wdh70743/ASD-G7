@@ -1,5 +1,6 @@
 import { useState, useCallback } from 'react';
 import taskService from '../services/TaskService.js';
+import projectService from '../services/ProjectService.js';
 
 const useTasks = () => {
   const [loading, setLoading] = useState(false);
@@ -42,25 +43,43 @@ const useTasks = () => {
     }
   }, []);
 
-  const fetchArchivedTasksByUser = useCallback(async (userId) => {
+  const fetchArchivedTasksByUserOrOwner = useCallback(async (userId) => {
     setLoading(true);
     setError(null);
-
     try {
-      const response = await taskService.getArchivedTasksByUser(userId);
+      const userResponse = await taskService.getArchivedTasksByUser(userId);
+      let allArchivedTasks = userResponse?.data?.tasks || userResponse?.data || [];
 
-      if (response && response.data) {
-        const allArchivedTasks = response.data.tasks || response.data;
-        setArchivedTasks(allArchivedTasks);
-      } else {
-        setArchivedTasks([]);
-      }
+      // Fetch projects to get owner IDs
+      const projectResponse = await projectService.getProjectsByUser(userId);
+      const ownerIds = projectResponse?.data?.map(project => project.owner);
+
+      // Fetch archived tasks for each owner ID
+      const ownerArchivedTasksPromises = ownerIds.map(ownerId =>
+        taskService.getArchivedTasksByUser(ownerId)
+      );
+      const ownerArchivedTasksResponses = await Promise.all(ownerArchivedTasksPromises);
+
+      // Merge user archived tasks and owner archived tasks
+      ownerArchivedTasksResponses.forEach(response => {
+        if (response && response.data) {
+          allArchivedTasks = [...allArchivedTasks, ...response.data.tasks || response.data];
+        }
+      });
+
+      // Remove duplicate tasks based on task ID
+      const uniqueArchivedTasks = allArchivedTasks.filter(
+        (task, index, self) => index === self.findIndex(t => t.id === task.id)
+      );
+
+      setArchivedTasks(uniqueArchivedTasks);
     } catch (err) {
       setError(err.response?.data?.message || 'Failed to fetch archived tasks');
     } finally {
       setLoading(false);
     }
   }, []);
+
 
   const fetchTasksByProject = useCallback(async (projectID) => {
     setLoading(true);
@@ -136,7 +155,7 @@ const updateTask = useCallback(async (taskId, updatedTask, taskFile) => {
 
 return { 
   fetchTasksByUser, 
-  fetchArchivedTasksByUser,
+  fetchArchivedTasksByUserOrOwner,
   fetchTasksByProject, 
   deleteTask, 
   createTask, 

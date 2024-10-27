@@ -89,8 +89,8 @@
   color: #007bff; 
 }
 
-/* Custom dropdown menu */
-.custom-dropdown-menu {
+/* General Dropdown Styles (applies to both notification and profile dropdowns) */
+.dropdown-menu {
   position: absolute;
   top: 35px;
   right: 0; 
@@ -98,13 +98,15 @@
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); 
   border-radius: 8px; 
   z-index: 1000; 
-  width: 150px; 
+  width: 200px; /* Adjusted width to be the same for both */
 }
 
-/* Dropdown item styling */
+/* Individual Dropdown Item Styling */
 .dropdown-item {
-  display: block;
-  padding: 12px 16px; 
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 16px; 
   font-size: 14px;
   text-align: left; 
   border: none;
@@ -122,8 +124,8 @@
   border-radius: 8px;
 }
 
-/* Dropdown arrow styling */
-.custom-dropdown-menu::before {
+/* Arrow Styling for Dropdown Menu */
+.dropdown-menu::before {
   content: '';
   position: absolute;
   top: -8px; 
@@ -133,27 +135,74 @@
   border-color: transparent transparent #ffffff transparent; 
 }
 
-.notification-bell {
-  position: relative;
-}
-
+/* Notification Dropdown Styling */
 .notification-dropdown {
-  position: absolute;
-  top: 100%;
-  right: 0;
-  width: 200px;
-  background-color: white;
-  border: 1px solid #ccc;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-  z-index: 1000;
+  width: 200px; /* Consistent width */
+  top: 65px;
+  right: 100px;
   max-height: 300px;
   overflow-y: auto;
 }
 
+/* Notification Item Styling */
 .notification-item {
+  width: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   padding: 10px;
   border-bottom: 1px solid #f0f0f0;
+  cursor: pointer;
+  transition: background-color 0.3s;
 }
+
+.notification-item:last-child {
+  border-bottom: none;
+}
+
+.notification-item:hover {
+  background-color: #f0f0f0; /* Light grey background on hover */
+}
+
+/* Read Button Styling */
+.read-button {
+  background-color: transparent;
+  border: none;
+  color: #007bff;
+  cursor: pointer;
+  font-size: 0.8em;
+  transition: color 0.3s;
+}
+
+.read-button:hover {
+  color: #0056b3;
+}
+
+/* Profile Dropdown Styling */
+.profile-dropdown-container {
+  position: relative;
+}
+
+.profile-icon {
+  font-size: 2em;
+  cursor: pointer;
+}
+
+.profile-icon:hover {
+  color: #007bff; 
+}
+
+/* Profile Dropdown Menu */
+.custom-dropdown-menu {
+  width: 200px; /* Consistent width with notification dropdown */
+}
+
+.profile-dropdown-container .dropdown-item {
+  padding: 12px 16px;
+}
+
+
+
 
 .notification-item:last-child {
   border-bottom: none;

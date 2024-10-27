@@ -8,7 +8,7 @@ import './Styles/ArchivePage.css';
 
 const ArchivePage = () => {
   const { fetchProjectsByUser, projects, loading: projectsLoading, error: projectsError } = useProjects();
-  const { fetchArchivedTasksByUser, archivedTasks, deleteTask, loading: tasksLoading, error: tasksError } = useTasks();
+  const { fetchArchivedTasksByUserOrOwner, archivedTasks, deleteTask, loading: tasksLoading, error: tasksError } = useTasks();
 
   const [searchResults, setSearchResults] = useState([]);
   const [archivedTaskState, setArchivedTaskState] = useState([]); // Local state for archived tasks
@@ -19,9 +19,9 @@ const ArchivePage = () => {
   useEffect(() => {
     if (userId) {
       fetchProjectsByUser(userId);
-      fetchArchivedTasksByUser(userId);
+      fetchArchivedTasksByUserOrOwner(userId); // Fetch archived tasks by user or owner
     }
-  }, [userId, fetchProjectsByUser, fetchArchivedTasksByUser]);
+  }, [userId, fetchProjectsByUser, fetchArchivedTasksByUserOrOwner]);
 
   // Set local states based on fetched tasks
   useEffect(() => {
@@ -52,7 +52,7 @@ const ArchivePage = () => {
     <div className="archive-page">
       <Hero title="Archived Projects" />
       <div className="archive-layout">
-        <SearchBar onSearch={handleSearch} /> {/* Add SearchBar at the top */}
+        <SearchBar onSearch={handleSearch} />
         {projectsError && <p className="error-message">Error: {projectsError}</p>}
         {tasksError && <p className="error-message">Error: {tasksError}</p>}
         {(projectsLoading || tasksLoading) ? (
@@ -62,8 +62,8 @@ const ArchivePage = () => {
             archivedTasks={searchResults}
             projects={projects}
             deleteTask={deleteTask}
-            setArchivedTasks={setArchivedTaskState} // Pass setArchivedTasks correctly
-            setSearchResults={setSearchResults} // Pass setSearchResults for consistency
+            setArchivedTasks={setArchivedTaskState}
+            setSearchResults={setSearchResults}
           />
         )}
       </div>
